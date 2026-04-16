@@ -5,17 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:layout_width="413dp"
-        android:layout_height="150dp"
-        tools:layout_editor_absoluteY="581dp" />
-
     <LinearLayout
         android:layout_width="410dp"
         android:layout_height="281dp"
@@ -37,12 +26,4 @@
             android:text="Button" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="409dp"
-        android:layout_height="447dp"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="283dp">
-
-    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
