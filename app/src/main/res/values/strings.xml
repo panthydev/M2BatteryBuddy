@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">M2BatteryBuddy</string>
+    <string name="app_name">M2BatteryBuddy</string> //idk why these 2 exist they just appeared
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string> //idk why these 2 exist
 </resources>
