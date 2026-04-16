@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- start of layout -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/nav_menu"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="30dp"
+        android:orientation="vertical">
+
+        <Button android:id="@+id/test_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test Button" />
+
+    <!--
+    <ListView android:id="@+id/test_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="list" />
+        (from PMA layout slides: 23-30 "adapters + adapterView"
+        could be used on info and settings screens
+        otherwise create them manually)-->
+
+    <!-- ifht menu bar i bunden
+    De fleste steder frostår at bruge fragments i stedet for activities
+    Så alt (det meste) vil forgå i en activity, med shifting fragments -->
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
+<!-- end of layout -->
