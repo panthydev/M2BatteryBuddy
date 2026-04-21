@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+//idk what's going on here, creating a fragment makes this file automatically too,
+//and it needs it to work. Changes to this might break it???
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link SettingsFragment#newInstance} factory method to

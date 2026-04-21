@@ -23,19 +23,21 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        EdgeToEdge.enable(this);
-        binding = ActivityBaseBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot()); //sets the starting activity fx R.layout.activity_base
-        replaceFragment(new HomeFragment()); //if binding.getRoot(). Starts on this fragment
+        EdgeToEdge.enable(this);
+        binding = ActivityBaseBinding.inflate(getLayoutInflater()); //name has to match with activity
+                                                                    // fx. activity_base = ActivityBaseBinding
+                                                                    // or activity_main = ActivityMainBinding
+        setContentView(binding.getRoot()); //sets starting activity
+        replaceFragment(new HomeFragment()); //sets starting fragment on activity that is in binding.getRoot()
 
-        //wat is that
+        //wat is this. No "main" id in R, so makes error.
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
 //            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
 
-        //add bottom navigation menu things
+        //bottom menu/navigation button functionality (menu layout is in res/menu)
         binding.menuBar.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.home_butt) {
@@ -49,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //change fragment method (fragment layouts are in res/layout)
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

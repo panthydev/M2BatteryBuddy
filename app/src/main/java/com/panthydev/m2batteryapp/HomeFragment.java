@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-//idk what's going on here, creating a fragment makes this file too to work,
-//so dosen't need changes???
+//idk what's going on here, creating a fragment makes this file automatically too,
+//and it needs it to work. Changes to this might break it???
 
 /**
  * A simple {@link Fragment} subclass.

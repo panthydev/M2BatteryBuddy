@@ -27,7 +27,7 @@ android {
         }
     }
 
-    //added buildFeatures
+    //added buildFeatures, needed for MainActivity's "binding to work.
     buildFeatures{
         viewBinding true
     }
