@@ -10,7 +10,11 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,6 +23,15 @@
             android:visibility="visible">
 
             <!-- This is the base cardview-->
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Information on taking care of your phone"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="34sp" />
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/base_cardview"
                 style="@style/Base.CardView"
@@ -91,8 +104,8 @@
                             android:layout_marginTop="27dp"
                             android:layout_marginEnd="65dp"
                             android:layout_marginBottom="30dp"
-                            android:contentDescription="Arrow button"
                             android:background="@drawable/roundcorners"
+                            android:contentDescription="Arrow button"
                             android:src="@drawable/outline_arrow_circle_right_24"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toStartOf="@+id/heading"
