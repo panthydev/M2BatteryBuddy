@@ -19,29 +19,4 @@
         app:layout_constraintBaseline_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/menu_bar"
         />
-    <!--
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="30dp"
-            android:orientation="vertical">
-
-            <Button android:id="@+id/test_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Test Button" />
-    -->
-        <!--
-        <ListView android:id="@+id/test_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="list" />
-            (from PMA layout slides: 23-30 "adapters + adapterView"
-            could be used on info and settings screens
-            otherwise create them manually)-->
-
-    <!-- ifht menu bar i bunden
-    De fleste steder frostår at bruge fragments i stedet for activities
-    Så alt (det meste) vil forgå i en activity, med shifting fragments
-    </LinearLayout>-->
 </androidx.constraintlayout.widget.ConstraintLayout>
