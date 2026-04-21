@@ -19,8 +19,8 @@ public class DataManager
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
-                BatteryTestData BatteryData = DbHelper.GetBatteryData();
-                callback.OnResult(BatteryData);
+               // BatteryTestData BatteryData = DbHelper.GetBatteryData();
+              //  callback.OnResult(BatteryData);
             }
         }).start();
     }
