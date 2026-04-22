@@ -3,7 +3,7 @@ package com.panthydev.m2batteryapp.DataBase;
 public class QueryBuilder
 {
 
-    private String SelectTable(String table) { return "SELECT * FROM " + table;}
+    public static String SelectTable(String table) { return "SELECT * FROM " + table;}
     private String SelectTableWhere(String table, String ConditionColumn, String Condition)
     {
         return SelectTable(table) + " WHERE " + ConditionColumn + " " + Condition;
@@ -22,6 +22,8 @@ public class QueryBuilder
 
         return query;
     }
+
+
 
 }
 
