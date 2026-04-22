@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import android.util.Log;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
                                                                     // or activity_main = ActivityMainBinding
         setContentView(binding.getRoot()); //sets starting activity
         replaceFragment(new HomeFragment()); //sets starting fragment on activity that is in binding.getRoot()
+        binding.menuBar.setSelectedItemId(R.id.home_butt);
 
         //wat is this. No "main" id in R, so makes error.
 //        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
