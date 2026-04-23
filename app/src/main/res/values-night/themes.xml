@@ -11,6 +11,11 @@
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+
         <!-- Customize your theme here. -->
+        <!-- activity bg -->
+        <item name="android:windowBackground">@color/purple_dark</item>
+        <!-- default text color -->
+        <item name="android:textColor">@color/purple_light</item>
     </style>
 </resources>
