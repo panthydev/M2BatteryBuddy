@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import com.panthydev.m2batteryapp.AccordionMenu;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -19,11 +20,17 @@ public class InfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_info);
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+
+//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main),
+//                (v, insets) -> {
 //            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
+        AccordionMenu.changeView(findViewById(R.id.arrow_button), findViewById(R.id.hidden_view),
+                findViewById(R.id.base_cardview));
+        // Each cardview menu needs to have individual ids, which are then called here to define what buttons and cardview
+        // correspond to each other.
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.info_butt);
