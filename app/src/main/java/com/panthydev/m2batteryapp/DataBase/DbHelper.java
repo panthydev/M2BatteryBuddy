@@ -27,6 +27,8 @@ public class DbHelper extends SQLiteOpenHelper
         db.execSQL(query);
     }
 
+    // SEPERATE DATA GETTING AND SETTING INTO TWO DIFFERENT OBJECTS
+
     public void AddBatteryData(float capacity,
                                float maxCharge,
                                float minCharge,
@@ -53,7 +55,7 @@ public class DbHelper extends SQLiteOpenHelper
             Log.d("TEST", e.getMessage());
         }
     }
-
+    
     public BatteryTestData GetBatteryData(){
 
         AddBatteryData(70, 100, 0, 59, 20, "2026-04-22 10:55");
