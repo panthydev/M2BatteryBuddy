@@ -13,11 +13,11 @@ public class QueryBuilder
     public static String CreateBatteryTable(){
         String query = "CREATE TABLE " + BatteryTable.TABLE_NAME + " ("
                 + BatteryTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + BatteryTable.CAPACITY_COL + " REAL, "
-                + BatteryTable.MAX_CHARGE_COL + " REAL, "
-                + BatteryTable.MIN_CHARGE_COL + " REAL, "
-                + BatteryTable.POWER_REMAINING_COL + " REAL, "
-                + BatteryTable.TEMPERATURE_COL + " REAL, "
+                + BatteryTable.PERCENT_REMAINING_COL + " REAL, "
+                + BatteryTable.CURRENT_MAH_COL + " REAL, "
+                + BatteryTable.ESTIMATED_TIME_LEFT_COL + " REAL, "
+                + BatteryTable.MAX_CAPACITY_MAH_COL + " REAL, "
+                + BatteryTable.POWER_SAVING_ON_COL + " INTEGER, " // 1/0 for true/false
                 + BatteryTable.TIMESTAMP_COL + " TEXT)";
 
         return query;

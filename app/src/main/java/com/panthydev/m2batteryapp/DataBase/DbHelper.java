@@ -6,10 +6,14 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.os.Build;
 import android.util.Log;
 
-import com.google.android.material.bottomappbar.BottomAppBarTopEdgeTreatment;
-import com.panthydev.m2batteryapp.data.DataObjects.BatteryTestData;
+import androidx.annotation.RequiresApi;
+import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
+import com.panthydev.m2batteryapp.data.DataObjects.Mappers.BatteryDataMapper;
+
+import java.time.Duration;
 
 public class DbHelper extends SQLiteOpenHelper
 {
@@ -29,25 +33,15 @@ public class DbHelper extends SQLiteOpenHelper
 
     // SEPERATE DATA GETTING AND SETTING INTO TWO DIFFERENT OBJECTS
 
-    public void AddBatteryData(float capacity,
-                               float maxCharge,
-                               float minCharge,
-                               float powerRemaining,
-                               float temperature,
-                               String timestamp){
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void AddBatteryData(BatteryData data){
 
          SQLiteDatabase db = this.getWritableDatabase();
-
         try{
 
-            ContentValues values = new ContentValues();
-            values.put(BatteryTable.CAPACITY_COL, capacity);
-            values.put(BatteryTable.MAX_CHARGE_COL, maxCharge);
-            values.put(BatteryTable.MIN_CHARGE_COL, minCharge);
-            values.put(BatteryTable.POWER_REMAINING_COL, powerRemaining);
-            values.put(BatteryTable.TEMPERATURE_COL, temperature);
-            values.put(BatteryTable.TIMESTAMP_COL, timestamp);
+            BatteryDataMapper mapper = new BatteryDataMapper();
 
+            ContentValues values = mapper.ToContentValues(data);
             db.insert(BatteryTable.TABLE_NAME, null, values);
             db.close();
 
@@ -56,22 +50,20 @@ public class DbHelper extends SQLiteOpenHelper
         }
     }
     
-    public BatteryTestData GetBatteryData(){
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public BatteryData GetBatteryData(){
 
-        AddBatteryData(70, 100, 0, 59, 20, "2026-04-22 10:55");
+        //for testing, we add batterydata here first, so theres some data to even test with
+        AddBatteryData(new BatteryData(40, 500, Duration.ofMinutes(10), 1000, false));
 
 
         SQLiteDatabase db = getReadableDatabase();
 
-        BatteryTestData data = new BatteryTestData();
+        BatteryDataMapper mapper = new BatteryDataMapper();
 
         String query = QueryBuilder.SelectTable(BatteryTable.TABLE_NAME);
         Cursor cursor = db.rawQuery(query, null);
-
-        cursor.moveToFirst();
-        int index = cursor.getColumnIndexOrThrow(BatteryTable.POWER_REMAINING_COL);
-        data.BatteryPowerLeft = cursor.getFloat(index);
-        cursor.close();
+        BatteryData data = mapper.fromCursor(cursor);
         return data;
     }
 

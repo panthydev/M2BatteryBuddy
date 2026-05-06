@@ -6,7 +6,8 @@ import android.util.Log;
 
 import com.panthydev.m2batteryapp.Interfaces.Callback;
 import com.panthydev.m2batteryapp.Managers.DataManager;
-import com.panthydev.m2batteryapp.data.DataObjects.BatteryTestData;
+import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
+
 
 public class TEST_Activity extends Activity
 {
@@ -16,17 +17,17 @@ public class TEST_Activity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        DataManager.GetBatteryDataAsync(getBaseContext(), new Callback<BatteryTestData>() {
+        DataManager.GetBatteryDataAsync(getBaseContext(), new Callback<BatteryData>() {
             @Override
-            public void OnResult(BatteryTestData Result) {
+            public void OnResult(BatteryData Result) {
                 SetBatteryPower(Result);
             }
         });
     }
 
-    public void SetBatteryPower(BatteryTestData data)
+    public void SetBatteryPower(BatteryData data)
     {
-        batteryPower = data.BatteryPowerLeft;
+        batteryPower = data.percentLeft;;
         DoSomethingElse();
     }
 
