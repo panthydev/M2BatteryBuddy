@@ -9,8 +9,9 @@ import androidx.annotation.RequiresApi;
 import com.panthydev.m2batteryapp.Interfaces.Mapper;
 
 import java.time.Duration;
+import java.util.Date;
 
-public class BatteryData {
+public class BatteryData extends DataObject {
     public int percentLeft; // in percent
     public int currentMAh; // in MAh
     public Duration estimatedBatTimeLeft; // in Duration
@@ -22,13 +23,15 @@ public class BatteryData {
                        int currentMAh,
                        Duration estimatedBatTimeLeft,
                        int maxCapacityMAh,
-                       boolean powerSavingOn){
+                       boolean powerSavingOn,
+                       Date timestamp){
 
         this.percentLeft = percentLeft;
         this.currentMAh = currentMAh;
         this.estimatedBatTimeLeft = estimatedBatTimeLeft;
         this.maxCapacityMAh = maxCapacityMAh;
         this.powerSavingOn = powerSavingOn;
+        super.Timestamp = timestamp;
     }
 }
 

@@ -9,6 +9,10 @@ public class QueryBuilder
         return SelectTable(table) + " WHERE " + ConditionColumn + " " + Condition;
     }
 
+    public static String SelectTableDataFromTimeRange(String table, String RangeStartDate, String RangeEndDate){
+        return SelectTable(table) + " WHERE " + BatteryTable.TIMESTAMP_COL + " BETWEEN " + RangeStartDate + " AND " + RangeEndDate;
+    }
+
 
     public static String CreateBatteryTable(){
         String query = "CREATE TABLE " + BatteryTable.TABLE_NAME + " ("

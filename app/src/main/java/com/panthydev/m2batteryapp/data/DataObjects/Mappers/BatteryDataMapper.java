@@ -10,8 +10,10 @@ import com.panthydev.m2batteryapp.DataBase.BatteryTable;
 import com.panthydev.m2batteryapp.Interfaces.Mapper;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class BatteryDataMapper implements Mapper<BatteryData> {
 
@@ -19,7 +21,6 @@ public class BatteryDataMapper implements Mapper<BatteryData> {
     @Override
     public BatteryData fromCursor(Cursor c)
     {
-        c.moveToFirst();
         int index = c.getColumnIndexOrThrow(BatteryTable.PERCENT_REMAINING_COL);
         int percentLeft = c.getInt(index);
         index = c.getColumnIndexOrThrow(BatteryTable.CURRENT_MAH_COL);
@@ -32,12 +33,22 @@ public class BatteryDataMapper implements Mapper<BatteryData> {
         boolean powerSavingOn = c.getInt(index) == 1;
         // again getting api level errors
         Duration estimatedBatTimeLeft = Duration.ofNanos(nanoSeconds);
+        index = c.getColumnIndexOrThrow(BatteryTable.TIMESTAMP_COL);
+        String stringTimestamp = c.getString(index);
+
+        Date date = null;
+        try {
+            date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(stringTimestamp); //TODO add date format to Resources file, standardize is
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         BatteryData data = new BatteryData(percentLeft,
                 currentMAh,
                 estimatedBatTimeLeft,
                 maxCapacityMAh,
-                powerSavingOn);
+                powerSavingOn,
+                date);
         c.close();
         return data;
     }

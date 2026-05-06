@@ -11,9 +11,11 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
+import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 import com.panthydev.m2batteryapp.data.DataObjects.Mappers.BatteryDataMapper;
 
 import java.time.Duration;
+import java.util.Date;
 
 public class DbHelper extends SQLiteOpenHelper
 {
@@ -49,22 +51,38 @@ public class DbHelper extends SQLiteOpenHelper
             Log.d("TEST", e.getMessage());
         }
     }
+
     
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public BatteryData GetBatteryData(){
+    public DataPack<BatteryData> GetBatteryData(){
 
         //for testing, we add batterydata here first, so theres some data to even test with
-        AddBatteryData(new BatteryData(40, 500, Duration.ofMinutes(10), 1000, false));
+        AddBatteryData(new BatteryData(63, 500, Duration.ofMinutes(10), 1000, false, new Date() ));
+        AddBatteryData(new BatteryData(32, 500, Duration.ofMinutes(10), 1000, false, new Date() ));
+        AddBatteryData(new BatteryData(78, 500, Duration.ofMinutes(10), 1000, false, new Date() ));
+        AddBatteryData(new BatteryData(14, 500, Duration.ofMinutes(10), 1000, false, new Date() ));
+        AddBatteryData(new BatteryData(33, 500, Duration.ofMinutes(10), 1000, false, new Date() ));
+        AddBatteryData(new BatteryData(22, 500, Duration.ofMinutes(10), 1000, false, new Date() ));
+
 
 
         SQLiteDatabase db = getReadableDatabase();
 
         BatteryDataMapper mapper = new BatteryDataMapper();
 
-        String query = QueryBuilder.SelectTable(BatteryTable.TABLE_NAME);
+        String query = QueryBuilder.SelectTableDataFromTimeRange(BatteryTable.TABLE_NAME, "2022-01-01 00:00:00", "2029-01-01 23:59:59");
         Cursor cursor = db.rawQuery(query, null);
+        cursor.moveToFirst();
+
+        DataPack<BatteryData> dataPack = new DataPack<BatteryData>();
+
+        for(int i = 0; i < cursor.getCount(); i++){
+        cursor.moveToNext();
         BatteryData data = mapper.fromCursor(cursor);
-        return data;
+        dataPack.AddData(data);
+
+        }
+        return dataPack;
     }
 
     @Override
