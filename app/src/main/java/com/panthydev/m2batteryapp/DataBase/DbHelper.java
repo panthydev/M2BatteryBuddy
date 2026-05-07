@@ -22,11 +22,16 @@ public class DbHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "DB";
     private static final int DB_VERSION = 1;
+    private SQLiteDatabase db;
+    BatteryDataMapper mapper;
 
 
     public DbHelper(Context context)
     {
         super(context, DB_NAME, null, DB_VERSION);
+         db = getReadableDatabase();
+         mapper = new BatteryDataMapper();
+
     }
 
     // SEPERATE DATA GETTING AND SETTING INTO TWO DIFFERENT OBJECTS
@@ -75,11 +80,6 @@ public class DbHelper extends SQLiteOpenHelper {
     public DataPack<BatteryData> GetBatteryData()
     {
 
-
-        SQLiteDatabase db = getReadableDatabase();
-
-        BatteryDataMapper mapper = new BatteryDataMapper();
-
         String query = QueryBuilder.SelectTableDataFromTimeRange(BatteryTable.TABLE_NAME, "2026-05-07 10:00:00", "2029-01-01 10:40:59");
 
         Cursor cursor = null;
@@ -90,18 +90,17 @@ public class DbHelper extends SQLiteOpenHelper {
             DataPack<BatteryData> dataPack = GetAndPackData(cursor, mapper);
             return dataPack;
 
-
         } catch (Exception e) {
-            Log.d("TEST", "What the hell went wrong " + e.getMessage());
             return null;
         } finally {
             if (cursor != null) {
                 cursor.close();
             }
         }
-
-
     }
+
+
+
 
     //Constructor
 
