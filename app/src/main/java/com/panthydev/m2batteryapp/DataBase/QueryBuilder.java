@@ -10,7 +10,7 @@ public class QueryBuilder
     }
 
     public static String SelectTableDataFromTimeRange(String table, String RangeStartDate, String RangeEndDate){
-        return SelectTable(table) + " WHERE " + BatteryTable.TIMESTAMP_COL + " BETWEEN " + RangeStartDate + " AND " + RangeEndDate;
+        return SelectTable(table) + " WHERE " + BatteryTable.TIMESTAMP_COL + " BETWEEN " + "'"+RangeStartDate+"'" + " AND " + "'" + RangeEndDate +"'";
     }
 
 

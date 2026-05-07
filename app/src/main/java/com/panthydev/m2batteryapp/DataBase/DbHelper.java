@@ -71,18 +71,33 @@ public class DbHelper extends SQLiteOpenHelper
         BatteryDataMapper mapper = new BatteryDataMapper();
 
         String query = QueryBuilder.SelectTableDataFromTimeRange(BatteryTable.TABLE_NAME, "2022-01-01 00:00:00", "2029-01-01 23:59:59");
-        Cursor cursor = db.rawQuery(query, null);
-        cursor.moveToFirst();
 
-        DataPack<BatteryData> dataPack = new DataPack<BatteryData>();
+        Cursor cursor = null;
 
-        for(int i = 0; i < cursor.getCount(); i++){
-        cursor.moveToNext();
-        BatteryData data = mapper.fromCursor(cursor);
-        dataPack.AddData(data);
+        try {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
 
+            DataPack<BatteryData> dataPack = new DataPack<BatteryData>();
+
+            for(int i = 0; i < cursor.getCount(); i++){
+                if (cursor.moveToNext()){
+                    BatteryData data = mapper.fromCursor(cursor);
+                    dataPack.AddData(data);
+                }
+            }
+            return dataPack;
+        } catch (Exception e){
+            Log.d("TEST", "What the hell went wrong " + e.getMessage());
+            return null;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
         }
-        return dataPack;
+
+
+
     }
 
     @Override

@@ -28,9 +28,10 @@ public class TEST_Activity extends Activity
 
     public void SetBatteryPower(DataPack<BatteryData> data)
     {
+        Log.d("TEST", "Datapack length: " + data.dataList.size());
         for (BatteryData batteryData : data.dataList) {
             batteryPower = batteryData.percentLeft;
-            System.out.println(batteryData.percentLeft);
+            Log.d("TEST", "Battery Power: " + batteryPower);
         }
         DoSomethingElse();
     }

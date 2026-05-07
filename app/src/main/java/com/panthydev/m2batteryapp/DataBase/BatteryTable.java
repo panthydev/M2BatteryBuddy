@@ -10,6 +10,10 @@ public class BatteryTable
     public static final String ESTIMATED_TIME_LEFT_COL = "estimatedBatTimeLeft";
     public static final String MAX_CAPACITY_MAH_COL = "maxCapacityMAh";
     public static final String POWER_SAVING_ON_COL = "powerSavingOn";
+
+    /**
+     * @apiNote Timestamp should be formatted as YYYY-MM-DD HH:MM:SS
+     */
     public static final String TIMESTAMP_COL = "timestamp";
 
 }

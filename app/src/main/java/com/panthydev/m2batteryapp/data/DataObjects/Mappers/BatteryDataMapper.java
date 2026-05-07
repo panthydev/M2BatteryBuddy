@@ -49,7 +49,7 @@ public class BatteryDataMapper implements Mapper<BatteryData> {
                 maxCapacityMAh,
                 powerSavingOn,
                 date);
-        c.close();
+
         return data;
     }
 
@@ -64,6 +64,10 @@ public class BatteryDataMapper implements Mapper<BatteryData> {
         values.put("currentMAh", obj.currentMAh);
         values.put("estimatedBatTimeLeft", nanoSeconds);
         values.put("maxCapacityMAh", obj.maxCapacityMAh);
+        values.put("powerSavingOn", obj.powerSavingOn ? 1 : 0);
+
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(obj.Timestamp);
+        values.put("timestamp", date);
         return values;
     }
 }
