@@ -9,6 +9,14 @@ public class QueryBuilder
         return SelectTable(table) + " WHERE " + ConditionColumn + " " + Condition;
     }
 
+
+    /**
+     * Creates a SQL command to select all data from a table between two dates.
+     * @param table what table to select from
+     * @param RangeStartDate start date
+     * @param RangeEndDate end date
+     * @return an SQL command String
+     */
     public static String SelectTableDataFromTimeRange(String table, String RangeStartDate, String RangeEndDate){
         return SelectTable(table) + " WHERE " + BatteryTable.TIMESTAMP_COL + " BETWEEN " + "'"+RangeStartDate+"'" + " AND " + "'" + RangeEndDate +"'";
     }
