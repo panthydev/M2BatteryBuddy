@@ -18,13 +18,15 @@ public class TEST_Activity extends Activity
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        DataManager.GetBatteryDataAsync(getBaseContext(), new Callback<DataPack<BatteryData>>() {
+        DataManager.GetBatteryDataAsync(this, 3,  new Callback<DataPack<BatteryData>>(){
+
             @Override
             public void OnResult(DataPack<BatteryData> Result) {
                 SetBatteryPower(Result);
             }
         });
     }
+
 
     public void SetBatteryPower(DataPack<BatteryData> data)
     {
