@@ -1,5 +1,7 @@
 package com.panthydev.m2batteryapp;
 
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,15 +39,23 @@ public class InfoActivity extends AppCompatActivity {
 
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.home_butt) {
+            if (itemId == R.id.home_butt)
+            {
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
                 startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
                 finish();
                 return true;
-            } else if (itemId == R.id.info_butt) {
+            } else if (itemId == R.id.info_butt)
+            {
                 return true;
-            } else if (itemId == R.id.settings_butt) {
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
+            } else if (itemId == R.id.settings_butt)
+            {
+                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
                 overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
                 finish();
                 return true;
