@@ -34,6 +34,11 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     //------------------------------------ Public methods ------------------------------------//
+
+    /**
+     * Adds a DataPack of BatteryData objects to the database.
+     * @param dataPack A DataPack of BatteryData objects.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void AddBatteryData(DataPack<BatteryData> dataPack)
     {
@@ -55,7 +60,6 @@ public class DbHelper extends SQLiteOpenHelper {
     //------------------------------------ Private methods ------------------------------------//
 
     /**
-     *
      * @param hours How many hours back to get data from, must be positive.
      * @return A DataPack that has a DataList of BatteryData objects.
      */
@@ -84,6 +88,12 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * @param cursor Cursor object pointing at result table from db
+     * @param mapper What mapper to use
+     * @return A DataPack that has a DataList of DataObject objects.
+     * @param <T> Type of DataObject which will always be subclassed of that type.
+     */
     private <T extends DataObject> DataPack GetAndPackData(Cursor cursor, Mapper<T> mapper)
     {
         DataPack<T> dataPack = new DataPack<T>();
@@ -100,6 +110,11 @@ public class DbHelper extends SQLiteOpenHelper {
 
     //------------------------------------ Default stuff ------------------------------------//
 
+    /**
+     * Converts an amount of hours to a date string
+     * @param hours how many hours back to go?
+     * @return A date string formatted as YYYY-MM-DD HH:MM:SS
+     */
     private String GetRangeStartDate(int hours)
     {
         long nanoSeconds = System.currentTimeMillis() - ((long) hours * 60 * 60 * 1000);
