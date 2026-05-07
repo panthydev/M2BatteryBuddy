@@ -20,7 +20,7 @@ public class DataManager
             @Override
             public void run() {
 
-                DataPack<BatteryData> dataPack = dbHelper.GetBatteryData();
+                DataPack<BatteryData> dataPack = dbHelper.GetBatteryData(2);
                 callback.OnResult(dataPack);
             }
         }).start();

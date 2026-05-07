@@ -1,5 +1,4 @@
 package com.panthydev.m2batteryapp.DataBase;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -12,29 +11,32 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.panthydev.m2batteryapp.Interfaces.Mapper;
+import com.panthydev.m2batteryapp.Utils.TestingFactory;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataObject;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 import com.panthydev.m2batteryapp.data.DataObjects.Mappers.BatteryDataMapper;
+
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Date;
 
 public class DbHelper extends SQLiteOpenHelper {
 
 
     private static final String DB_NAME = "DB";
     private static final int DB_VERSION = 1;
-    private SQLiteDatabase db;
-    BatteryDataMapper mapper;
+    BatteryDataMapper batteryMapper;
 
 
     public DbHelper(Context context)
     {
         super(context, DB_NAME, null, DB_VERSION);
-         db = getReadableDatabase();
-         mapper = new BatteryDataMapper();
+        batteryMapper = new BatteryDataMapper();
 
     }
 
-    // SEPERATE DATA GETTING AND SETTING INTO TWO DIFFERENT OBJECTS
+
 
     @Override
     public void onCreate(SQLiteDatabase db)
@@ -45,17 +47,16 @@ public class DbHelper extends SQLiteOpenHelper {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void AddBatteryData(BatteryData data)
+    public void AddBatteryData(DataPack<BatteryData> dataPack)
     {
-
-        SQLiteDatabase db = this.getWritableDatabase();
+        var writableDB = this.getWritableDatabase();
         try {
+            for (BatteryData data : dataPack.dataList){
+                ContentValues values = batteryMapper.ToContentValues(data);
+                writableDB.insert(BatteryTable.TABLE_NAME, null, values);
+            }
 
-            BatteryDataMapper mapper = new BatteryDataMapper();
-
-            ContentValues values = mapper.ToContentValues(data);
-            db.insert(BatteryTable.TABLE_NAME, null, values);
-            db.close();
+            writableDB.close();
 
         } catch (SQLException e) {
             Log.d("TEST", e.getMessage());
@@ -76,18 +77,33 @@ public class DbHelper extends SQLiteOpenHelper {
         return dataPack;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public DataPack<BatteryData> GetBatteryData()
-    {
+    private String GetRangeStartDate(int hours){
+        long nanoSeconds = System.currentTimeMillis() - (hours * 60 * 60 * 1000);
+        Date date = new Date(nanoSeconds);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+    }
 
-        String query = QueryBuilder.SelectTableDataFromTimeRange(BatteryTable.TABLE_NAME, "2026-05-07 10:00:00", "2029-01-01 10:40:59");
+
+
+    /**
+     *
+     * @param hours How many hours back to get data from, must be positive.
+     * @return A DataPack that has a DataList of BatteryData objects.
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public DataPack<BatteryData> GetBatteryData(int hours)
+    {
+        String StartDate = GetRangeStartDate(hours);
+        String EndDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String query = QueryBuilder.SelectTableDataFromTimeRange(BatteryTable.TABLE_NAME, StartDate, EndDate);
 
         Cursor cursor = null;
 
         try {
+            var db = this.getReadableDatabase();
             cursor = db.rawQuery(query, null);
             cursor.moveToFirst();
-            DataPack<BatteryData> dataPack = GetAndPackData(cursor, mapper);
+            DataPack<BatteryData> dataPack = GetAndPackData(cursor, batteryMapper);
             return dataPack;
 
         } catch (Exception e) {
