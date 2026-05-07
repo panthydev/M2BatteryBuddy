@@ -22,6 +22,7 @@ import java.util.Date;
 
 public class DbHelper extends SQLiteOpenHelper {
 
+    //TODO Implement AppUsage methods. both for getting and setting data. Waiting for data collection to be implemented.
     private static final String DB_NAME = "DB";
     private static final int DB_VERSION = 1;
     BatteryDataMapper batteryMapper;
