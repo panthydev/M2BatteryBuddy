@@ -1,10 +1,18 @@
 package com.panthydev.m2batteryapp;
 
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.charts.Chart;
@@ -119,4 +127,14 @@ public class graphActivity extends AppCompatActivity
         return barEntries;
     }
 
+//    Button back = findViewById(R.id.backBtn);
+//        back.setOnClickListener(new View.OnClickListener() {
+    public void Back(View v)
+    {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+        startActivity(intent);
+        overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
+        finish();
+    }
 }
