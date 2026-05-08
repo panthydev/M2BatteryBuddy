@@ -34,6 +34,22 @@ public class DataManager
         }).start();
     }
 
+    /**
+     * <p>Method to send battery data to the database, in the form of a dataPack dto.</p>
+     * @param context
+     * @param dataPack the container holding an arraylist of battery data
+     */
+    public static void SetBatteryDataAsync(Context context, DataPack<BatteryData> dataPack){
+        DbHelper dbHelper = new DbHelper(context);
+        new Thread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void run() {
+                dbHelper.AddBatteryData(dataPack);
+            }
+        }).start();
+    }
+
     //TODO implement GetUsageDataAsync() ... waiting for collection to be implemented
 
 }
