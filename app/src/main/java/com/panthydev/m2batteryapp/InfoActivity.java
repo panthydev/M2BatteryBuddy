@@ -29,10 +29,17 @@ public class InfoActivity extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
-        AccordionMenu.changeView(findViewById(R.id.arrow_button), findViewById(R.id.hidden_view),
-                findViewById(R.id.base_cardview));
-        // Each cardview menu needs to have individual ids, which are then called here to define what buttons and cardview
-        // correspond to each other.
+        for (int i = 1; i <= 8; i++) { // i < number of accordions.
+            int arrow = getResources().getIdentifier("arrow_button_" + i, "id", getPackageName());
+            int hiddenView = getResources().getIdentifier("hidden_view_" + i, "id", getPackageName());
+            int baseCard = getResources().getIdentifier("base_cardview_" + i, "id", getPackageName());
+
+            AccordionMenu.changeView(findViewById(arrow), findViewById(hiddenView), findViewById(baseCard));
+            // Each cardview menu needs to have individual ids, which are then called here to define what buttons and cardview
+            // correspond to each other.
+        }
+
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.info_butt);

@@ -12,13 +12,13 @@ import androidx.cardview.widget.CardView;
 
 public class AccordionMenu extends AppCompatActivity
 {
-    @Override
-    protected void onCreate(Bundle savedInstanceState)
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState)
     {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_info);
 
-        changeView(findViewById(R.id.arrow_button), findViewById(R.id.hidden_view), findViewById(R.id.base_cardview));
+//        changeView(findViewById(R.id.arrow_button), findViewById(R.id.hidden_view), findViewById(R.id.base_cardview));
         // Each cardview menu needs to have individual ids, which are then called here to define what buttons and cardview
         // correspond to each other.
 
