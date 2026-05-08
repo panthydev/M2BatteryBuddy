@@ -1,6 +1,7 @@
 package com.panthydev.m2batteryapp.Managers;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -49,6 +50,30 @@ public class DataManager
             }
         }).start();
     }
+
+
+    /**
+     * <p>Method to set the system discharge int into the shared preferences.</p>
+     * @param context as always, please pass in the context or die
+     * @param discharge the int to be saved
+     */
+    public static void SetSystemDischarge(Context context, int discharge){
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        prefs.edit().putInt("system_discharge", discharge).apply();
+
+    }
+
+    /**
+     * <p>Method to get the system discharge int from the shared preferences.</p>
+     * @param context give it.... please
+     * @return the discharge int, or 0 as a default value if the value doesnt exist
+     */
+    public static int GetSystemDischarge(Context context){
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        return prefs.getInt("system_discharge", 0);
+    }
+
+
 
     //TODO implement GetUsageDataAsync() ... waiting for collection to be implemented
 
