@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
 
-        bottomNavigationView.setOnItemSelectedListener(item -> {
+        bottomNavigationView.setOnItemSelectedListener(item-> {
             int itemId = item.getItemId();
             if (itemId == R.id.home_butt)
             {
@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
         ConstraintLayout bar = findViewById(R.id.barGraphContainer);
         bar.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "DIller", Toast.LENGTH_SHORT).show();
+            public void onClick(View v)
+            {
                 Intent intent = new Intent(getApplicationContext(), graphActivity.class);
                 intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);

@@ -12,9 +12,9 @@
     <color name="purple_dark">#1D1E54</color>
     <color name="orange_light">#FFAA80</color>
     <color name="orange_dark">#A3735F</color>
-    <color name="bar_red">#EA416E</color>
+    <color name="bar_red">#EA4171</color>
     <color name="bar_orange">#FF8766</color>
-    <color name="bar_ora_yell">#FFB55B</color>
-    <color name="bar_yellow">#F0EE6C</color>
-    <color name="bar_green">#9FFF89</color>
+    <color name="bar_ora_yell">#FDB347</color>
+    <color name="bar_yellow">#FADD6C</color>
+    <color name="bar_green">#68A858</color>
 </resources>
