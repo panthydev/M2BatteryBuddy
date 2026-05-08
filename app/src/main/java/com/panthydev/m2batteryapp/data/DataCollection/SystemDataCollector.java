@@ -21,7 +21,9 @@ import java.util.List;
 
 public class SystemDataCollector extends Activity {
 
-    public void CollectAndSendBatteryDataToDB() {
+    App[] appArray;
+
+    public void CollectAndSendBatteryDataToDB() { //Needs to run on the interval
         BatteryManager BM = (BatteryManager) getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager
         PowerManager PM = (PowerManager) getSystemService(POWER_SERVICE); //Getting access to the Power Manager
 
@@ -46,18 +48,19 @@ public class SystemDataCollector extends Activity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public void CollectAndSendUsageDataToDB () {
+    public void CollectAndSendUsageDataToDB () { // Needs to run once when the app is first opened
         List<ApplicationInfo> applicationInfoList = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA); // Get a list of packages with applications
 
-        App[] appArray = new App[applicationInfoList.size()]; // Making an array for all the app objects ToBeMade
+        appArray = new App[applicationInfoList.size()]; // Making an array for all the app objects ToBeMade
         int i = 0; // just a Counter, dont worry :)
 
         for (ApplicationInfo applicationInfo : applicationInfoList) {
             String appName = applicationInfoList.get(i).packageName; // Finding the app name
             int appCat = applicationInfoList.get(i).category; // Finding the app category (see below for meaning of each number)
+            int appDischarge = 0; // No discharge data collected yet
 
             if (appCat != -1) { //Only makes objects of importance, based on the category number (aka all but -1)
-                appArray[i] = new App(appName, appCat); // Making all the app objects
+                appArray[i] = new App(appName, appCat, appDischarge); // Making all the app objects
                 System.out.println("here is the app: " + appArray[i].getAppName() + " The Category: " + appArray[i].getAppCategory());
             }
             i++;
@@ -76,47 +79,88 @@ public class SystemDataCollector extends Activity {
         // 8 = CATEGORY_ACCESSIBILITY (Category for apps which are primarily accessibility apps, such as screen-readers.)
     }
 
-    public int appDischargeCalculator () {
+    int appDischarge; // The power discharge of an app used (with the system discharged)
+    int SystemDischarge; // The power discharge of the system
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void appDischargeTimer () { //Needs to run on the interval
         BatteryManager BM = (BatteryManager) getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager (again lol)
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo(); //Getting access to the Activity Manager and info of all the running apps
         ActivityManager.getMyMemoryState(appProcessInfo); // it does something cool and it works, but i dont know how :P
-
-        int appUsedDischarge; // The power discharge of an app used (inkl. the system discharge)
-        int noAppUsedDischarge; // The power discharge when no app is used (system discharge)
-        int appDischarge; // The power discharge of an app used (without the system discharged)
 
         if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE) { // Checks for if you are on an app
             new CountDownTimer(2000, 1000) { // This timer gathers the discharge for 1 sec (i hope), which we can upscale as we want
                 int duringAppUsedDischarge;
                 int finnishedAppUsedDischarge;
+                int AppUsedDischarge;
 
-                public void onTick(long millisUntilFinished) { // first discharge check
+                @Override public void onTick(long millisUntilFinished) { // first discharge check
                     duringAppUsedDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
                 }
 
-                public void onFinish() { // second discharge check
+                @Override public void onFinish() { // second discharge check
                     finnishedAppUsedDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-                    appUsedDischarge = (duringAppUsedDischarge + finnishedAppUsedDischarge) / 2;
+                    AppUsedDischarge = duringAppUsedDischarge + finnishedAppUsedDischarge;
+                    setAppDischarge(AppUsedDischarge / 2);
                 }
             }.start();
+
+            dischargeSaver();
         }
         else { // Aka. you don't have an app open (i hope it works lol)
             new CountDownTimer(2000, 1000) {
-                int duringNoAppUsedDischarge;
-                int finnishedNoAppUsedDischarge;
+                int duringSystemDischarge;
+                int finnishedSystemDischarge;
+                int SystemDischarge;
 
                 public void onTick(long millisUntilFinished) { // first discharge check
-                    duringNoAppUsedDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
+                    duringSystemDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
                 }
 
                 public void onFinish() { // second discharge check
-                    finnishedNoAppUsedDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-                    noAppUsedDischarge = (duringNoAppUsedDischarge + finnishedNoAppUsedDischarge) / 2;
+                    finnishedSystemDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
+                    SystemDischarge = duringSystemDischarge + finnishedSystemDischarge;
+                    setSystemDischarge(SystemDischarge / 2);
                 }
             }.start();
         }
+    }
 
-        appDischarge = appUsedDischarge - noAppUsedDischarge;
+    public void setAppDischarge (int appDischarge) {
+        this.appDischarge = appDischarge;
+    }
+
+    public int getAppDischarge () {
         return appDischarge;
+    }
+
+    public void setSystemDischarge (int SystemDischarge) {
+        this.SystemDischarge = SystemDischarge;
+    }
+
+    public int getSystemDischarge () {
+        return SystemDischarge;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void dischargeSaver () {
+        ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo(); //Getting access to the Activity Manager and info of all the running apps
+        ActivityManager.getMyMemoryState(appProcessInfo); // it does something cool and it works, but i dont know how :P
+
+        List<ApplicationInfo> applicationInfoList = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA); // Get a list of packages with applications
+        appArray = new App[applicationInfoList.size()]; // Making an array for all the app objects ToBeMade
+
+        int i = 0; // just a Counter again, dont worry :)
+
+        for (ApplicationInfo applicationInfo : applicationInfoList) {
+            String appName = applicationInfoList.get(i).packageName; // Finding the app name
+            int appCat = applicationInfoList.get(i).category; // Finding the app category (see below for meaning of each number)
+            int appDischarge = getAppDischarge(); // Is getting the discharge data just collected
+
+            if (appName == appProcessInfo.processName) { // Should be checking if the app package name is equals to the process name (THIS NEEDS TO BE CHECKED JUST TO BE SURE IT IS WORKING)
+                appArray[i] = new App(appName, appCat, appDischarge); // Making all the app objects
+            }
+            i++;
+        }
     }
 }

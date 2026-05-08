@@ -2,6 +2,7 @@ package com.panthydev.m2batteryapp.data.DataObjects;
 
 import android.app.ApplicationErrorReport;
 import android.app.usage.UsageStats;
+import android.content.pm.ApplicationInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 
@@ -11,12 +12,12 @@ public class App {
 
     String appName;
     int appCategory;
-    //Drawable appIcon;
+    int appDischarge; //With systemDischarge
 
-    public App (String appName, int appCategory) {
+    public App (String appName, int appCategory, int appDischarge) {
         this.appName = appName;
         this.appCategory = appCategory;
-        //this.appIcon = appIcon;
+        this.appDischarge = appDischarge;
     }
 
     public String getAppName () {
@@ -27,7 +28,8 @@ public class App {
         return appCategory;
     }
 
-//    public Drawable getAppIcon () {
-//        return appIcon;
-//    }
+    public int getAppDischarge () {
+        return appDischarge;
+    }
+
 }
