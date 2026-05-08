@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.renderer.BarChartRenderer;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -85,6 +87,8 @@ public class graphActivity extends AppCompatActivity
 
         Legend legend = horizontalBarChart.getLegend();
         legend.setEnabled(true);
+        Legend colorShape = horizontalBarChart.getLegend();
+        colorShape.setForm(Legend.LegendForm.NONE);
 
 
 
@@ -97,10 +101,16 @@ public class graphActivity extends AppCompatActivity
         xAxis.setGranularityEnabled(true);
         xAxis.setGranularity(1);
         xAxis.setDrawLabels(true);
-        xAxis.setXOffset(0.1f);
+        xAxis.setXOffset(1);
         xAxis.setDrawGridLines(true);
         xAxis.setDrawGridLines(true);
+        //This sets the color for axis (it sucks ass), Philipp Jahoda if i ever meet you, i'm losing a boot up your ass(respectfully)
         xAxis.setTextColor(getResources().getColor(R.color.white));
+        YAxis topAxis = horizontalBarChart.getAxisLeft();
+        topAxis.setTextColor(getResources().getColor(R.color.white));
+        YAxis botAxis = horizontalBarChart.getAxisRight();
+        botAxis.setTextColor(getResources().getColor(R.color.white));
+
 
 
 
@@ -154,4 +164,38 @@ public class graphActivity extends AppCompatActivity
         overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
         finish();
     }
+
+//    BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
+//        bottomNavigationView.setSelectedItemId(R.id.home_butt);
+//
+//        bottomNavigationView.setOnItemSelectedListener(item -> {
+//    int itemId = item.getItemId();
+//    if (itemId == R.id.home_butt)
+//    {
+//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//        intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        startActivity(intent);
+//        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+//        overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
+//        finish();
+//        return true;
+//    } else if (itemId == R.id.info_butt)
+//    {
+//        Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
+//        intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        startActivity(intent);
+//        overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
+//        finish();
+//        return true;
+//    } else if (itemId == R.id.settings_butt)
+//    {
+//        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+//        intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+//        startActivity(intent);
+//        overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
+//        finish();
+//        return true;
+//    }
+//    return false;
+//});
 }
