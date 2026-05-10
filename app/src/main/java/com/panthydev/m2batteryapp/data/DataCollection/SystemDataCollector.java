@@ -66,6 +66,8 @@ public class SystemDataCollector extends Activity {
             i++;
         }
 
+        //note from panthy: why have they not used enums, are they weird ?
+
         // When it gathers categories, an int is assigned, so here is every int and their respective category:
         // -1 = CATEGORY_UNDEFINED (Value when category is undefined.)
         // 0 = CATEGORY_GAME (Category for apps which are primarily games.)

@@ -8,7 +8,7 @@ import android.os.Parcel;
 
 import java.util.List;
 
-public class App {
+public class App extends DataObject {
 
     String appName;
     int appCategory;
