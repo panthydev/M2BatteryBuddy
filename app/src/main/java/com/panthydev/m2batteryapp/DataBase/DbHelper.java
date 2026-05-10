@@ -12,9 +12,11 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.panthydev.m2batteryapp.Interfaces.Mapper;
+import com.panthydev.m2batteryapp.data.DataObjects.App;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataObject;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
+import com.panthydev.m2batteryapp.data.DataObjects.Mappers.AppMapper;
 import com.panthydev.m2batteryapp.data.DataObjects.Mappers.BatteryDataMapper;
 
 import java.text.SimpleDateFormat;
@@ -26,11 +28,13 @@ public class DbHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "DB";
     private static final int DB_VERSION = 1;
     BatteryDataMapper batteryMapper;
+    AppMapper appMapper;
 
     public DbHelper(Context context)
     {
         super(context, DB_NAME, null, DB_VERSION);
         batteryMapper = new BatteryDataMapper();
+        appMapper = new AppMapper();
     }
 
     //------------------------------------ Public methods ------------------------------------//
@@ -53,6 +57,39 @@ public class DbHelper extends SQLiteOpenHelper {
 
         } catch (SQLException e) {
             Log.d("TEST", e.getMessage());
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void AddAppData(DataPack<App> dataPack)
+    {
+        var writableDB = this.getWritableDatabase();
+        try {
+            for (App app : dataPack.dataList) {
+                ContentValues values = appMapper.ToContentValues(app);
+                writableDB.insert(AppTable.TABLE_NAME, null, values);
+            }
+            writableDB.close();
+        } catch (SQLException e) {
+            Log.d("TEST", e.getMessage());
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public DataPack<App> GetAppData(String appName, int hours)
+    {
+        String startDate = GetRangeStartDate(hours);
+        String endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String query = QueryBuilder.SelectAppDataFromTimeRange(appName, startDate, endDate);
+
+        Cursor cursor = null;
+        try {
+            var db = this.getReadableDatabase();
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            return GetAndPackData(cursor, appMapper);
+        } finally {
+            if (cursor != null) cursor.close();
         }
     }
 
@@ -128,8 +165,9 @@ public class DbHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db)
     {
-
         String query = QueryBuilder.CreateBatteryTable();
+        db.execSQL(query);
+        query = QueryBuilder.CreateAppTable();
         db.execSQL(query);
     }
 
