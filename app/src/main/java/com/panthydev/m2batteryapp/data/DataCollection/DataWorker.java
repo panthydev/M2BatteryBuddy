@@ -1,6 +1,7 @@
 package com.panthydev.m2batteryapp.data.DataCollection;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -9,9 +10,12 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 public class DataWorker extends Worker{
+
+    Context context;
     public DataWorker(@NonNull Context context, @NonNull WorkerParameters workerParams)
     {
         super(context, workerParams);
+        this.context = context;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.S)
@@ -20,14 +24,37 @@ public class DataWorker extends Worker{
     public Result doWork()
     {
 
+        var sysDataCollector = new SystemDataCollector();
+        if(!CollectedAllApps(context)){
+            sysDataCollector.CollectAndSendUsageDataToDB();
+            SetConditions(context, true);
+        }
+
         //TODO create SystemDataCollector
         //TODO run relevant methods from it
 
-        var sysDataCollector = new SystemDataCollector();
+
         sysDataCollector.CollectAndSendBatteryDataToDB();
         sysDataCollector.appDischargeTimer();
 
 
         return Result.success();
     }
+
+
+
+
+
+    public static void SetConditions(Context context, boolean b){
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        prefs.edit().putBoolean("CollectedAllApps", b).apply();
+    }
+
+    public static Boolean CollectedAllApps(Context context){
+        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+        return prefs.getBoolean("CollectedAllApps", false);
+    }
+
+
+
 }

@@ -71,6 +71,14 @@ public class SystemDataCollector extends Activity {
             }
             i++;
         }
+        var datapack = new DataPack<App>();
+
+        for (App app : appArray) {
+            if (app != null) {
+                datapack.AddData(app); // Adding the app data object to the data pack
+            }
+        }
+        DataManager.SetAppDataAsync(this,datapack) ; //Sending the app data
 
         //note from panthy: why have they not used enums, are they weird ?
 
