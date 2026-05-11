@@ -23,7 +23,8 @@ public class DataWorker extends Worker{
     @Override
     public Result doWork()
     {
-        Looper.prepare();
+
+
 
         var sysDataCollector = new SystemDataCollector(context);
         if(!CollectedAllApps(context)){
@@ -37,7 +38,6 @@ public class DataWorker extends Worker{
 
         sysDataCollector.CollectAndSendBatteryDataToDB();
         sysDataCollector.appDischargeTimer();
-
 
         return Result.success();
     }

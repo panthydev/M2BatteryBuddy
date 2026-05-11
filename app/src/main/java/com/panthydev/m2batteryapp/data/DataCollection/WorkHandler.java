@@ -2,6 +2,7 @@ package com.panthydev.m2batteryapp.data.DataCollection;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Looper;
 import android.util.Log;
 
 import androidx.work.OneTimeWorkRequest;
@@ -19,6 +20,7 @@ public class WorkHandler {
      * CALL ONLY ONCE!!!
      */
     public void StartDataCollection(Context context){
+
         WorkRequest DataCollectionWork = new PeriodicWorkRequest.Builder(DataWorker.class, 1, TimeUnit.MINUTES).build();
 
         var time = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());

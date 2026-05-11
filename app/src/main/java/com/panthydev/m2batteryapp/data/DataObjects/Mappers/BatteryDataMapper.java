@@ -3,6 +3,7 @@ package com.panthydev.m2batteryapp.data.DataObjects.Mappers;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -55,7 +56,15 @@ public class BatteryDataMapper implements Mapper<BatteryData> {
     @Override
     public ContentValues ToContentValues(BatteryData obj) // was getting api level errors on this?
     {
-        long nanoSeconds = obj.estimatedBatTimeLeft.toNanos();
+        long nanoSeconds =0;
+        try{
+            nanoSeconds = obj.estimatedBatTimeLeft.toNanos();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.d("TEST", "Could not convert duration to nanoseconds, probably null");
+        }
+
+
 
         ContentValues values = new ContentValues();
         values.put("percentLeft", obj.percentLeft);
