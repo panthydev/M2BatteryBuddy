@@ -77,7 +77,7 @@ public class graphActivity extends AppCompatActivity
 
         //The little description in the corner
         Description description = new Description();
-        description.setText("MapH Since last charge");
+        description.setText("General use of mAh");
         description.setTextColor(getResources().getColor(R.color.white));
         horizontalBarChart.setDescription(description);
         horizontalBarChart.getXAxis().setLabelCount(5);
