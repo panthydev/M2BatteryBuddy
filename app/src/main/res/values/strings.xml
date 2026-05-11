@@ -18,7 +18,7 @@ In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquen
         Swipe down the Quick Settings panel and tap the Battery Saver/Power Saving icon. Alternatively, go to Settings -> Battery- > Battery Saver and turn it on from there.\n
     </string>
 
-    <string name ="info_goldilock">Keeping a smartphone\'s battery between 20%-80% (also called the goldilock zone) is good for the phone’s battery health. This is because depleting the battery inside the phone to 0% or charging it up to 100% can overwork the battery and degrade it with time, causing it to run out of power faster and shortening the battery’s overall lifespan.\n
+    <string name="info_goldilock">Keeping a smartphone\'s battery between 20%-80% (also called the goldilock zone) is good for the phone’s battery health. This is because depleting the battery inside the phone to 0% or charging it up to 100% can overwork the battery and degrade it with time, causing it to run out of power faster and shortening the battery’s overall lifespan.\n
         <b>General tips:</b> \n
         1. Avoid leaving your phone unattended in a charger for long periods of time. Like before going to sleep.\n
         2. When the phone’s battery is low, try to use it less or use less power-intensive apps.\n

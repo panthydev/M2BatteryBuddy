@@ -27,6 +27,26 @@ public class SettingsActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
+        BottomNavigationView topNavigationView = findViewById(R.id.top_menu_bar);
+        topNavigationView.setSelectedItemId(R.id.notif_settings_butt);
+
+        topNavigationView.setOnItemSelectedListener(item -> {
+            int itemId= item.getItemId();
+            if (itemId == R.id.notif_settings_butt)
+            {
+                Intent intent = new Intent(getApplicationContext(), NotifSettingsActivity.class);
+                intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+                startActivity(intent);
+                overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
+                finish();
+                return true;
+            } else if (itemId == R.id.app_settings_butt)
+            {
+                return true;
+            }
+            return false;
+        });
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.settings_butt);
 

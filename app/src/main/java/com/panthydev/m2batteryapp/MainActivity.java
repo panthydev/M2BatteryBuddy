@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 finish();                return true;
             } else if (itemId == R.id.settings_butt)
             {
-                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NotifSettingsActivity.class);
                 intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
                 startActivity(intent);
                 overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
