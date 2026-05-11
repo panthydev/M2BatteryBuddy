@@ -11,7 +11,6 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.os.Build;
-import android.os.CountDownTimer;
 import android.os.PowerManager;
 
 import androidx.annotation.RequiresApi;
@@ -127,41 +126,24 @@ public class SystemDataCollector{
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo(); //Getting access to the Activity Manager and info of all the running apps
         ActivityManager.getMyMemoryState(appProcessInfo); // it does something cool and it works, but i dont know how :P
 
+        // WorkManager runs on a background thread without a Looper, so avoid CountDownTimer here.
+        int firstReading = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
+        int secondReading = firstReading;
+        try {
+            Thread.sleep(1000);
+            secondReading = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+        int averageDischarge = (firstReading + secondReading) / 2;
+
         if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE) { // Checks for if you are on an app
-            new CountDownTimer(2000, 1000) { // This timer gathers the discharge for 1 sec (i hope), which we can upscale as we want
-                int duringAppUsedDischarge;
-                int finnishedAppUsedDischarge;
-                int AppUsedDischarge;
-
-                @Override public void onTick(long millisUntilFinished) { // first discharge check
-                    duringAppUsedDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-                }
-
-                @Override public void onFinish() { // second discharge check
-                    finnishedAppUsedDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-                    AppUsedDischarge = duringAppUsedDischarge + finnishedAppUsedDischarge;
-                    setAppDischarge(AppUsedDischarge / 2);
-                }
-            }.start();
+            setAppDischarge(averageDischarge);
 
             dischargeSaver();
         }
         else { // Aka. you don't have an app open (i hope it works lol)
-            new CountDownTimer(2000, 1000) {
-                int duringSystemDischarge;
-                int finnishedSystemDischarge;
-                int SystemDischarge;
-
-                public void onTick(long millisUntilFinished) { // first discharge check
-                    duringSystemDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-                }
-
-                public void onFinish() { // second discharge check
-                    finnishedSystemDischarge = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-                    SystemDischarge = duringSystemDischarge + finnishedSystemDischarge;
-                    setSystemDischarge(SystemDischarge / 2);
-                }
-            }.start();
+            setSystemDischarge(averageDischarge);
         }
     }
 
