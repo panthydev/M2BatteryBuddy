@@ -14,15 +14,21 @@ import android.os.PowerManager;
 
 import androidx.annotation.RequiresApi;
 
+import com.panthydev.m2batteryapp.Managers.DataManager;
 import com.panthydev.m2batteryapp.data.DataObjects.App;
+import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
+import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 
 import java.time.Duration;
+import java.util.Date;
 import java.util.List;
 
 public class SystemDataCollector extends Activity {
 
     App[] appArray;
 
+
+    @RequiresApi(api = Build.VERSION_CODES.S)
     public void CollectAndSendBatteryDataToDB() { //Needs to run on the interval
         BatteryManager BM = (BatteryManager) getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager
         PowerManager PM = (PowerManager) getSystemService(POWER_SERVICE); //Getting access to the Power Manager
@@ -33,20 +39,20 @@ public class SystemDataCollector extends Activity {
         boolean powerSaveOn = PM.isPowerSaveMode(); //Checks if powersaving mode is on
 
         //Checks if the phone which runs this, has a high enough API level (is new enough)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+
             Duration remainingBatLife = PM.getBatteryDischargePrediction(); //Estimates the time in minutes there is left on the phone
             System.out.println("Estimated remaining battery left is: " + (remainingBatLife.toMinutes()) + " minutes");
-        }
-        else {
-            System.out.println("Estimated remaining battery left in time is unavailable");
-        }
 
-        System.out.println("The battery level is: " + batLevelPercent);
-        System.out.println("The battery capacity in microampere-hours is: " + batCapMAh);
-        System.out.println("The battery current in microampere-hours is: " + batCurrentMAh);
-        System.out.println("Power save mode is on: " + powerSaveOn);
+
+        BatteryData batData = new BatteryData(batLevelPercent, batCapMAh, remainingBatLife, batCapMAh, powerSaveOn); //Making a battery data object with the collected data
+        var datapack = new DataPack<BatteryData>();
+        datapack.AddData(batData); //Adding the battery data object to the data pack
+        DataManager.SetBatteryDataAsync(this,datapack) ; //Sending the battery data object to the database
     }
 
+    /**
+     * should only run once when the app is first opened
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void CollectAndSendUsageDataToDB () { // Needs to run once when the app is first opened
         List<ApplicationInfo> applicationInfoList = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA); // Get a list of packages with applications
@@ -79,6 +85,7 @@ public class SystemDataCollector extends Activity {
         // 6 = CATEGORY_MAPS (Category for apps which are primarily maps apps, such as navigation apps.)
         // 7 = CATEGORY_PRODUCTIVITY (Category for apps which are primarily productivity apps, such as cloud storage or workplace apps.)
         // 8 = CATEGORY_ACCESSIBILITY (Category for apps which are primarily accessibility apps, such as screen-readers.)
+
     }
 
     int appDischarge; // The power discharge of an app used (with the system discharged)
@@ -161,6 +168,16 @@ public class SystemDataCollector extends Activity {
 
             if (appName == appProcessInfo.processName) { // Should be checking if the app package name is equals to the process name (THIS NEEDS TO BE CHECKED JUST TO BE SURE IT IS WORKING)
                 appArray[i] = new App(appName, appCat, appDischarge); // Making all the app objects
+
+
+                var datapack = new DataPack<App>();
+
+                for (App app : appArray) {
+                    if (app != null) {
+                        datapack.AddData(app); // Adding the app data object to the data pack
+                    }
+                }
+                DataManager.SetAppDataAsync(this,datapack) ; //Sending the app data
             }
             i++;
         }

@@ -8,6 +8,7 @@ import androidx.annotation.RequiresApi;
 
 import com.panthydev.m2batteryapp.DataBase.DbHelper;
 import com.panthydev.m2batteryapp.Interfaces.Callback;
+import com.panthydev.m2batteryapp.data.DataObjects.App;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 
@@ -47,6 +48,17 @@ public class DataManager
             @Override
             public void run() {
                 dbHelper.AddBatteryData(dataPack);
+            }
+        }).start();
+    }
+
+    public static void SetAppDataAsync(Context context, DataPack<App> dataPack){
+        DbHelper dbHelper = new DbHelper(context);
+        new Thread(new Runnable() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void run() {
+                dbHelper.AddAppData(dataPack);
             }
         }).start();
     }

@@ -6,6 +6,7 @@ import android.content.pm.ApplicationInfo;
 import android.graphics.drawable.Drawable;
 import android.os.Parcel;
 
+import java.util.Date;
 import java.util.List;
 
 public class App extends DataObject {
@@ -18,6 +19,14 @@ public class App extends DataObject {
         this.appName = appName;
         this.appCategory = appCategory;
         this.appDischarge = appDischarge;
+        super.Timestamp = new Date();
+    }
+
+    public App (String appName, int appCategory, int appDischarge, Date timestamp) {
+        this.appName = appName;
+        this.appCategory = appCategory;
+        this.appDischarge = appDischarge;
+        super.Timestamp = timestamp;
     }
 
     public String getAppName () {

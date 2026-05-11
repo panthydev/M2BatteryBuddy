@@ -33,6 +33,24 @@ public class BatteryData extends DataObject {
         this.powerSavingOn = powerSavingOn;
         super.Timestamp = timestamp;
     }
+
+
+    public BatteryData(int percentLeft,
+                       int currentMAh,
+                       Duration estimatedBatTimeLeft,
+                       int maxCapacityMAh,
+                       boolean powerSavingOn){
+
+        this.percentLeft = percentLeft;
+        this.currentMAh = currentMAh;
+        this.estimatedBatTimeLeft = estimatedBatTimeLeft;
+        this.maxCapacityMAh = maxCapacityMAh;
+        this.powerSavingOn = powerSavingOn;
+        super.Timestamp = new Date();
+    }
+
+
+
 }
 
 
