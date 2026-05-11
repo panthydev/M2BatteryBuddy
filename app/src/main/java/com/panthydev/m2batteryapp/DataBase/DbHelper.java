@@ -43,7 +43,6 @@ public class DbHelper extends SQLiteOpenHelper {
      * Adds a DataPack of BatteryData objects to the database.
      * @param dataPack A DataPack of BatteryData objects.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void AddBatteryData(DataPack<BatteryData> dataPack)
     {
         var writableDB = this.getWritableDatabase();
@@ -60,7 +59,6 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void AddAppData(DataPack<App> dataPack)
     {
         var writableDB = this.getWritableDatabase();
@@ -75,7 +73,6 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public DataPack<App> GetAppData(String appName, int hours)
     {
         String startDate = GetRangeStartDate(hours);
@@ -100,7 +97,6 @@ public class DbHelper extends SQLiteOpenHelper {
      * @param hours How many hours back to get data from, must be positive.
      * @return A DataPack that has a DataList of BatteryData objects.
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public DataPack<BatteryData> GetBatteryData(int hours)
     {
         String StartDate = GetRangeStartDate(hours);

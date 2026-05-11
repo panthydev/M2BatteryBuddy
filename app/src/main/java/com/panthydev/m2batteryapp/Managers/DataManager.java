@@ -26,7 +26,6 @@ public class DataManager
     {
         DbHelper dbHelper = new DbHelper(context);
         new Thread(new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void run() {
 
@@ -44,7 +43,6 @@ public class DataManager
     public static void SetBatteryDataAsync(Context context, DataPack<BatteryData> dataPack){
         DbHelper dbHelper = new DbHelper(context);
         new Thread(new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void run() {
                 dbHelper.AddBatteryData(dataPack);
@@ -55,7 +53,6 @@ public class DataManager
     public static void SetAppDataAsync(Context context, DataPack<App> dataPack){
         DbHelper dbHelper = new DbHelper(context);
         new Thread(new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void run() {
                 dbHelper.AddAppData(dataPack);

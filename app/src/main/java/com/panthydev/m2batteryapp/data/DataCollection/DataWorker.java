@@ -3,6 +3,7 @@ package com.panthydev.m2batteryapp.data.DataCollection;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
+import android.os.Looper;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -18,13 +19,13 @@ public class DataWorker extends Worker{
         this.context = context;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.S)
     @NonNull
     @Override
     public Result doWork()
     {
+        Looper.prepare();
 
-        var sysDataCollector = new SystemDataCollector();
+        var sysDataCollector = new SystemDataCollector(context);
         if(!CollectedAllApps(context)){
             sysDataCollector.CollectAndSendUsageDataToDB();
             SetConditions(context, true);

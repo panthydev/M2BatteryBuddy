@@ -5,9 +5,6 @@ import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIB
 import static android.content.Context.BATTERY_SERVICE;
 import static android.content.Context.POWER_SERVICE;
 
-import static androidx.core.content.ContextCompat.getSystemService;
-
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -24,6 +21,7 @@ import com.panthydev.m2batteryapp.data.DataObjects.App;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.Date;
 import java.util.List;
@@ -37,7 +35,6 @@ public class SystemDataCollector{
         this.context = context;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.S)
     public void CollectAndSendBatteryDataToDB() { //Needs to run on the interval
         BatteryManager BM = (BatteryManager) context.getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager
         PowerManager PM = (PowerManager) context.getSystemService(POWER_SERVICE); //Getting access to the Power Manager
@@ -47,11 +44,26 @@ public class SystemDataCollector{
         int batCurrentMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW); //Instantaneous battery current in microamperes, as an integer (positive means it is charging, negative is draining)
         boolean powerSaveOn = PM.isPowerSaveMode(); //Checks if powersaving mode is on
 
+        Duration remainingBatLife = null;
         //Checks if the phone which runs this, has a high enough API level (is new enough)
-
-            Duration remainingBatLife = PM.getBatteryDischargePrediction(); //Estimates the time in minutes there is left on the phone
-            System.out.println("Estimated remaining battery left is: " + (remainingBatLife.toMinutes()) + " minutes");
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            try {
+                // Use reflection to avoid potential signature mismatches with desugared java.time types on some platform versions
+                Method getPredictionMethod = PowerManager.class.getMethod("getBatteryDischargePrediction");
+                Object result = getPredictionMethod.invoke(PM);
+                if (result != null) {
+                    // Use reflection to get minutes from the returned Duration object (java.time.Duration)
+                    Method toMinutesMethod = result.getClass().getMethod("toMinutes");
+                    long minutes = (long) toMinutesMethod.invoke(result);
+                    System.out.println("Estimated remaining battery left is: " + minutes + " minutes");
+                    remainingBatLife = Duration.ofMinutes(minutes);
+                }
+            } catch (Throwable t) {
+                // Method might not be present on this specific device implementation even if API >= 31, or other reflection error
+                System.out.println("Could not get battery discharge prediction: " + t.getMessage());
+                //TODO implement all the other stuff to let user know it doesnt work + add to prefs
+            }
+        }
 
         BatteryData batData = new BatteryData(batLevelPercent, batCapMAh, remainingBatLife, batCapMAh, powerSaveOn); //Making a battery data object with the collected data
         var datapack = new DataPack<BatteryData>();
@@ -62,7 +74,6 @@ public class SystemDataCollector{
     /**
      * should only run once when the app is first opened
      */
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void CollectAndSendUsageDataToDB () { // Needs to run once when the app is first opened
         List<ApplicationInfo> applicationInfoList = context.getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA); // Get a list of packages with applications
 
@@ -70,8 +81,11 @@ public class SystemDataCollector{
         int i = 0; // just a Counter, dont worry :)
 
         for (ApplicationInfo applicationInfo : applicationInfoList) {
-            String appName = applicationInfoList.get(i).packageName; // Finding the app name
-            int appCat = applicationInfoList.get(i).category; // Finding the app category (see below for meaning of each number)
+            String appName = applicationInfo.packageName; // Finding the app name
+            int appCat = -1; // CATEGORY_UNDEFINED
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                appCat = applicationInfo.category; // Finding the app category
+            }
             int appDischarge = 0; // No discharge data collected yet
 
             if (appCat != -1) { //Only makes objects of importance, based on the category number (aka all but -1)
@@ -108,7 +122,6 @@ public class SystemDataCollector{
     int appDischarge; // The power discharge of an app used (with the system discharged)
     int SystemDischarge; // The power discharge of the system
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void appDischargeTimer () { //Needs to run on the interval
         BatteryManager BM = (BatteryManager) context.getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager (again lol)
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo(); //Getting access to the Activity Manager and info of all the running apps
@@ -168,7 +181,6 @@ public class SystemDataCollector{
         return SystemDischarge;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public void dischargeSaver () {
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo(); //Getting access to the Activity Manager and info of all the running apps
         ActivityManager.getMyMemoryState(appProcessInfo); // it does something cool and it works, but i dont know how :P
@@ -179,11 +191,14 @@ public class SystemDataCollector{
         int i = 0; // just a Counter again, dont worry :)
 
         for (ApplicationInfo applicationInfo : applicationInfoList) {
-            String appName = applicationInfoList.get(i).packageName; // Finding the app name
-            int appCat = applicationInfoList.get(i).category; // Finding the app category (see below for meaning of each number)
+            String appName = applicationInfo.packageName; // Finding the app name
+            int appCat = -1; // CATEGORY_UNDEFINED
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                appCat = applicationInfo.category; // Finding the app category
+            }
             int appDischarge = getAppDischarge(); // Is getting the discharge data just collected
 
-            if (appName == appProcessInfo.processName) { // Should be checking if the app package name is equals to the process name (THIS NEEDS TO BE CHECKED JUST TO BE SURE IT IS WORKING)
+            if (appName != null && appName.equals(appProcessInfo.processName)) { // Should be checking if the app package name is equals to the process name (THIS NEEDS TO BE CHECKED JUST TO BE SURE IT IS WORKING)
                 appArray[i] = new App(appName, appCat, appDischarge); // Making all the app objects
 
 

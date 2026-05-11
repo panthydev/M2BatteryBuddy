@@ -17,7 +17,6 @@ import java.util.Date;
 
 public class BatteryDataMapper implements Mapper<BatteryData> {
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public BatteryData fromCursor(Cursor c)
     {
@@ -53,7 +52,6 @@ public class BatteryDataMapper implements Mapper<BatteryData> {
         return data;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public ContentValues ToContentValues(BatteryData obj) // was getting api level errors on this?
     {
