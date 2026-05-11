@@ -4,9 +4,10 @@ public class QueryBuilder
 {
 
     public static String SelectTable(String table) { return "SELECT * FROM " + table;}
-    private String SelectTableWhere(String table, String ConditionColumn, String Condition)
+
+    private static String SelectTableWhere(String table, String conditionColumn, String condition)
     {
-        return SelectTable(table) + " WHERE " + ConditionColumn + " " + Condition;
+        return SelectTable(table) + " WHERE " + conditionColumn + " " + condition;
     }
 
 
@@ -21,11 +22,45 @@ public class QueryBuilder
         return SelectTable(table) + " WHERE " + BatteryTable.TIMESTAMP_COL + " BETWEEN " + "'"+RangeStartDate+"'" + " AND " + "'" + RangeEndDate +"'";
     }
 
+    public static String SelectTableDataSince(String table, String startDate){
+        if (startDate == null || startDate.isEmpty()) {
+            return SelectTable(table);
+        }
+
+        return SelectTableWhere(table, BatteryTable.TIMESTAMP_COL, ">= '" + startDate + "'");
+    }
+
     public static String SelectAppDataFromTimeRange(String appName, String rangeStartDate, String rangeEndDate) {
-        return SelectTable(AppTable.TABLE_NAME)
-                + " WHERE " + AppTable.APP_NAME_COL + " = '" + appName + "'"
-                + " AND " + AppTable.TIMESTAMP_COL + " BETWEEN '"
-                + rangeStartDate + "' AND '" + rangeEndDate + "'";
+        String query = SelectTable(AppTable.TABLE_NAME);
+
+        if (appName != null && !appName.isEmpty()) {
+            query += " WHERE " + AppTable.APP_NAME_COL + " = '" + appName + "'";
+        }
+
+        if (rangeStartDate != null && !rangeStartDate.isEmpty() && rangeEndDate != null && !rangeEndDate.isEmpty()) {
+            query += (query.contains(" WHERE ") ? " AND " : " WHERE ")
+                    + AppTable.TIMESTAMP_COL + " BETWEEN '" + rangeStartDate + "' AND '" + rangeEndDate + "'";
+        }
+
+        return query;
+    }
+
+    public static String SelectAppDataSince(String appName, String startDate) {
+        String condition = "";
+
+        if (appName != null && !appName.isEmpty()) {
+            condition += AppTable.APP_NAME_COL + " = '" + appName + "'";
+        }
+
+        if (startDate != null && !startDate.isEmpty()) {
+            condition += (condition.isEmpty() ? "" : " AND ") + AppTable.TIMESTAMP_COL + " >= '" + startDate + "'";
+        }
+
+        if (condition.isEmpty()) {
+            return SelectTable(AppTable.TABLE_NAME);
+        }
+
+        return SelectTable(AppTable.TABLE_NAME) + " WHERE " + condition;
     }
 
 
