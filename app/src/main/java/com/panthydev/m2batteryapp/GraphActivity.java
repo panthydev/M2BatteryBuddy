@@ -3,21 +3,13 @@ package com.panthydev.m2batteryapp;
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
@@ -26,13 +18,10 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
-import com.github.mikephil.charting.renderer.BarChartRenderer;
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
-public class graphActivity extends AppCompatActivity
+public class GraphActivity extends AppCompatActivity
 {
 
     HorizontalBarChart horizontalBarChart;
@@ -66,22 +55,22 @@ public class graphActivity extends AppCompatActivity
         barDataSet.setColors(colors);
 
         // set the text color within the graph for large numbers
-        barDataSet.setValueTextColor(getResources().getColor(R.color.white));
+        barDataSet.setValueTextColor(getResources().getColor(R.color.text_light_gray));
 
-        //Set animation for the bars and make the graph and text fir so it is readable
+        //Set animation for the bars and make the graph and text fit so it is readable
         horizontalBarChart.animateY(1000);
         horizontalBarChart.setFitBars(true);
 
         barDataSet.setValueTextSize(15f);
 
 
-        //The little description in the corner
+        //The little description in the corner + color and shape of background
         Description description = new Description();
         description.setText("General use of mAh");
-        description.setTextColor(getResources().getColor(R.color.white));
+        description.setTextColor(getResources().getColor(R.color.text_light_gray));
         horizontalBarChart.setDescription(description);
         horizontalBarChart.getXAxis().setLabelCount(5);
-        barDataSet.setValueTextColor(getResources().getColor(R.color.white));
+        barDataSet.setValueTextColor(getResources().getColor(R.color.text_light_gray));
         horizontalBarChart.setExtraRightOffset(5f);
         horizontalBarChart.setBackground(getDrawable(R.drawable.shapeofcontainerlight));
 
@@ -105,11 +94,11 @@ public class graphActivity extends AppCompatActivity
         xAxis.setDrawGridLines(true);
         xAxis.setDrawGridLines(true);
         //This sets the color for axis (it sucks ass), Philipp Jahoda if i ever meet you, i'm losing a boot up your ass(respectfully)
-        xAxis.setTextColor(getResources().getColor(R.color.white));
+        xAxis.setTextColor(getResources().getColor(R.color.text_light_gray));
         YAxis topAxis = horizontalBarChart.getAxisLeft();
-        topAxis.setTextColor(getResources().getColor(R.color.white));
+        topAxis.setTextColor(getResources().getColor(R.color.text_light_gray));
         YAxis botAxis = horizontalBarChart.getAxisRight();
-        botAxis.setTextColor(getResources().getColor(R.color.white));
+        botAxis.setTextColor(getResources().getColor(R.color.text_light_gray));
 
 
 
@@ -165,37 +154,4 @@ public class graphActivity extends AppCompatActivity
         finish();
     }
 
-//    BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
-//        bottomNavigationView.setSelectedItemId(R.id.home_butt);
-//
-//        bottomNavigationView.setOnItemSelectedListener(item -> {
-//    int itemId = item.getItemId();
-//    if (itemId == R.id.home_butt)
-//    {
-//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//        intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
-//        startActivity(intent);
-//        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-//        overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
-//        finish();
-//        return true;
-//    } else if (itemId == R.id.info_butt)
-//    {
-//        Intent intent = new Intent(getApplicationContext(), InfoActivity.class);
-//        intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
-//        startActivity(intent);
-//        overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
-//        finish();
-//        return true;
-//    } else if (itemId == R.id.settings_butt)
-//    {
-//        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-//        intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
-//        startActivity(intent);
-//        overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
-//        finish();
-//        return true;
-//    }
-//    return false;
-//});
 }

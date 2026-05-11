@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.M2BatteryBuddy">
         <activity
-            android:name=".graphActivity"
+            android:name=".GraphActivity"
             android:exported="false" />
         <activity
             android:name=".SettingsActivity"

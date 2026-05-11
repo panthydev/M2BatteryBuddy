@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class percentageGraph
+public class PercentageGraph
 {
 
     private View viewUse3, viewUse2, viewUse1, viewOther;
@@ -15,7 +15,7 @@ public class percentageGraph
 
 
 
-    public percentageGraph(MainActivity mainActivity)
+    public PercentageGraph(MainActivity mainActivity)
     {
         viewUse3 = mainActivity.findViewById(R.id.viewUse3);
         viewUse2 = mainActivity.findViewById(R.id.viewUse2);
