@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/barGraphContainer"
         android:layout_width="370dp"
-        android:layout_height="100dp"
+        android:layout_height="150dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/shapeofcontainerlight"
@@ -28,7 +28,7 @@
             android:id="@+id/barManager"
             android:layout_width="305.5dp"
             android:layout_height="44dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="50dp"
             android:background="@drawable/shapeofcontainer"
             android:orientation="horizontal"
             android:paddingStart="2dp"
@@ -202,6 +202,18 @@
             android:textSize="10sp"
             app:layout_constraintStart_toEndOf="@+id/view"
             app:layout_constraintTop_toBottomOf="@+id/Category1" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="305dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginEnd="18dp"
+            android:text="Your most power consuming category of applications"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageView
@@ -234,11 +246,11 @@
         android:id="@+id/imageView5"
         android:layout_width="370dp"
         android:layout_height="200dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/shapeofcontainerlight"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/barGraphContainer"
         app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <include layout="@layout/buttom_bar"/>
