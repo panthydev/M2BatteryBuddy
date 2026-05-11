@@ -25,216 +25,174 @@ public class NotificationManager {
 
     // Powersave related
     public static void SetPowersaveRejseKortApp(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PowersaveRejseKortApp", b).apply();
+        putBooleanPref(context, "PowersaveRejseKortApp", b);
     }
 
     public static boolean GetPowersaveRejseKortApp(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PowersaveRejseKortApp", false);
+        return getBooleanPref(context, "PowersaveRejseKortApp", false);
     }
 
     public static void SetPowersaveNotOnAt50Percent(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PowersaveNotOnAt50Percent", b).apply();
+        putBooleanPref(context, "PowersaveNotOnAt50Percent", b);
     }
 
     public static boolean GetPowersaveNotOnAt50Percent(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PowersaveNotOnAt50Percent", false);
+        return getBooleanPref(context, "PowersaveNotOnAt50Percent", false);
     }
 
     public static void SetPowersaveNotOnAt30Percent(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PowersaveNotOnAt30Percent", b).apply();
+        putBooleanPref(context, "PowersaveNotOnAt30Percent", b);
     }
 
     public static boolean GetPowersaveNotOnAt30Percent(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PowersaveNotOnAt30Percent", false);
+        return getBooleanPref(context, "PowersaveNotOnAt30Percent", false);
     }
 
     public static void SetPowersaveNotOn2HoursLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PowersaveNotOn2HoursLeft", b).apply();
+        putBooleanPref(context, "PowersaveNotOn2HoursLeft", b);
     }
 
     public static boolean GetPowersaveNotOn2HoursLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PowersaveNotOn2HoursLeft", false);
+        return getBooleanPref(context, "PowersaveNotOn2HoursLeft", false);
     }
 
     public static void SetPowersaveNotOn1HourLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PowersaveNotOn1HourLeft", b).apply();
+        putBooleanPref(context, "PowersaveNotOn1HourLeft", b);
     }
 
     public static boolean GetPowersaveNotOn1HourLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PowersaveNotOn1HourLeft", false);
+        return getBooleanPref(context, "PowersaveNotOn1HourLeft", false);
     }
 
     // Amount related (hours/minutes)
     public static void SetPhoneHas3HoursLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas3HoursLeft", b).apply();
+        putBooleanPref(context, "PhoneHas3HoursLeft", b);
     }
 
     public static boolean GetPhoneHas3HoursLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas3HoursLeft", false);
+        return getBooleanPref(context, "PhoneHas3HoursLeft", false);
     }
 
     public static void SetPhoneHas2HoursLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas2HoursLeft", b).apply();
+        putBooleanPref(context, "PhoneHas2HoursLeft", b);
     }
 
     public static boolean GetPhoneHas2HoursLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas2HoursLeft", false);
+        return getBooleanPref(context, "PhoneHas2HoursLeft", false);
     }
 
     public static void SetPhoneHas1Point5HoursLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas1Point5HoursLeft", b).apply();
+        putBooleanPref(context, "PhoneHas1Point5HoursLeft", b);
     }
 
     public static boolean GetPhoneHas1Point5HoursLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas1Point5HoursLeft", false);
+        return getBooleanPref(context, "PhoneHas1Point5HoursLeft", false);
     }
 
     public static void SetPhoneHas1HourLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas1HourLeft", b).apply();
+        putBooleanPref(context, "PhoneHas1HourLeft", b);
     }
 
     public static boolean GetPhoneHas1HourLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas1HourLeft", false);
+        return getBooleanPref(context, "PhoneHas1HourLeft", false);
     }
 
     public static void SetPhoneHas30MinLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas30MinLeft", b).apply();
+        putBooleanPref(context, "PhoneHas30MinLeft", b);
     }
 
     public static boolean GetPhoneHas30MinLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas30MinLeft", false);
+        return getBooleanPref(context, "PhoneHas30MinLeft", false);
     }
 
     // Amount related (percentage)
     public static void SetPhoneHas60PercentLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas60PercentLeft", b).apply();
+        putBooleanPref(context, "PhoneHas60PercentLeft", b);
     }
 
     public static boolean GetPhoneHas60PercentLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas60PercentLeft", false);
+        return getBooleanPref(context, "PhoneHas60PercentLeft", false);
     }
 
     public static void SetPhoneHas50PercentLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas50PercentLeft", b).apply();
+        putBooleanPref(context, "PhoneHas50PercentLeft", b);
     }
 
     public static boolean GetPhoneHas50PercentLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas50PercentLeft", false);
+        return getBooleanPref(context, "PhoneHas50PercentLeft", false);
     }
 
     public static void SetPhoneHas40PercentLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas40PercentLeft", b).apply();
+        putBooleanPref(context, "PhoneHas40PercentLeft", b);
     }
 
     public static boolean GetPhoneHas40PercentLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas40PercentLeft", false);
+        return getBooleanPref(context, "PhoneHas40PercentLeft", false);
     }
 
     public static void SetPhoneHas30PercentLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas30PercentLeft", b).apply();
+        putBooleanPref(context, "PhoneHas30PercentLeft", b);
     }
 
     public static boolean GetPhoneHas30PercentLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas30PercentLeft", false);
+        return getBooleanPref(context, "PhoneHas30PercentLeft", false);
     }
 
     public static void SetPhoneHas20PercentLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas20PercentLeft", b).apply();
+        putBooleanPref(context, "PhoneHas20PercentLeft", b);
     }
 
     public static boolean GetPhoneHas20PercentLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas20PercentLeft", false);
+        return getBooleanPref(context, "PhoneHas20PercentLeft", false);
     }
 
     public static void SetPhoneHas10PercentLeft(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("PhoneHas10PercentLeft", b).apply();
+        putBooleanPref(context, "PhoneHas10PercentLeft", b);
     }
 
     public static boolean GetPhoneHas10PercentLeft(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("PhoneHas10PercentLeft", false);
+        return getBooleanPref(context, "PhoneHas10PercentLeft", false);
     }
 
     // Other related
     public static void SetBatteryMaxCapacityBad(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("BatteryMaxCapacityBad", b).apply();
+        putBooleanPref(context, "BatteryMaxCapacityBad", b);
     }
 
     public static boolean GetBatteryMaxCapacityBad(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("BatteryMaxCapacityBad", false);
+        return getBooleanPref(context, "BatteryMaxCapacityBad", false);
     }
 
     public static void SetDigitalMaintenanceCheck(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("DigitalMaintenanceCheck", b).apply();
+        putBooleanPref(context, "DigitalMaintenanceCheck", b);
     }
 
     public static boolean GetDigitalMaintenanceCheck(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("DigitalMaintenanceCheck", false);
+        return getBooleanPref(context, "DigitalMaintenanceCheck", false);
     }
 
     public static void SetOnlyWhenOver50Percent(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("OnlyWhenOver50Percent", b).apply();
+        putBooleanPref(context, "OnlyWhenOver50Percent", b);
     }
 
     public static boolean GetOnlyWhenOver50Percent(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("OnlyWhenOver50Percent", false);
+        return getBooleanPref(context, "OnlyWhenOver50Percent", false);
     }
 
     public static void SetReadTipsAndTricks(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("ReadTipsAndTricks", b).apply();
+        putBooleanPref(context, "ReadTipsAndTricks", b);
     }
 
     public static boolean GetReadTipsAndTricks(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("ReadTipsAndTricks", false);
+        return getBooleanPref(context, "ReadTipsAndTricks", false);
     }
 
     public static void SetGoldilocksZone(Context context, boolean b){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        prefs.edit().putBoolean("GoldilocksZone", b).apply();
+        putBooleanPref(context, "GoldilocksZone", b);
     }
 
     public static boolean GetGoldilocksZone(Context context){
-        SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
-        return prefs.getBoolean("GoldilocksZone", false);
+        return getBooleanPref(context, "GoldilocksZone", false);
     }
 
 
