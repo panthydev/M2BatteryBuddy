@@ -2,9 +2,14 @@ package com.panthydev.m2batteryapp.data.DataCollection;
 
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND;
 import static android.app.ActivityManager.RunningAppProcessInfo.IMPORTANCE_VISIBLE;
+import static android.content.Context.BATTERY_SERVICE;
+import static android.content.Context.POWER_SERVICE;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.BatteryManager;
@@ -23,15 +28,19 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
-public class SystemDataCollector extends Activity {
+public class SystemDataCollector{
 
     App[] appArray;
+    Context context;
 
+    public SystemDataCollector(Context context){
+        this.context = context;
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.S)
     public void CollectAndSendBatteryDataToDB() { //Needs to run on the interval
-        BatteryManager BM = (BatteryManager) getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager
-        PowerManager PM = (PowerManager) getSystemService(POWER_SERVICE); //Getting access to the Power Manager
+        BatteryManager BM = (BatteryManager) context.getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager
+        PowerManager PM = (PowerManager) context.getSystemService(POWER_SERVICE); //Getting access to the Power Manager
 
         int batLevelPercent = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY); //Finds Battery percentage at this moment
         int batCapMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER); //Entire Battery capacity in microampere-hours, as an integer.
@@ -47,7 +56,7 @@ public class SystemDataCollector extends Activity {
         BatteryData batData = new BatteryData(batLevelPercent, batCapMAh, remainingBatLife, batCapMAh, powerSaveOn); //Making a battery data object with the collected data
         var datapack = new DataPack<BatteryData>();
         datapack.AddData(batData); //Adding the battery data object to the data pack
-        DataManager.SetBatteryDataAsync(this,datapack) ; //Sending the battery data object to the database
+        DataManager.SetBatteryDataAsync(context,datapack) ; //Sending the battery data object to the database
     }
 
     /**
@@ -55,7 +64,7 @@ public class SystemDataCollector extends Activity {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void CollectAndSendUsageDataToDB () { // Needs to run once when the app is first opened
-        List<ApplicationInfo> applicationInfoList = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA); // Get a list of packages with applications
+        List<ApplicationInfo> applicationInfoList = context.getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA); // Get a list of packages with applications
 
         appArray = new App[applicationInfoList.size()]; // Making an array for all the app objects ToBeMade
         int i = 0; // just a Counter, dont worry :)
@@ -78,7 +87,7 @@ public class SystemDataCollector extends Activity {
                 datapack.AddData(app); // Adding the app data object to the data pack
             }
         }
-        DataManager.SetAppDataAsync(this,datapack) ; //Sending the app data
+        DataManager.SetAppDataAsync(context,datapack) ; //Sending the app data
 
         //note from panthy: why have they not used enums, are they weird ?
 
@@ -101,7 +110,7 @@ public class SystemDataCollector extends Activity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void appDischargeTimer () { //Needs to run on the interval
-        BatteryManager BM = (BatteryManager) getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager (again lol)
+        BatteryManager BM = (BatteryManager) context.getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager (again lol)
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo(); //Getting access to the Activity Manager and info of all the running apps
         ActivityManager.getMyMemoryState(appProcessInfo); // it does something cool and it works, but i dont know how :P
 
@@ -164,7 +173,7 @@ public class SystemDataCollector extends Activity {
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo(); //Getting access to the Activity Manager and info of all the running apps
         ActivityManager.getMyMemoryState(appProcessInfo); // it does something cool and it works, but i dont know how :P
 
-        List<ApplicationInfo> applicationInfoList = getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA); // Get a list of packages with applications
+        List<ApplicationInfo> applicationInfoList = context.getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA); // Get a list of packages with applications
         appArray = new App[applicationInfoList.size()]; // Making an array for all the app objects ToBeMade
 
         int i = 0; // just a Counter again, dont worry :)
@@ -185,7 +194,7 @@ public class SystemDataCollector extends Activity {
                         datapack.AddData(app); // Adding the app data object to the data pack
                     }
                 }
-                DataManager.SetAppDataAsync(this,datapack) ; //Sending the app data
+                DataManager.SetAppDataAsync(context,datapack) ; //Sending the app data
             }
             i++;
         }
