@@ -79,8 +79,21 @@ public class DataManager
      */
     public static int GetSystemDischarge(Context context){
         SharedPreferences prefs = context.getSharedPreferences("app_prefs", Context.MODE_PRIVATE);
+
+
+
         return prefs.getInt("system_discharge", 0);
     }
+
+
+
+
+
+
+
+
+
+
 
 
 
