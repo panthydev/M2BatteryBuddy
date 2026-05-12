@@ -45,6 +45,7 @@ public class DataCollectionService extends Service {
 
             handler.postDelayed(this, INTERVAL_MS);
         }
+
     };
 
     private boolean running = false;
