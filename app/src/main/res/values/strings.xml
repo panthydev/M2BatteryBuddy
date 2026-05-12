@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">M2BatteryBuddy</string>
+    <string name="post_notification">Post Notification</string>
 </resources>
