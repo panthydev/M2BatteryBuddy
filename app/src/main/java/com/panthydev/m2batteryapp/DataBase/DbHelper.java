@@ -6,10 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.os.Build;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import com.panthydev.m2batteryapp.Interfaces.Mapper;
 import com.panthydev.m2batteryapp.data.DataObjects.App;
@@ -21,6 +18,7 @@ import com.panthydev.m2batteryapp.data.DataObjects.Mappers.BatteryDataMapper;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class DbHelper extends SQLiteOpenHelper {
 
@@ -73,17 +71,47 @@ public class DbHelper extends SQLiteOpenHelper {
         }
     }
 
+    public DataPack<BatteryData> GetAllBatteryData() {
+        return GetBatteryDataSince(null);
+    }
+
+    public DataPack<App> GetAllAppData() {
+        return GetAppData(null, -1);
+    }
+
     public DataPack<App> GetAppData(String appName, int hours)
     {
-        String startDate = GetRangeStartDate(hours);
-        String endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-        String query = QueryBuilder.SelectAppDataFromTimeRange(appName, startDate, endDate);
+        String query;
+
+        if (hours < 0) {
+            query = QueryBuilder.SelectAppDataSince(appName, null);
+        } else {
+            String startDate = GetRangeStartDate(hours);
+            String endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date());
+            query = QueryBuilder.SelectAppDataFromTimeRange(appName, startDate, endDate);
+        }
 
         Cursor cursor = null;
         try {
             var db = this.getReadableDatabase();
             cursor = db.rawQuery(query, null);
-            cursor.moveToFirst();
+            return GetAndPackData(cursor, appMapper);
+        } finally {
+            if (cursor != null) cursor.close();
+        }
+    }
+
+    public DataPack<App> GetAppData(String appName) {
+        return GetAppData(appName, -1);
+    }
+
+    public DataPack<App> GetAppDataSince(String appName, String startTimestamp) {
+        String query = QueryBuilder.SelectAppDataSince(appName, startTimestamp);
+
+        Cursor cursor = null;
+        try {
+            var db = this.getReadableDatabase();
+            cursor = db.rawQuery(query, null);
             return GetAndPackData(cursor, appMapper);
         } finally {
             if (cursor != null) cursor.close();
@@ -99,8 +127,12 @@ public class DbHelper extends SQLiteOpenHelper {
      */
     public DataPack<BatteryData> GetBatteryData(int hours)
     {
+        if (hours < 0) {
+            return GetBatteryDataSince(null);
+        }
+
         String StartDate = GetRangeStartDate(hours);
-        String EndDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+        String EndDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date());
         String query = QueryBuilder.SelectTableDataFromTimeRange(BatteryTable.TABLE_NAME, StartDate, EndDate);
 
         Cursor cursor = null;
@@ -108,9 +140,26 @@ public class DbHelper extends SQLiteOpenHelper {
         try {
             var db = this.getReadableDatabase();
             cursor = db.rawQuery(query, null);
-            cursor.moveToFirst();
-            DataPack<BatteryData> dataPack = GetAndPackData(cursor, batteryMapper);
-            return dataPack;
+            return GetAndPackData(cursor, batteryMapper);
+
+        } catch (Exception e) {
+            return null;
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+    }
+
+    public DataPack<BatteryData> GetBatteryDataSince(String startTimestamp) {
+        String query = QueryBuilder.SelectTableDataSince(BatteryTable.TABLE_NAME, startTimestamp);
+
+        Cursor cursor = null;
+
+        try {
+            var db = this.getReadableDatabase();
+            cursor = db.rawQuery(query, null);
+            return GetAndPackData(cursor, batteryMapper);
 
         } catch (Exception e) {
             return null;
@@ -127,15 +176,19 @@ public class DbHelper extends SQLiteOpenHelper {
      * @return A DataPack that has a DataList of DataObject objects.
      * @param <T> Type of DataObject which will always be subclassed of that type.
      */
-    private <T extends DataObject> DataPack GetAndPackData(Cursor cursor, Mapper<T> mapper)
+    private <T extends DataObject> DataPack<T> GetAndPackData(Cursor cursor, Mapper<T> mapper)
     {
-        DataPack<T> dataPack = new DataPack<T>();
+        DataPack<T> dataPack = new DataPack<>();
 
-        for (int i = 0; i < cursor.getCount(); i++) {
-            if (cursor.moveToNext()) {
+        if (cursor == null || cursor.getCount() == 0) {
+            return dataPack;
+        }
+
+        if (cursor.moveToFirst()) {
+            do {
                 T data = mapper.fromCursor(cursor);
                 dataPack.AddData(data);
-            }
+            } while (cursor.moveToNext());
         }
         return dataPack;
     }
@@ -152,7 +205,7 @@ public class DbHelper extends SQLiteOpenHelper {
     {
         long nanoSeconds = System.currentTimeMillis() - ((long) hours * 60 * 60 * 1000);
         Date date = new Date(nanoSeconds);
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(date);
     }
 
     @Override

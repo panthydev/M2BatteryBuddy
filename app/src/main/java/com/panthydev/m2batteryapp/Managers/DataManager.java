@@ -11,6 +11,8 @@ import com.panthydev.m2batteryapp.Interfaces.Callback;
 import com.panthydev.m2batteryapp.data.DataObjects.App;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
+import com.panthydev.m2batteryapp.Managers.CloudSqlSyncManager;
+import com.panthydev.m2batteryapp.Managers.CloudSyncResult;
 
 public class DataManager
 {
@@ -58,6 +60,26 @@ public class DataManager
                 dbHelper.AddAppData(dataPack);
             }
         }).start();
+    }
+
+    /**
+     * Uploads the local database to a backend endpoint that writes into Cloud SQL.
+     * If endpointUrl is null/empty, the saved endpoint from prefs is used.
+     */
+    public static void SyncDatabaseToCloudAsync(Context context, String endpointUrl, boolean fullResync, Callback<CloudSyncResult> callback) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                CloudSyncResult result = CloudSqlSyncManager.SyncDatabase(context, endpointUrl, fullResync);
+                if (callback != null) {
+                    callback.OnResult(result);
+                }
+            }
+        }).start();
+    }
+
+    public static void SyncDatabaseToCloudAsync(Context context, boolean fullResync, Callback<CloudSyncResult> callback) {
+        SyncDatabaseToCloudAsync(context, null, fullResync, callback);
     }
 
 
