@@ -87,7 +87,7 @@ public class DbHelper extends SQLiteOpenHelper {
             query = QueryBuilder.SelectAppDataSince(appName, null);
         } else {
             String startDate = GetRangeStartDate(hours);
-            String endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date());
+            String endDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
             query = QueryBuilder.SelectAppDataFromTimeRange(appName, startDate, endDate);
         }
 
@@ -132,7 +132,7 @@ public class DbHelper extends SQLiteOpenHelper {
         }
 
         String StartDate = GetRangeStartDate(hours);
-        String EndDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(new Date());
+        String EndDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
         String query = QueryBuilder.SelectTableDataFromTimeRange(BatteryTable.TABLE_NAME, StartDate, EndDate);
 
         Cursor cursor = null;
@@ -205,7 +205,7 @@ public class DbHelper extends SQLiteOpenHelper {
     {
         long nanoSeconds = System.currentTimeMillis() - ((long) hours * 60 * 60 * 1000);
         Date date = new Date(nanoSeconds);
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(date);
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
     }
 
     @Override

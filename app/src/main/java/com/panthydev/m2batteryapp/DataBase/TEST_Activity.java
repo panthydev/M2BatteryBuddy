@@ -33,10 +33,25 @@ public class TEST_Activity extends Activity
             startActivity(intent);
         }
 
+        DataManager.GetBatteryDataAsync(this,4, new Callback<DataPack<BatteryData>>() {
+            @Override
+            public void OnResult(DataPack<BatteryData> Result)
+            {
+
+            }
+
+
+        });
+
 
         var Silly = new WorkHandler();
         Silly.StartDataCollection(this);
     }
+
+    public void SetUiSomething(){
+
+    }
+
 
     private boolean isAccessGranted() {
         try {

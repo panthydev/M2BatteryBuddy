@@ -1,5 +1,7 @@
 package com.panthydev.m2batteryapp.Managers;
 
+import static com.panthydev.m2batteryapp.BackendClient.PayloadBuilder.buildPayload;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.os.Build;
@@ -74,6 +76,7 @@ public final class CloudSqlSyncManager {
         batteryData.PrepareForTransport();
         appData.PrepareForTransport();
 
+        /*
         try {
             JSONObject payload = buildPayload(context, batchId, fullResync, batteryData, appData);
             CloudSyncResult result = postJson(resolvedEndpoint, payload, batchId, fullResync, batteryData.dataList.size(), appData.dataList.size());
@@ -86,75 +89,9 @@ public final class CloudSqlSyncManager {
         } catch (Exception e) {
             return CloudSyncResult.failure(-1, e.getMessage(), batchId, fullResync);
         }
+        */
+         return null; // testing REMOVE AFTER
     }
-
-    private static JSONObject buildPayload(Context context,
-                                           String batchId,
-                                           boolean fullResync,
-                                           DataPack<BatteryData> batteryData,
-                                           DataPack<App> appData) throws Exception {
-        JSONObject payload = new JSONObject();
-        JSONObject metadata = new JSONObject();
-
-        String uploadedAt = nowString();
-        metadata.put("batchId", batchId);
-        metadata.put("senderId", CloudSyncPreferences.GetOrCreateSenderId(context));
-        metadata.put("deviceManufacturer", Build.MANUFACTURER);
-        metadata.put("deviceModel", Build.MODEL);
-        metadata.put("deviceLabel", Build.MANUFACTURER + " " + Build.MODEL);
-        metadata.put("packageName", context.getPackageName());
-        metadata.put("androidVersion", Build.VERSION.RELEASE);
-        metadata.put("sdkInt", Build.VERSION.SDK_INT);
-        metadata.put("uploadedAt", uploadedAt);
-        metadata.put("syncMode", fullResync ? "FULL" : "INCREMENTAL");
-        metadata.put("sourceDatabase", "DB");
-
-        payload.put("metadata", metadata);
-        payload.put("batteryRows", buildRows("batteryTable", batteryData, BATTERY_MAPPER, batchId, context, fullResync, uploadedAt));
-        payload.put("appRows", buildRows("appTable", appData, APP_MAPPER, batchId, context, fullResync, uploadedAt));
-
-        return payload;
-    }
-
-    private static <T extends DataObject> JSONArray buildRows(String tableName,
-                                                              DataPack<T> dataPack,
-                                                              Mapper<T> mapper,
-                                                              String batchId,
-                                                              Context context,
-                                                              boolean fullResync,
-                                                              String uploadedAt) throws Exception {
-        JSONArray array = new JSONArray();
-        String senderId = CloudSyncPreferences.GetOrCreateSenderId(context);
-        String deviceLabel = Build.MANUFACTURER + " " + Build.MODEL;
-
-        for (T item : dataPack.dataList) {
-            ContentValues values = mapper.ToContentValues(item);
-            JSONObject row = contentValuesToJson(values);
-            row.put("syncBatchId", batchId);
-            row.put("senderId", senderId);
-            row.put("deviceLabel", deviceLabel);
-            row.put("uploadedAt", uploadedAt);
-            row.put("syncMode", fullResync ? "FULL" : "INCREMENTAL");
-            row.put("sourceTable", tableName);
-            array.put(row);
-        }
-
-        return array;
-    }
-
-    private static JSONObject contentValuesToJson(ContentValues values) throws Exception {
-        JSONObject row = new JSONObject();
-        for (Map.Entry<String, Object> entry : values.valueSet()) {
-            Object value = entry.getValue();
-            if (value == null) {
-                row.put(entry.getKey(), JSONObject.NULL);
-            } else {
-                row.put(entry.getKey(), value);
-            }
-        }
-        return row;
-    }
-
     private static CloudSyncResult postJson(String endpointUrl,
                                             JSONObject payload,
                                             String batchId,
@@ -247,7 +184,6 @@ public final class CloudSqlSyncManager {
                 latest = item.Timestamp;
             }
         }
-
         if (latest == null) {
             return null;
         }
