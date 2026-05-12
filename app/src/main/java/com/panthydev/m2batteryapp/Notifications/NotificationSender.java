@@ -1,68 +1,65 @@
 package com.panthydev.m2batteryapp.Notifications;
 
-import android.Manifest;
+
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.pm.PackageManager;
+import android.content.Context;
 import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
-
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-
-import com.google.android.material.button.MaterialButton;
 import com.panthydev.m2batteryapp.R;
 
-public class NotificationSender extends AppCompatActivity {
-    private final ActivityResultLauncher<String> activityResultLauncher = registerForActivityResult(new ActivityResultContracts.RequestPermission(), new ActivityResultCallback<Boolean>() {
-        @Override
-        public void onActivityResult(Boolean o) {
-            if(o){
-                Toast.makeText(NotificationSender.this, "Post notification granted", Toast.LENGTH_SHORT).show();
-            }
-            else {
-                Toast.makeText(NotificationSender.this, "Post notification not granted", Toast.LENGTH_SHORT).show();
-            }
+/**
+ *
+ */
+public class NotificationSender {
+
+    private Context context;
+    private static final String CHANNEL_ID = "test";
+
+    // Constructor — pass in context from any Activity
+    public NotificationSender(Context context) {
+        this.context = context;
+        createChannel(); // set up the channel on creation
+    }
+
+
+    /**
+     * Call this to create and send notifications
+     * @param title what is the title
+     * @param message the msg that will go into the notification
+     * example
+     * NotificationSender notificationSender = new NotificationSender(this);
+     * notificationSender.send ("Reminder", "Don't forget your task!");
+     */
+    // Call this to send a notification
+    public void send(String title, String message) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                    .setSmallIcon(R.drawable.baseline_notifications_24)
+                    .setContentTitle(title)
+                    .setContentText(message)
+                    .setPriority(NotificationCompat.PRIORITY_HIGH);
+
+            NotificationManager manager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+            manager.notify(10, builder.build());
         }
-    });
+    }
 
+    // Private helper — creates the channel once
+    private void createChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    CHANNEL_ID, "My Notifications", NotificationManager.IMPORTANCE_DEFAULT
+            );
+            channel.setDescription("App notifications");
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState){
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+            NotificationManager manager =
+                    (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        MaterialButton postNotification = findViewById(R.id.postNotification);
-
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(NotificationSender.this,"test")
-                .setSmallIcon(R.drawable.baseline_notifications_24)
-                .setContentTitle(getString(R.string.app_name))
-                .setContentText("Notification text content")
-                .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-        NotificationManager notificationManager = getSystemService(NotificationManager.class);
-
-        postNotification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && ActivityCompat.checkSelfPermission(NotificationSender.this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-                    activityResultLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        NotificationChannel notificationChannel = new NotificationChannel("test", getString(R.string.app_name), NotificationManager.IMPORTANCE_DEFAULT);
-                        notificationChannel.setDescription("Notification Description...");
-                        notificationManager.createNotificationChannel(notificationChannel);
-                        notificationManager.notify(10, builder.build());
-                    }
-
-                }
-            }
-        });
+            manager.createNotificationChannel(channel);
+        }
     }
 }

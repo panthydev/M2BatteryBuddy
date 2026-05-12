@@ -15,7 +15,7 @@
         android:theme="@style/Theme.M2BatteryBuddy" >
 
         <activity
-            android:name="com.panthydev.m2batteryapp.Notifications.NotificationSender"
+            android:name="com.panthydev.m2batteryapp.Notifications.MainActivity"
             android:exported="true"
             tools:ignore="DuplicateActivity">
             <intent-filter>
