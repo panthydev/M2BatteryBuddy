@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- start of layout -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/buttom_bar"/>
+
+    <FrameLayout
+        android:id="@+id/fragment_manager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBaseline_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/menu_bar"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>
