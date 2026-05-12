@@ -31,6 +31,12 @@ public class SystemDataCollector{
     App[] appArray;
     Context context;
 
+    public int batLevelPercent;
+    public int batCapMAh;
+    public int batCurrentMAh;
+    public boolean powerSaveOn;
+    public Duration remainingBatLife;
+
     public SystemDataCollector(Context context){
         this.context = context;
     }
@@ -39,12 +45,12 @@ public class SystemDataCollector{
         BatteryManager BM = (BatteryManager) context.getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager
         PowerManager PM = (PowerManager) context.getSystemService(POWER_SERVICE); //Getting access to the Power Manager
 
-        int batLevelPercent = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY); //Finds Battery percentage at this moment
-        int batCapMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER); //Entire Battery capacity in microampere-hours, as an integer.
-        int batCurrentMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW); //Instantaneous battery current in microamperes, as an integer (positive means it is charging, negative is draining)
-        boolean powerSaveOn = PM.isPowerSaveMode(); //Checks if powersaving mode is on
+        batLevelPercent = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY); //Finds Battery percentage at this moment
+        batCapMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER); //Entire Battery capacity in microampere-hours, as an integer.
+        batCurrentMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW); //Instantaneous battery current in microamperes, as an integer (positive means it is charging, negative is draining)
+        powerSaveOn = PM.isPowerSaveMode(); //Checks if powersaving mode is on
 
-        Duration remainingBatLife = null;
+        remainingBatLife = null;
         //Checks if the phone which runs this, has a high enough API level (is new enough)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             try {
