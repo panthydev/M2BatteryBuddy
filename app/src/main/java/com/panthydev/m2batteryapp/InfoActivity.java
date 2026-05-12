@@ -29,7 +29,7 @@ public class InfoActivity extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
-        for (int i = 1; i <= 8; i++) { // i < number of accordions.
+        for (int i = 0; i <= 8; i++) { // i < number of accordions.
             int arrow = getResources().getIdentifier("arrow_button_" + i, "id", getPackageName());
             int hiddenView = getResources().getIdentifier("hidden_view_" + i, "id", getPackageName());
             int baseCard = getResources().getIdentifier("base_cardview_" + i, "id", getPackageName());
