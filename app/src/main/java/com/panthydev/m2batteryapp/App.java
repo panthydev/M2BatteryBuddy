@@ -1,13 +1,27 @@
 package com.panthydev.m2batteryapp;
 
 import android.app.Application;
+import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.Worker;
+import androidx.work.WorkerParameters;
+
+import com.panthydev.m2batteryapp.Managers.CloudSqlSyncManager;
 import com.panthydev.m2batteryapp.Managers.CloudSyncPreferences;
-import com.panthydev.m2batteryapp.Managers.DataManager;
 import com.panthydev.m2batteryapp.data.DataCollection.WorkHandler;
 
+import java.util.concurrent.TimeUnit;
+
 public class App extends Application {
+
+    private static final String TAG = "App";
 
     @Override
     public void onCreate() {
@@ -17,22 +31,60 @@ public class App extends Application {
         try {
             WorkHandler.EnsureRunning(this);
         } catch (Exception e) {
-            Log.e("App", "Failed to ensure data collection running", e);
+            Log.e(TAG, "Failed to ensure data collection running", e);
         }
 
-        // Start cloud sync automatically on app launch, but only when an endpoint is configured.
-        //TESTING, USE THIS COMMAND IN TERMINAL BEFORE TESTING, IT STARTS A MOCK SERVER
-        //Set-ExecutionPolicy -Scope Process Bypass
-        //.\mock_sync_server.ps1
+        // Temporary test endpoint; remove this once you store the endpoint from settings.
         CloudSyncPreferences.SetSyncEndpoint(this, "http://10.0.2.2:18080/sync/"); // TODO: remove this line; it's just for testing
-        String endpoint = CloudSyncPreferences.GetSyncEndpoint(this);
-        if (endpoint != null && !endpoint.isEmpty()) {
-            DataManager.SyncDatabaseToCloudAsync(this, false, result ->
-                    Log.d("App", "Auto sync finished: success=" + result.success
-                            + ", code=" + result.httpCode
-                            + ", msg=" + result.message));
-        } else {
-            Log.d("App", "Auto sync skipped: no backend endpoint configured");
+
+        Constraints syncConstraints = new Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
+                .build();
+
+        PeriodicWorkRequest periodicSync = new PeriodicWorkRequest.Builder(
+                PeriodicCloudSyncWorker.class,
+                15,
+                TimeUnit.MINUTES
+        )
+                .setConstraints(syncConstraints)
+                .build();
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                PeriodicCloudSyncWorker.WORK_NAME,
+                ExistingPeriodicWorkPolicy.KEEP,
+                periodicSync
+        );
+    }
+
+    public static class PeriodicCloudSyncWorker extends Worker {
+        public static final String WORK_NAME = "CloudSyncPeriodicWork";
+        private static final String WORK_TAG = "PeriodicCloudSyncWorker";
+
+        public PeriodicCloudSyncWorker(@NonNull Context context, @NonNull WorkerParameters workerParams) {
+            super(context, workerParams);
+        }
+
+        @NonNull
+        @Override
+        public Result doWork() {
+            Context context = getApplicationContext();
+            String endpoint = CloudSyncPreferences.GetSyncEndpoint(context);
+
+            if (endpoint == null || endpoint.isEmpty()) {
+                Log.d(WORK_TAG, "Skipping sync: no endpoint configured");
+                return Result.success();
+            }
+
+            try {
+                var result = CloudSqlSyncManager.SyncDatabase(context, endpoint, false);
+                Log.d(WORK_TAG, "Periodic sync finished: success=" + result.success
+                        + ", code=" + result.httpCode
+                        + ", msg=" + result.message);
+            } catch (Exception e) {
+                Log.e(WORK_TAG, "Periodic sync failed", e);
+            }
+
+            return Result.success();
         }
     }
 
