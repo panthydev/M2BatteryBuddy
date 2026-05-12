@@ -1,3 +1,72 @@
 <resources>
     <string name="app_name">M2BatteryBuddy</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="longLoremIpsum">Ææ Øø ÅåLorem ipsum dolor sit amet, consectetur adipiscing elit. Sed cursus purus nisi, vel elementum nisi ultricies quis. Sed sit amet est at dui imperdiet finibus. Vivamus varius molestie sem, a ullamcorper nunc lacinia ut. Duis pulvinar lobortis nisi, sit amet efficitur neque posuere eu. Vivamus enim tellus, feugiat ac eros a, semper vehicula erat. Phasellus bibendum rutrum sem, vitae vulputate eros eleifend eget. Sed felis tellus, imperdiet vitae urna et, porta lacinia augue. Mauris sed ornare lorem, eu efficitur dui. Phasellus fermentum molestie ex. Vivamus ac pharetra enim.
+
+Nullam dictum, augue et consectetur mattis, turpis dolor convallis erat, at dictum mauris augue sit amet neque. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque sit amet porta nulla, ut convallis odio. Suspendisse vitae sem et dui dictum scelerisque. Nunc volutpat augue ut dolor interdum ultricies sed non nulla. Donec diam ex, maximus vel cursus porta, vulputate in erat. Fusce vel urna a lorem bibendum porta. Duis sit amet purus quis neque vulputate consectetur ac ac ex. In mauris nisi, vehicula ac turpis vitae, molestie mattis tortor. Quisque lacus augue, mollis a blandit eu, pellentesque ac metus. Maecenas id dolor sit amet elit efficitur elementum.
+
+Mauris tristique erat eget consectetur volutpat. Quiæåøsque nulla nulla, tincidunt eget ante vitae, gravida laoreet urna. Morbi eleifend vehicula interdum. Integer vitae ligula odio. Maecenas feugiat elit eu nunc elementum tincidunt. Suspendisse commodo odio sed dolor sagittis fermentum. Vivamus imperdiet, diam in tempor rutrum, libero dolor feugiat mauris, ut molestie lectus nulla at mi.
+
+Vivamus libero dolor, faucibus ornare erat eget, ultrices tincidunt eros. In hac habitasse platea dictumst. Donec euismod, risus vel ultricies fringilla, sapien orci ullamcorper sapien, id sagittis dui felis vel justo. Ut at arcu libero. Proin sollicitudin tellus in tortor egestas finibus id at nulla. Nullam at sem laoreet, elementum lorem ut, hendrerit nunc. Maecenas ante magna, dignissim eu est nec, venenatis fermentum magna. Nam ex lorem, faucibus eu sapien non, tempor consequat tortor. Suspendisse efficitur metus leo. Fusce ut orci quis purus lobortis tristique. In hac habitasse platea dictumst. In cursus luctus augue nec faucibus. In tempor, nisl a tincidunt ornare, lacus lorem imperdiet purus, eu facilisis lectus magna quis sem. Ut pulvinar mauris ut augue vehicula, a porttitor mi mattis.
+
+In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Phasellus placerat nisl vel magna scelerisque, non vehicula quam posuere. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vivamus ut felis suscipit nunc finibus aliquet. Morbi efficitur, felis id aliquam posuere, felis ex interdum est, nec facilisis mi est ac nulla. Cras id molestie nisi. Ut varius ex a nisi mattis posuere. Nunc pulvinar fermentum nisi, id imperdiet nunc egestas at. Sed consequat, erat a egestas efficitur, orci eros viverra odio, sed elementum ante tortor dignissim ex. Maecenas eleifend est nec magna finibus, sit amet condimentum arcu auctor. Praesent varius leo eu ex varius, hendrerit condimentum dolor viverra. Praesent at consequat dolor. Proin pulvinar tellus massa, mattis maximus felis lobortis ut. Nulla sed ultricies ligula, non fringilla erat.\n
+    </string>
+
+    <string name="info_powerSaver">Every android smartphone comes with the option to toggle on or off power saver mode. This mode was made with the aim of conserving and minimizing the power used by the smartphone. However this will come at the cost of the performance of the smartphone. Features such as lighting, processing speed, sound and GPS tracking might perform worse when power saver mode is active. This may cause errors with some apps that use GPS location in the background of the phone.\n
+    <b>How to activate:</b> \n
+        Swipe down the Quick Settings panel and tap the Battery Saver/Power Saving icon. Alternatively, go to Settings -> Battery- > Battery Saver and turn it on from there.\n
+    </string>
+
+    <string name="info_goldilock">Keeping a smartphone\'s battery between 20%-80% (also called the goldilock zone) is good for the phone’s battery health. This is because depleting the battery inside the phone to 0% or charging it up to 100% can overwork the battery and degrade it with time, causing it to run out of power faster and shortening the battery’s overall lifespan.\n
+        <b>General tips:</b> \n
+        1. Avoid leaving your phone unattended in a charger for long periods of time. Like before going to sleep.\n
+        2. When the phone’s battery is low, try to use it less or use less power-intensive apps.\n
+        <b>Battery protection:</b> Newer phone models have a feature called battery protection. It sets a limit to how much the phone is allowed to charge, so when the phone reaches a certain battery percentage it will stop charging, preventing it from going over the goldilock zone or continuing to charge even when at 100%.\n
+        <b>How to activate:</b> Inside phone settings, go to Battery -> Battery protection, tap the switch to turn it on. Alternatively, you can search in settings by tapping on the magnifying glass in the corner. If you tap on Battery protection, it will take you to the battery protection settings, where you can set it to use the basic setup (limit at 100%) or the maximum setup (you can set the limit at 80% to 95%).\n
+    </string>
+
+    <string name="info_update">Issues and bugs with the smartphone battery can sometimes stem from outdated software.
+Keeping a phone and its apps up-to-date can often fix these bugs and other performance issues.\n
+<b>How to update:</b> \n
+        To update the smartphone fully, you have to both update the phones software and security separately.\n
+<b>Software:</b> Go into settings and scroll down to Software update, where you can scan for new updates. You can also enable auto download for updates in here.\n
+<b>Security:</b> Go into settings and scroll down to Security and privacy -> Updates. where you can scan for new security updates and Google Play updates.\n
+<b>Apps:</b> Open the Google Play store and tap on your profile icon in the upper-corner. Go into “Manage apps and device”. A field titled “Updates available” will note how many apps have an update, and you can either update all at once or go into “See details” to choose apps to update individually.\n
+</string>
+
+    <string name="info_closeApps">Apps can still be running on the smartphone after exiting them, like when returning to the home screen or opening another app. This is because apps do not close when you exit them and are still technically still “open” and active in the background, even when not visibly on screen. Open apps can be viewed in the Recents screen.\n
+<b>How to close apps:</b> \n
+        Opening the Recents screen is done differently depending on the phone’s model.\n
+1. Swipe up from the bottom edge of the screen.\n
+2. Press the “Recents” button, which is next to the home button at the bottom of the screen.\n
+Here you can close an app by swiping it upward, or close all apps with the “Close all” button.\n
+</string>
+    <string name="info_GPS">GPS and other apps that ask for your location can be very power draining, as they have to track your location while the app service is running. Some of these services run in the background of the phone and drain the phone battery even when not in active use.
+You can give each app a specific permission on when it’s allowed to track your location.\n
+
+Depending on how the app works, giving it fitting permission can help it run smoothly and save power.
+Some apps need to be able to track your location in the background. These should be allowed to get the location all the time.
+For most other apps, it is recommended to only allow them to track your location while the app is in use. This means it will only track your location while the app is open and on screen.
+Finally, some apps can function just fine without tracking your location, even if it asks for it. These can be given the permission to never track your location safely.\n
+<b>How to manage:</b> \n
+        Inside phone settings, go to Location -> App permissions. Alternatively, you can search in settings by tapping on the magnifying glass in the corner. In App permissions, you can see and change all the permission status of apps that use GPS location.\n
+        <b>Note - It is NOT advised to change the permission of apps that have “Android” in their names.</b>\n
+    </string>
+    <string name="info_screenBrightness">Setting the screen brightness to high levels will drain the smartphone battery slightly faster, and might increase the internal temperature of the phone depending on the situation.\n
+<b>How to manage:</b> \n
+        Swipe down the Quick Settings panel and adjust the brightness with the slider. Depending on the phone’s model, you might have to slide down from a specific area (example: on some newer versions, slide down on the right side of the top of the screen to open Quick Settings). Alternatively, go into settings and scroll down to Display, where a Brightness slider will be.\n
+</string>
+    <string name="info_darkMode">Using Dark modes on the smartphone and in apps can save battery power. This is because like with screen brightness, displaying lighter colors and especially white on the screen drains the battery slightly faster. Dark mode changes menus in the phone and apps to display with a dark-to-black background and white text, which is more power efficient.\n
+<b>How to activate:</b> \n
+        Swipe down the Quick Settings panel and tap on the Dark mode icon (icon of a moon) next to the Brightness slider. Alternatively, go into settings and scroll down to Display, where you will be able to pick between Light- and Dark mode.
+If Power Saver mode is turned on, the phone will automatically use Dark mode.\n
+    </string>
+    <string name="info_temperatures">If a smartphone is hot, it can cause performance issues on the phone or even damage its internal parts. This is because the internals of the phone naturally get warmer when it is running, processing data or transferring power (when it is using power or is charging). If the phone detects its temperature is getting too high, it will try to cool down by limiting its internal processes or forcefully shutting down to avoid damaging its components. The phone\'s temperature can be affected by both inside processes of the phone and the outside environment it’s in.\n
+        <b>General tips:</b> \n
+        1. Avoid using your phone in direct sunlight on hot days.\n
+        2. Stop or close power- and process intensive apps.\n
+        3. Avoid using fast charging, as most fast chargers push high amounts of power into the phone battery, causing high temperatures or damaging the battery in other ways.\n
+        <b>Note - As with hot temperatures, cold temperatures can also be harmful for smartphones.</b>\n
+</string>
 </resources>
