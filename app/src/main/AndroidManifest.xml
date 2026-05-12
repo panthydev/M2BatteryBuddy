@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.M2BatteryBuddy">
         <activity
+            android:name=".NotifSettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".GraphActivity"
             android:exported="false" />
         <activity

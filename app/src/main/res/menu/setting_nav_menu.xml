@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/notif_settings_butt"
+        android:icon="@drawable/outline_notifications_24"
+        android:title="Notif Settings" />
+    <item
+        android:id="@+id/app_settings_butt"
+        android:icon="@drawable/settings_icon"
+        android:title="Settings" />
+</menu>

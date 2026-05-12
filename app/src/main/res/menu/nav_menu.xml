@@ -11,6 +11,6 @@
     <item
         android:id="@+id/settings_butt"
         android:title="Settings"
-        android:icon="@drawable/settings_icon"/>
+        android:icon="@drawable/outline_notification_settings_24"/>
 
 </menu>
