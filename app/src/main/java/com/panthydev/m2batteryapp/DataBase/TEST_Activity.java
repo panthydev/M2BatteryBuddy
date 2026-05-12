@@ -13,7 +13,6 @@ import android.util.Log;
 
 import com.panthydev.m2batteryapp.Interfaces.Callback;
 import com.panthydev.m2batteryapp.Managers.DataManager;
-import com.panthydev.m2batteryapp.data.DataCollection.WorkHandler;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 
@@ -42,10 +41,6 @@ public class TEST_Activity extends Activity
 
 
         });
-
-
-        var Silly = new WorkHandler();
-        Silly.StartDataCollection(this);
     }
 
     public void SetUiSomething(){

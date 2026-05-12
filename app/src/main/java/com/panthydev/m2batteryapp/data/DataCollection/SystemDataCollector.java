@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.PowerManager;
+import android.os.SystemClock;
 
 import androidx.annotation.RequiresApi;
 
@@ -129,18 +130,17 @@ public class SystemDataCollector{
 
     public void appDischargeTimer () { //Needs to run on the interval
         BatteryManager BM = (BatteryManager) context.getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager (again lol)
+        if (BM == null) {
+            setSystemDischarge(0);
+            return;
+        }
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo(); //Getting access to the Activity Manager and info of all the running apps
         ActivityManager.getMyMemoryState(appProcessInfo); // it does something cool and it works, but i dont know how :P
 
         // WorkManager runs on a background thread without a Looper, so avoid CountDownTimer here.
         int firstReading = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-        int secondReading = firstReading;
-        try {
-            Thread.sleep(1000);
-            secondReading = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        SystemClock.sleep(1000);
+        int secondReading = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
         int averageDischarge = (firstReading + secondReading) / 2;
 
         if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE) { // Checks for if you are on an app
