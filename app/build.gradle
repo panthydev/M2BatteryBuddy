@@ -26,16 +26,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    //added buildFeatures, needed for MainActivity's "binding to work.
+    buildFeatures{
+        viewBinding true
+    }
+
     compileOptions {
+        coreLibraryDesugaringEnabled true
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
     }
 }
 
 dependencies {
+    coreLibraryDesugaring libs.desugar.jdk.libs
+    implementation libs.work.multiprocess
+
     implementation libs.appcompat
     implementation libs.material
+    implementation libs.activity
+    implementation libs.constraintlayout
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation libs.work.runtime
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
