@@ -22,9 +22,15 @@ public class NotificationManager {
         return getPrefs(context).getBoolean(key, defaultValue);
     }
 
-    /// Notif
+    /// Notif Bools ///
 
+    public static void SetSwitchPowersave60percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave60percent", b);
+    }
 
+    public static boolean GetSwitchPowersave60percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave60percent", false);
+    }
 
     /// System stuff ///
 
