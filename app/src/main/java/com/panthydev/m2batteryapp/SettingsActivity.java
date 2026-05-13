@@ -28,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
 //        });
 
         BottomNavigationView topNavigationView = findViewById(R.id.top_menu_bar);
-        topNavigationView.setSelectedItemId(R.id.notif_settings_butt);
+        topNavigationView.setSelectedItemId(R.id.app_settings_butt);
 
         topNavigationView.setOnItemSelectedListener(item -> {
             int itemId= item.getItemId();
