@@ -1,31 +1,27 @@
 package com.panthydev.m2batteryapp.data.DataObjects;
 
-import android.app.ApplicationErrorReport;
-import android.app.usage.UsageStats;
-import android.content.pm.ApplicationInfo;
-import android.graphics.drawable.Drawable;
-import android.os.Parcel;
-
 import java.util.Date;
-import java.util.List;
 
 public class App extends DataObject {
 
     String appName;
     int appCategory;
     int appDischarge; //With systemDischarge
+    int backgroundProcessCount;
 
-    public App (String appName, int appCategory, int appDischarge) {
+    public App (String appName, int appCategory, int appDischarge, int backgroundProcessCount) {
         this.appName = appName;
         this.appCategory = appCategory;
         this.appDischarge = appDischarge;
+        this.backgroundProcessCount = backgroundProcessCount;
         super.Timestamp = new Date();
     }
 
-    public App (String appName, int appCategory, int appDischarge, Date timestamp) {
+    public App (String appName, int appCategory, int appDischarge, int backgroundProcessCount, Date timestamp) {
         this.appName = appName;
         this.appCategory = appCategory;
         this.appDischarge = appDischarge;
+        this.backgroundProcessCount = backgroundProcessCount;
         super.Timestamp = timestamp;
     }
 
@@ -39,6 +35,10 @@ public class App extends DataObject {
 
     public int getAppDischarge () {
         return appDischarge;
+    }
+
+    public int getBackgroundProcessCount() {
+        return backgroundProcessCount;
     }
 
 }

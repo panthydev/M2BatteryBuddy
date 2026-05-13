@@ -82,6 +82,7 @@ public class SystemDataCollector{
      */
     public void CollectAndSendUsageDataToDB () { // Needs to run once when the app is first opened
         List<ApplicationInfo> applicationInfoList = context.getPackageManager().getInstalledApplications(PackageManager.GET_META_DATA); // Get a list of packages with applications
+        int backgroundProcessCount = getBackgroundProcessCount();
 
         appArray = new App[applicationInfoList.size()]; // Making an array for all the app objects ToBeMade
         int i = 0; // just a Counter, dont worry :)
@@ -95,7 +96,7 @@ public class SystemDataCollector{
             int appDischarge = 0; // No discharge data collected yet
 
             if (appCat != -1) { //Only makes objects of importance, based on the category number (aka all but -1)
-                appArray[i] = new App(appName, appCat, appDischarge); // Making all the app objects
+                appArray[i] = new App(appName, appCat, appDischarge, backgroundProcessCount); // Making all the app objects
                 System.out.println("here is the app: " + appArray[i].getAppName() + " The Category: " + appArray[i].getAppCategory());
             }
             i++;
@@ -235,7 +236,8 @@ public class SystemDataCollector{
         }
 
         int appDischarge = getAppDischarge();
-        App app = new App(foregroundPackage, appCat, appDischarge);
+        int backgroundProcessCount = getBackgroundProcessCount();
+        App app = new App(foregroundPackage, appCat, appDischarge, backgroundProcessCount);
         var datapack = new DataPack<App>();
         datapack.AddData(app);
         DataManager.SetAppDataAsync(context, datapack);
@@ -300,6 +302,34 @@ public class SystemDataCollector{
     }
 
     /**
+     * Coarse count of background stuff running right now.
+     * We count running app processes that are neither foreground nor visible, excluding our own package.
+     */
+    private int getBackgroundProcessCount() {
+        int count = 0;
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        if (am == null) return 0;
+
+        try {
+            List<ActivityManager.RunningAppProcessInfo> processes = am.getRunningAppProcesses();
+            if (processes == null) return 0;
+
+            String myPackage = context.getPackageName();
+            for (ActivityManager.RunningAppProcessInfo proc : processes) {
+                if (proc == null || proc.processName == null) continue;
+                if (myPackage.equals(proc.processName)) continue;
+                if (proc.importance > IMPORTANCE_VISIBLE) {
+                    count++;
+                }
+            }
+        } catch (Exception ex) {
+            // ignore; return the best-effort count
+        }
+
+        return count;
+    }
+
+    /**
      * Format discharge value (stored as uAh in DB) to human-friendly string for logging.
      * Shows as mAh if >= 1000 uAh, otherwise as uAh.
      * Example: 8740 uAh -> "8.74 mAh", 500 uAh -> "500 uAh"
@@ -313,24 +343,9 @@ public class SystemDataCollector{
         }
     }
 
-    private int calculateDischargeValue(int lastBatteryPercent, int currentBatteryPercent) {
-        if (lastBatteryPercent < 0) {
-            return 0;
-        }
-
-        int drop = lastBatteryPercent - currentBatteryPercent;
-        if (drop <= 0) {
-            return 0;
-        }
-
-        long scaled = (long) drop * DISCHARGE_SCALE;
-        return scaled > Integer.MAX_VALUE ? Integer.MAX_VALUE : (int) scaled;
-    }
-
     private int calculatePercentDrop(int lastBatteryPercent, int currentBatteryPercent) {
         if (lastBatteryPercent < 0) return 0;
-        int drop = lastBatteryPercent - currentBatteryPercent;
-        return drop > 0 ? drop : 0;
+        return Math.max(lastBatteryPercent - currentBatteryPercent, 0);
     }
 
     private int getLastBatteryPercent() {
