@@ -13,23 +13,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.panthydev.m2batteryapp.Interfaces.Callback;
 import com.panthydev.m2batteryapp.Managers.DataManager;
 import com.panthydev.m2batteryapp.data.DataCollection.WorkHandler;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 import com.panthydev.m2batteryapp.databinding.ActivityBaseBinding;
 
-import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.view.View;
 import android.widget.TextView;
 
-import javax.xml.transform.Result;
+import java.time.Duration;
 
 public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
-    public String BatteryInPercent;
-    public String BatteryTimeLeft;
+    public TextView batText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
         workHandler.StartDataCollection(this);
 
-        TextView batText = findViewById(R.id.BatTime);
+        batText = findViewById(R.id.BatTime);
 
+        testingMethod();
 
         isAccessGranted();
         if (!isAccessGranted()) {
@@ -103,6 +103,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isAccessGranted() {
+
+
+
+
         try {
             PackageManager packageManager = getPackageManager();
             ApplicationInfo applicationInfo = packageManager.getApplicationInfo(getPackageName(), 0);
@@ -116,10 +120,41 @@ public class MainActivity extends AppCompatActivity {
             return false;
         }
 
-        DataManager.GetBatteryDataAsync(this, 24,DataPack< > );
+    }
 
-        String fuck = BatteryInPercent;
-        String my_ass = BatteryTimeLeft;
 
+    public void testingMethod(){
+        DataManager.GetBatteryDataAsync(this, 24, new Callback<DataPack<BatteryData>>()
+        {
+            @Override
+            public void OnResult(DataPack<BatteryData> Result)
+            {
+                int index = Result.dataList.size();
+                String my_ass = String.valueOf(Result.dataList.get(0).estimatedBatTimeLeft.toHours());
+                String fuck = String.valueOf(Result.dataList.get(index-1).percentLeft);
+
+                if (Result.dataList.get(0).estimatedBatTimeLeft.getSeconds() == 0)
+                {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run() {
+                            batText.setText(fuck + "%");
+                        }
+                    });
+                }
+                else
+                {
+                    runOnUiThread(new Runnable()
+                    {
+                        @Override
+                        public void run() {
+                            batText.setText(my_ass);
+                        }
+                    });
+                }
+
+            }
+        });
     }
 }
