@@ -17,6 +17,8 @@ import com.panthydev.m2batteryapp.Managers.CloudSyncResult;
 public class DataManager
 {
     /**
+     * gyuiuyfghhhhh
+     * ryuyrghhy
      * <p>Method to get battery data from the database.</p>
      * @param context Android context, just pass it in please
      * @param callback Method that should be called when fetching the data is done
