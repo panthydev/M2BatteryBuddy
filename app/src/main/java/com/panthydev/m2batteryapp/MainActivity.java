@@ -13,13 +13,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.panthydev.m2batteryapp.Managers.DataManager;
+import com.panthydev.m2batteryapp.data.DataCollection.WorkHandler;
+import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
+import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 import com.panthydev.m2batteryapp.databinding.ActivityBaseBinding;
 
+import android.provider.ContactsContract;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.TextView;
+
+import javax.xml.transform.Result;
 
 public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
+    public String BatteryInPercent;
+    public String BatteryTimeLeft;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
 //            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
 //            return insets;
 //        });
+
+        WorkHandler workHandler = new WorkHandler();
+
+        workHandler.StartDataCollection(this);
+
+        TextView batText = findViewById(R.id.BatTime);
+
 
         isAccessGranted();
         if (!isAccessGranted()) {
@@ -98,5 +115,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+
+        DataManager.GetBatteryDataAsync(this, 24,DataPack< > );
+
+        String fuck = BatteryInPercent;
+        String my_ass = BatteryTimeLeft;
+
     }
 }
