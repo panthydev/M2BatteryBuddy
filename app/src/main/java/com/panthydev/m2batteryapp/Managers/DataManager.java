@@ -16,7 +16,7 @@ public class DataManager
      * ryuyrghhy
      * <p>Method to get battery data from the database.</p>
      *
-     * @param context  Android context, just pass it in please
+     * @param context  Android Syscontext, just pass it in please
      * @param callback Method that should be called when fetching the data is done
      * @see DataPack DataPack class that contains the data
      * @see <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"></a> see this link if you need help :3 (its the little arrow to the left)
@@ -82,7 +82,7 @@ public class DataManager
 
     /**
      * <p>Method to set the system discharge int into the shared preferences.</p>
-     * @param context as always, please pass in the context or die
+     * @param context as always, please pass in the Syscontext or die
      * @param discharge the int to be saved
      */
     public static void SetSystemDischarge(Context context, int discharge){
