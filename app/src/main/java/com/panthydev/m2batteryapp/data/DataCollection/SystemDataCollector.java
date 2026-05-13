@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.PowerManager;
+import android.os.SystemClock;
 
 import androidx.annotation.RequiresApi;
 
@@ -49,20 +50,13 @@ public class SystemDataCollector{
         batCurrentMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW); //Instantaneous battery current in microamperes, as an integer (positive means it is charging, negative is draining)
         powerSaveOn = PM.isPowerSaveMode(); //Checks if powersaving mode is on
 
-        remainingBatLife = null;
+
         //Checks if the phone which runs this, has a high enough API level (is new enough)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             try {
                 // Use reflection to avoid potential signature mismatches with desugared java.time types on some platform versions
-                Method getPredictionMethod = PowerManager.class.getMethod("getBatteryDischargePrediction");
-                Object result = getPredictionMethod.invoke(PM);
-                if (result != null) {
-                    // Use reflection to get minutes from the returned Duration object (java.time.Duration)
-                    Method toMinutesMethod = result.getClass().getMethod("toMinutes");
-                    long minutes = (long) toMinutesMethod.invoke(result);
-                    System.out.println("Estimated remaining battery left is: " + minutes + " minutes");
-                    remainingBatLife = Duration.ofMinutes(minutes);
-                }
+                 remainingBatLife = PM.getBatteryDischargePrediction(); //Estimates the time in minutes there is left on the phone
+                System.out.println("Estimated remaining battery left is: " + (remainingBatLife.toMinutes()) + " minutes");
             } catch (Throwable t) {
                 // Method might not be present on this specific device implementation even if API >= 31, or other reflection error
                 System.out.println("Could not get battery discharge prediction: " + t.getMessage());
@@ -129,18 +123,17 @@ public class SystemDataCollector{
 
     public void appDischargeTimer () { //Needs to run on the interval
         BatteryManager BM = (BatteryManager) context.getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager (again lol)
+        if (BM == null) {
+            setSystemDischarge(0);
+            return;
+        }
         ActivityManager.RunningAppProcessInfo appProcessInfo = new ActivityManager.RunningAppProcessInfo(); //Getting access to the Activity Manager and info of all the running apps
         ActivityManager.getMyMemoryState(appProcessInfo); // it does something cool and it works, but i dont know how :P
 
         // WorkManager runs on a background thread without a Looper, so avoid CountDownTimer here.
         int firstReading = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-        int secondReading = firstReading;
-        try {
-            Thread.sleep(1000);
-            secondReading = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        SystemClock.sleep(1000);
+        int secondReading = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW);
         int averageDischarge = (firstReading + secondReading) / 2;
 
         if (appProcessInfo.importance == IMPORTANCE_FOREGROUND || appProcessInfo.importance == IMPORTANCE_VISIBLE) { // Checks for if you are on an app
