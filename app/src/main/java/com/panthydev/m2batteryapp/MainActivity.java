@@ -47,19 +47,9 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
-        WorkHandler workHandler = new WorkHandler();
-
-        workHandler.StartDataCollection(this);
-
         batText = findViewById(R.id.BatTime);
 
         BatteryUIMethod();
-
-        isAccessGranted();
-        if (!isAccessGranted()) {
-            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-            startActivity(intent);
-        }
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
@@ -104,13 +94,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        appsCollectedStarted = NotificationManager.GetFirstAppCollectionOn(this);
+        isAccessGranted();
+        if (!isAccessGranted() && !appsCollectedStarted) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
+        }
+
+        intervalStarted = NotificationManager.GetIntervalOn(this);
+        if (!intervalStarted) {
+            WorkHandler workHandler = new WorkHandler();
+            workHandler.StartDataCollection(this);
+            NotificationManager.SetIntervalOn(this, intervalStarted = true);
+        }
+
     }
 
     private boolean isAccessGranted() {
-
-
-
-
         try {
             PackageManager packageManager = getPackageManager();
             ApplicationInfo applicationInfo = packageManager.getApplicationInfo(getPackageName(), 0);
