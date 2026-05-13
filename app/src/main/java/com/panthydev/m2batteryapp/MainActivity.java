@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         batText = findViewById(R.id.BatTime);
 
-        testingMethod();
+        BatteryUIMethod();
 
         isAccessGranted();
         if (!isAccessGranted()) {
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void testingMethod(){
+    public void BatteryUIMethod(){
         DataManager.GetBatteryDataAsync(this, 24, new Callback<DataPack<BatteryData>>()
         {
             @Override
