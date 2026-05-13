@@ -24,19 +24,28 @@
             <ImageView
                 android:id="@+id/imageView3"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="135dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:scaleX="-1"
                 android:scaleY="-1"
                 app:srcCompat="@drawable/bottom_bar_bg" />
 
-            <Switch
-                android:id="@+id/switch5"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Switch" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="370dp"
+                android:layout_height="30dp"
+                android:background="@drawable/shapeofcontainerlight"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteX="20dp">
+
+                <Switch
+                    android:id="@+id/switch1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Switch" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
         </LinearLayout>
     </ScrollView>
 
