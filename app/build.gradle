@@ -41,8 +41,8 @@ android {
 
 dependencies {
     coreLibraryDesugaring libs.desugar.jdk.libs
+    // remove libs.activity and (another thing i cant remember bellow it) if they appear
     implementation libs.work.multiprocess
-
     implementation libs.appcompat
     implementation libs.material
     implementation 'androidx.cardview:cardview:1.0.0'

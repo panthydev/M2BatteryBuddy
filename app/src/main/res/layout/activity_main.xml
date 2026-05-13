@@ -18,9 +18,9 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/shapeofcontainerlight"
         android:clickable="true"
-        app:layout_constraintBottom_toTopOf="@+id/imageView5"
+        app:layout_constraintBottom_toTopOf="@id/buddyView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.487"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/batteryView">
 
@@ -216,18 +216,6 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:scaleX="-1"
-        android:scaleY="-1"
-        app:layout_constraintBottom_toTopOf="@+id/batteryView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bottom_bar_bg" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/batteryView"
         android:layout_width="370dp"
@@ -237,7 +225,6 @@
         android:layout_marginEnd="27dp"
         android:background="@drawable/shapeofcontainerlight"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.538"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/imageView2">
         <ImageView
@@ -248,6 +235,7 @@
             app:srcCompat="@drawable/outline_battery_android_0_24"
             android:layout_marginStart="15dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             />
         <TextView
             android:id="@+id/BatTime"
@@ -262,16 +250,40 @@
             app:layout_constraintTop_toTopOf="@id/batteryView" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/imageView5"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/buddyView"
         android:layout_width="370dp"
-        android:layout_height="200dp"
+        android:layout_height="210dp"
         android:layout_marginTop="10dp"
         android:background="@drawable/shapeofcontainerlight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/barGraphContainer"
-        app:srcCompat="@drawable/bb1" />
+        app:layout_constraintTop_toBottomOf="@id/barGraphContainer">
+        <ImageView
+            android:id="@+id/buddyImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@drawable/bb1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:scaleX="-1"
+        android:scaleY="-1"
+        app:layout_constraintBottom_toTopOf="@+id/batteryView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/bottom_bar_bg" />
 
     <include layout="@layout/buttom_bar"/>
 
