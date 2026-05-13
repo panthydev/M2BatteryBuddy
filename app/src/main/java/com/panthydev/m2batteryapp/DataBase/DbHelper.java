@@ -59,13 +59,37 @@ public class DbHelper extends SQLiteOpenHelper implements AutoCloseable {
 
     public void AddAppData(DataPack<App> dataPack)
     {
-        var writableDB = this.getWritableDatabase();
-        try {
-            for (App app : dataPack.dataList) {
-                ContentValues values = appMapper.ToContentValues(app);
-                writableDB.insert(AppTable.TABLE_NAME, null, values);
+        try (var writableDB = this.getWritableDatabase()) {
+            if (dataPack == null || dataPack.dataList == null) {
+                return;
             }
-            writableDB.close();
+
+            for (App app : dataPack.dataList) {
+                if (app == null) {
+                    continue;
+                }
+
+                ContentValues values = appMapper.ToContentValues(app);
+
+                if (app.getAppDischarge() != 0) {
+                    long bootstrapRowId = findBootstrapAppRowId(writableDB, app.getAppName());
+                    if (bootstrapRowId != -1) {
+                        int rowsUpdated = writableDB.update(
+                                AppTable.TABLE_NAME,
+                                values,
+                                AppTable.ID_COL + " = ?",
+                                new String[]{String.valueOf(bootstrapRowId)}
+                        );
+
+                        if (rowsUpdated > 0) {
+                            Log.d("DbHelper", "Replaced bootstrap app row id=" + bootstrapRowId + " name=" + app.getAppName());
+                            continue;
+                        }
+                    }
+                }
+                long id = writableDB.insert(AppTable.TABLE_NAME, null, values);
+                Log.d("DbHelper", "Inserted app row id=" + id + " name=" + app.getAppName() + " discharge=" + app.getAppDischarge());
+            }
         } catch (SQLException e) {
             Log.d("TEST", String.valueOf(e.getMessage()));
         }
@@ -99,10 +123,6 @@ public class DbHelper extends SQLiteOpenHelper implements AutoCloseable {
         } finally {
             if (cursor != null) cursor.close();
         }
-    }
-
-    public DataPack<App> GetAppData(String appName) {
-        return GetAppData(appName, -1);
     }
 
     //TODO make a method that returns a list of key value pairs of app (name) and  AVERAGE discharge, calc it by getting sum of all discharge / number of apps
@@ -193,6 +213,29 @@ public class DbHelper extends SQLiteOpenHelper implements AutoCloseable {
             } while (cursor.moveToNext());
         }
         return dataPack;
+    }
+
+    private long findBootstrapAppRowId(SQLiteDatabase db, String appName) {
+        if (appName == null || appName.isEmpty()) {
+            return -1;
+        }
+
+        try (Cursor cursor = db.query(
+                AppTable.TABLE_NAME,
+                new String[]{AppTable.ID_COL},
+                AppTable.APP_NAME_COL + " = ? AND " + AppTable.APP_DISCHARGE_COL + " = ?",
+                new String[]{appName, "0"},
+                null,
+                null,
+                AppTable.ID_COL + " ASC",
+                "1"
+        )) {
+            if (cursor.moveToFirst()) {
+                return cursor.getLong(cursor.getColumnIndexOrThrow(AppTable.ID_COL));
+            }
+        }
+
+        return -1;
     }
 
 
