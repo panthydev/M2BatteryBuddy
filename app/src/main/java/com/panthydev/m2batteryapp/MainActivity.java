@@ -21,8 +21,8 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-    boolean appsCollectedStarted = false;
-    boolean intervalStarted = false;
+    boolean appsCollectedStarted;
+    boolean intervalStarted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,12 +71,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        appsCollectedStarted = NotificationManager.GetFirstAppCollectionOn(this);
         isAccessGranted();
         if (!isAccessGranted() && !appsCollectedStarted) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
         }
 
+        intervalStarted = NotificationManager.GetIntervalOn(this);
         if (!intervalStarted) {
             WorkHandler workHandler = new WorkHandler();
             workHandler.StartDataCollection(this);
