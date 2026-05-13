@@ -22,6 +22,185 @@ public class NotificationManager {
         return getPrefs(context).getBoolean(key, defaultValue);
     }
 
+    public static void SetSwitchPowersave60percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave60percent", b);
+    }
+    public static boolean GetSwitchPowersave60percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave60percent", false);
+    }
+
+    public static void SetSwitchPowersave50percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave50percent", b);
+    }
+    public static boolean GetSwitchPowersave50percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave50percent", false);
+    }
+
+    public static void SetSwitchPowersave40percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave40percent", b);
+    }
+    public static boolean GetSwitchPowersave40percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave40percent", false);
+    }
+
+    public static void SetSwitchPowersave30percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave30percent", b);
+    }
+    public static boolean GetSwitchPowersave30percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave30percent", false);
+    }
+
+    public static void SetSwitchPowersave20percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave20percent", b);
+    }
+    public static boolean GetSwitchPowersave20percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave20percent", false);
+    }
+
+    public static void SetSwitchPowersave10percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave10percent", b);
+    }
+    public static boolean GetSwitchPowersave10percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave10percent", false);
+    }
+
+    //time and powersave
+    public static void SetSwitchPowersave3hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave3hours", b);
+    }
+    public static boolean GetSwitchPowersave3hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave3hours", false);
+    }
+
+    public static void SetSwitchPowersave25hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave25hours", b);
+    }
+    public static boolean GetSwitchPowersave25hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave25hours", false);
+    }
+
+    public static void SetSwitchPowersave2hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave2hours", b);
+    }
+    public static boolean GetSwitchPowersave2hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave2hours", false);
+    }
+
+    public static void SetSwitchPowersave15hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave15hours", b);
+    }
+    public static boolean GetSwitchPowersave15hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave15hours", false);
+    }
+
+    public static void SetSwitchPowersave1hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave1hour", b);
+    }
+    public static boolean GetSwitchPowersave1hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave1hour", false);
+    }
+
+    public static void SetSwitchPowersave30min(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave30min", b);
+    }
+    public static boolean GetSwitchPowersave30min(Context context){
+        return getBooleanPref(context, "SwitchPowersave30min", false);
+    }
+
+    //Percent
+    public static void SetSwitch60percent(Context context, boolean b){
+        putBooleanPref(context, "Switch60percent", b);
+    }
+    public static boolean GetSwitch60percent(Context context){
+        return getBooleanPref(context, "Switch60percent", false);
+    }
+
+    public static void SetSwitch50percent(Context context, boolean b){
+        putBooleanPref(context, "Switch50percent", b);
+    }
+    public static boolean GetSwitch50percent(Context context){
+        return getBooleanPref(context, "Switch50percent", false);
+    }
+
+    public static void SetSwitch40percent(Context context, boolean b){
+        putBooleanPref(context, "Switch40percent", b);
+    }
+    public static boolean GetSwitch40percent(Context context){
+        return getBooleanPref(context, "Switch40percent", false);
+    }
+
+    public static void SetSwitch30percent(Context context, boolean b){
+        putBooleanPref(context, "Switch30percent", b);
+    }
+    public static boolean GetSwitch30percent(Context context){
+        return getBooleanPref(context, "Switch30percent", false);
+    }
+
+    public static void SetSwitch20percent(Context context, boolean b){
+        putBooleanPref(context, "Switch20percent", b);
+    }
+    public static boolean GetSwitch20percent(Context context){
+        return getBooleanPref(context, "Switch20percent", false);
+    }
+
+    public static void SetSwitch10percent(Context context, boolean b){
+        putBooleanPref(context, "Switch10percent", b);
+    }
+    public static boolean GetSwitch10percent(Context context){
+        return getBooleanPref(context, "Switch10percent", false);
+    }
+
+    //Time
+    public static void SetSwitch3hours(Context context, boolean b){
+        putBooleanPref(context, "Switch3hours", b);
+    }
+    public static boolean GetSwitch3hours(Context context){
+        return getBooleanPref(context, "Switch3hours", false);
+    }
+
+    public static void SetSwitch25hours(Context context, boolean b){
+        putBooleanPref(context, "Switch25hours", b);
+    }
+    public static boolean GetSwitch25hours(Context context){
+        return getBooleanPref(context, "Switch25hours", false);
+    }
+
+    public static void SetSwitch2hours(Context context, boolean b){
+        putBooleanPref(context, "Switch2hours", b);
+    }
+    public static boolean GetSwitch2hours(Context context){
+        return getBooleanPref(context, "Switch2hours", false);
+    }
+
+    public static void SetSwitch15hours(Context context, boolean b){
+        putBooleanPref(context, "Switch15hours", b);
+    }
+    public static boolean GetSwitch15hours(Context context){
+        return getBooleanPref(context, "Switch15hours", false);
+    }
+
+    public static void SetSwitch1hours(Context context, boolean b){
+        putBooleanPref(context, "Switch1hour", b);
+    }
+    public static boolean GetSwitch1hours(Context context){
+        return getBooleanPref(context, "Switch1hour", false);
+    }
+
+    public static void SetSwitch30min(Context context, boolean b){
+        putBooleanPref(context, "Switch30min", b);
+    }
+    public static boolean GetSwitch30min(Context context){
+        return getBooleanPref(context, "Switch30min", false);
+    }
+
+    //Tips
+    public static void SetSwitchTips(Context context, boolean b){
+        putBooleanPref(context, "SwitchTips", b);
+    }
+    public static boolean GetSwitchTips(Context context){
+        return getBooleanPref(context, "SwitchTips", false);
+    }
+
 
     // Powersave related
         //    public static void SetPowersaveRejseKortApp(Context context, boolean b){

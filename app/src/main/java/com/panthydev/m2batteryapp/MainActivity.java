@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         @Override
                         public void run() {
-                            batText.setText(my_ass);
+                            batText.setText(my_ass + "Hours remaining");
                         }
                     });
                 }
