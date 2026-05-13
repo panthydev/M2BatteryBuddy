@@ -60,7 +60,7 @@
                 <Switch
                     android:id="@+id/switch1"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="50dp"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="75dp"
                     android:layout_marginEnd="25dp"
@@ -75,9 +75,8 @@
 
                 <Switch
                     android:id="@+id/switch2"
-                    android
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"
+                    android:layout_height="50dp"
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
