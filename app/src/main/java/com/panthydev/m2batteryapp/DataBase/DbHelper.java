@@ -20,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class DbHelper extends SQLiteOpenHelper {
+public class DbHelper extends SQLiteOpenHelper implements AutoCloseable {
 
     //TODO Implement AppUsage methods. both for getting and setting data. Waiting for data collection to be implemented.
     private static final String DB_NAME = "DB";
@@ -53,7 +53,7 @@ public class DbHelper extends SQLiteOpenHelper {
             writableDB.close();
 
         } catch (SQLException e) {
-            Log.d("TEST", e.getMessage());
+            Log.d("TEST", String.valueOf(e.getMessage()));
         }
     }
 
@@ -67,7 +67,7 @@ public class DbHelper extends SQLiteOpenHelper {
             }
             writableDB.close();
         } catch (SQLException e) {
-            Log.d("TEST", e.getMessage());
+            Log.d("TEST", String.valueOf(e.getMessage()));
         }
     }
 
@@ -218,6 +218,11 @@ public class DbHelper extends SQLiteOpenHelper {
         db.execSQL(query);
         query = QueryBuilder.CreateAppTable();
         db.execSQL(query);
+    }
+
+    @Override
+    public void close() {
+        super.close();
     }
 
 }
