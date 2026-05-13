@@ -22,6 +22,10 @@ public class NotificationManager {
         return getPrefs(context).getBoolean(key, defaultValue);
     }
 
+    /// Notif
+
+
+
     /// System stuff ///
 
     public static void SetFirstAppCollectionOn(Context context, boolean b){

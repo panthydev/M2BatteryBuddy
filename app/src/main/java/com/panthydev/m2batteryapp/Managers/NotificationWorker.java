@@ -12,6 +12,10 @@ import java.util.Objects;
 
 public class NotificationWorker {
 
+
+
+    /// All methods accessable under here ///
+
     Context context;
     SystemDataCollector SysCollector = new SystemDataCollector(context);
 

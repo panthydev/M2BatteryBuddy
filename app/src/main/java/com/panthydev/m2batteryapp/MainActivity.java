@@ -15,6 +15,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.panthydev.m2batteryapp.Interfaces.Callback;
 import com.panthydev.m2batteryapp.Managers.DataManager;
+import com.panthydev.m2batteryapp.Managers.NotificationManager;
 import com.panthydev.m2batteryapp.data.DataCollection.WorkHandler;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
