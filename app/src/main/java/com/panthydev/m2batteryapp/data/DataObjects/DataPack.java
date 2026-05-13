@@ -24,9 +24,19 @@ public class DataPack<T extends DataObject>{
     }
 
     public void PrepareForTransport(){
+        if (dataList == null || dataList.size() < 2) {
+            return;
+        }
+
         dataList.sort(new Comparator<T>(){
             @Override
             public int compare(T o1, T o2) {
+                if (o1 == null || o1.Timestamp == null) {
+                    return (o2 == null || o2.Timestamp == null) ? 0 : -1;
+                }
+                if (o2 == null || o2.Timestamp == null) {
+                    return 1;
+                }
                 return o1.Timestamp.compareTo(o2.Timestamp);
             }
         });
