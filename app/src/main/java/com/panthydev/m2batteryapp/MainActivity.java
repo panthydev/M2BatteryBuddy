@@ -13,33 +13,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.panthydev.m2batteryapp.databinding.ActivityBaseBinding;
+import com.panthydev.m2batteryapp.Managers.NotificationManager;
+import com.panthydev.m2batteryapp.data.DataCollection.WorkHandler;
 
 import android.provider.Settings;
 import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
-    ActivityBaseBinding binding;
+
+    boolean appsCollectedStarted = false;
+    boolean intervalStarted = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this); //hvorfor er den her linjer her enlig?
         setContentView(R.layout.activity_main);
-
-        //wat is this. No "main" id in R, so makes error.
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-//            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-//            return insets;
-//        });
-
-        isAccessGranted();
-        if (!isAccessGranted()) {
-            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-            startActivity(intent);
-        }
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
@@ -83,6 +71,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        isAccessGranted();
+        if (!isAccessGranted() && !appsCollectedStarted) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
+        }
+
+        if (!intervalStarted) {
+            WorkHandler workHandler = new WorkHandler();
+            workHandler.StartDataCollection(this);
+            NotificationManager.SetIntervalOn(this, intervalStarted = true);
+        }
+
     }
 
     private boolean isAccessGranted() {
@@ -93,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
             int mode = 0;
 
             mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, applicationInfo.uid, applicationInfo.packageName);
+            NotificationManager.SetFirstAppCollectionOn(this, appsCollectedStarted = true);
             return (mode == AppOpsManager.MODE_ALLOWED);
 
         } catch (PackageManager.NameNotFoundException e) {

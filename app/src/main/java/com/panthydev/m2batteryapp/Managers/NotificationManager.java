@@ -22,6 +22,23 @@ public class NotificationManager {
         return getPrefs(context).getBoolean(key, defaultValue);
     }
 
+    /// System stuff ///
+
+    public static void SetFirstAppCollectionOn(Context context, boolean b){
+        putBooleanPref(context, "FirstAppCollection", b);
+    }
+
+    public static boolean GetFirstAppCollectionOn(Context context){
+        return getBooleanPref(context, "FirstAppCollection", false);
+    }
+
+    public static void SetIntervalOn(Context context, boolean b){
+        putBooleanPref(context, "Interval", b);
+    }
+
+    public static boolean GetIntervalOn(Context context){
+        return getBooleanPref(context, "Interval", false);
+    }
 
     // Powersave related
         //    public static void SetPowersaveRejseKortApp(Context context, boolean b){
