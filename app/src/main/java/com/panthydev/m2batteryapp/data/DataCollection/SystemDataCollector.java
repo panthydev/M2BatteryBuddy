@@ -50,20 +50,13 @@ public class SystemDataCollector{
         batCurrentMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW); //Instantaneous battery current in microamperes, as an integer (positive means it is charging, negative is draining)
         powerSaveOn = PM.isPowerSaveMode(); //Checks if powersaving mode is on
 
-        remainingBatLife = null;
+
         //Checks if the phone which runs this, has a high enough API level (is new enough)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             try {
                 // Use reflection to avoid potential signature mismatches with desugared java.time types on some platform versions
-                Method getPredictionMethod = PowerManager.class.getMethod("getBatteryDischargePrediction");
-                Object result = getPredictionMethod.invoke(PM);
-                if (result != null) {
-                    // Use reflection to get minutes from the returned Duration object (java.time.Duration)
-                    Method toMinutesMethod = result.getClass().getMethod("toMinutes");
-                    long minutes = (long) toMinutesMethod.invoke(result);
-                    System.out.println("Estimated remaining battery left is: " + minutes + " minutes");
-                    remainingBatLife = Duration.ofMinutes(minutes);
-                }
+                 remainingBatLife = PM.getBatteryDischargePrediction(); //Estimates the time in minutes there is left on the phone
+                System.out.println("Estimated remaining battery left is: " + (remainingBatLife.toMinutes()) + " minutes");
             } catch (Throwable t) {
                 // Method might not be present on this specific device implementation even if API >= 31, or other reflection error
                 System.out.println("Could not get battery discharge prediction: " + t.getMessage());
