@@ -6,7 +6,9 @@ import static android.content.Context.BATTERY_SERVICE;
 import static android.content.Context.POWER_SERVICE;
 
 import android.app.ActivityManager;
+import android.app.AppOpsManager;
 import android.app.usage.UsageEvents;
+import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -15,6 +17,7 @@ import android.content.SharedPreferences;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.PowerManager;
+import android.os.Process;
 import android.util.Log;
 
 import com.panthydev.m2batteryapp.Managers.DataManager;
@@ -23,8 +26,10 @@ import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 
 import java.time.Duration;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 public class SystemDataCollector{
 
@@ -303,30 +308,92 @@ public class SystemDataCollector{
 
     /**
      * Coarse count of background stuff running right now.
-     * We count running app processes that are neither foreground nor visible, excluding our own package.
+     * On modern Android, ActivityManager.getRunningAppProcesses() is highly restricted.
+     * We use UsageStatsManager (requires "Usage Access" permission) to estimate active background processes.
      */
     private int getBackgroundProcessCount() {
-        int count = 0;
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        if (am == null) return 0;
+        if (!hasUsageStatsPermission()) {
+            Log.w("SystemDataCollector", "Usage Access permission (PACKAGE_USAGE_STATS) NOT granted. Background process count will likely be 0. Please grant it in Settings > Security > Special App Access > Usage Access.");
+        }
 
-        try {
-            List<ActivityManager.RunningAppProcessInfo> processes = am.getRunningAppProcesses();
-            if (processes == null) return 0;
+        Set<String> activePackages = new HashSet<>();
+        String myPkg = context.getPackageName();
 
-            String myPackage = context.getPackageName();
-            for (ActivityManager.RunningAppProcessInfo proc : processes) {
-                if (proc == null || proc.processName == null) continue;
-                if (myPackage.equals(proc.processName)) continue;
-                if (proc.importance > IMPORTANCE_VISIBLE) {
-                    count++;
+        UsageStatsManager usm = (UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
+        if (usm != null) {
+            try {
+                long now = System.currentTimeMillis();
+                // 1. Check UsageStats for recent activity (last 30 minutes)
+                // We use INTERVAL_BEST to let the system decide the best resolution.
+                List<UsageStats> stats = usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, now - 30 * 60 * 1000, now);
+                if (stats != null) {
+                    for (UsageStats s : stats) {
+                        // If it was used in the last 15 minutes, consider it "active"
+                        if (s.getLastTimeUsed() > now - 15 * 60 * 1000) {
+                            String pkg = s.getPackageName();
+                            if (pkg != null && !pkg.equals(myPkg)) {
+                                activePackages.add(normalizePackage(pkg));
+                            }
+                        }
+                    }
                 }
+
+                // 2. Check UsageEvents for state changes in the last 15 minutes
+                UsageEvents events = usm.queryEvents(now - 15 * 60 * 1000, now);
+                UsageEvents.Event e = new UsageEvents.Event();
+                while (events.hasNextEvent()) {
+                    events.getNextEvent(e);
+                    String pkg = e.getPackageName();
+                    if (pkg != null && !pkg.equals(myPkg)) {
+                        activePackages.add(normalizePackage(pkg));
+                    }
+                }
+            } catch (Exception ex) {
+                Log.e("SystemDataCollector", "UsageStatsManager error: " + ex.getMessage());
             }
-        } catch (Exception ex) {
-            // ignore; return the best-effort count
+        }
+
+        // Subtract the current foreground app if detected
+        String fg = detectForegroundPackage();
+        if (fg != null) {
+            activePackages.remove(normalizePackage(fg));
+        }
+
+        int count = activePackages.size();
+        Log.d("SystemDataCollector", "getBackgroundProcessCount: " + count + " active packages (excluding foreground). Permission: " + hasUsageStatsPermission());
+        
+        // Fallback: If UsageStats returns nothing (e.g. permission just granted but no events yet, or old device)
+        if (count == 0) {
+            try {
+                ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+                if (am != null) {
+                    List<ActivityManager.RunningAppProcessInfo> processes = am.getRunningAppProcesses();
+                    if (processes != null) {
+                        for (ActivityManager.RunningAppProcessInfo proc : processes) {
+                            if (proc != null && proc.processName != null && !proc.processName.equals(myPkg)) {
+                                if (proc.importance > IMPORTANCE_VISIBLE) {
+                                    count++;
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (Exception ignored) {}
         }
 
         return count;
+    }
+
+    private boolean hasUsageStatsPermission() {
+        try {
+            AppOpsManager appOps = (AppOpsManager) context.getSystemService(Context.APP_OPS_SERVICE);
+            if (appOps == null) return false;
+            int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, 
+                    android.os.Process.myUid(), context.getPackageName());
+            return mode == AppOpsManager.MODE_ALLOWED;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
