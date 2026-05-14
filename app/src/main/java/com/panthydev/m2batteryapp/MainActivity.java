@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
+        batText = findViewById(R.id.BatTime);
+        BatteryUIMethod();
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
