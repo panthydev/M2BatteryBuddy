@@ -79,15 +79,15 @@ public class SystemDataCollector{
             }
         }
 
-        NotificationManager.SetBatteryPercent(context, batLevelPercent);
-        NotificationManager.SetEstBatTime(context, (int) remainingBatLife.toSeconds());
-        NotificationManager.SetIsCharging(context, isCharging);
-        NotificationManager.SetPowerSaveOn(context, powerSaveOn);
-
         BatteryData batData = new BatteryData(batLevelPercent, batCapMAh, remainingBatLife, batCapMAh, powerSaveOn); //Making a battery data object with the collected data
         var datapack = new DataPack<BatteryData>();
         datapack.AddData(batData); //Adding the battery data object to the data pack
         DataManager.SetBatteryDataAsync(context,datapack) ; //Sending the battery data object to the database
+
+        NotificationManager.SetBatteryPercent(context, batLevelPercent);
+        NotificationManager.SetEstBatTime(context, (int) remainingBatLife.toSeconds());
+        NotificationManager.SetIsCharging(context, isCharging);
+        NotificationManager.SetPowerSaveOn(context, powerSaveOn);
     }
 
     /**
