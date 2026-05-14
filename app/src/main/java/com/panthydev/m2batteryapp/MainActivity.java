@@ -47,10 +47,6 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
-        batText = findViewById(R.id.BatTime);
-
-        BatteryUIMethod();
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
@@ -110,6 +106,34 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        batText = findViewById(R.id.BatTime);
+        BatteryUIMethod();
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        batText = findViewById(R.id.BatTime);
+        BatteryUIMethod();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        batText = findViewById(R.id.BatTime);
+        BatteryUIMethod();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        batText = findViewById(R.id.BatTime);
+        BatteryUIMethod();
+        super.onStop();
+    }
+
     private boolean isAccessGranted() {
         try {
             PackageManager packageManager = getPackageManager();
@@ -138,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 String my_ass = String.valueOf(Result.dataList.get(0).estimatedBatTimeLeft.toHours());
                 String fuck = String.valueOf(Result.dataList.get(index-1).percentLeft);
 
-                if (Result.dataList.get(0).estimatedBatTimeLeft.getSeconds() == 0)
+                if (Result.dataList.get(0).estimatedBatTimeLeft.getSeconds() <= 0)
                 {
                     runOnUiThread(new Runnable()
                     {
