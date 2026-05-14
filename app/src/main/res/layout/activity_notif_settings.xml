@@ -40,8 +40,10 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
                 android:layout_marginTop="75dp"
-                android:text="Set which Notifications, you'd like to recieve."
+                android:layout_marginEnd="25dp"
+                android:text="Set which Notifications you would like to recieve."
                 android:textAlignment="center"
                 android:textSize="30dp" />
 
