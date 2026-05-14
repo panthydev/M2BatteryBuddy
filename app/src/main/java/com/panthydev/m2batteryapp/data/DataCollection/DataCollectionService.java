@@ -40,8 +40,15 @@ public class DataCollectionService extends Service {
                 collector.CollectAndSendBatteryDataToDB();
                 collector.appDischargeTimer();
 
-                NotificationWorker notificationWorker = new NotificationWorker(getApplicationContext());
-                notificationWorker.NotifWorkerEntryPoint();
+                try{
+
+                    NotificationWorker notificationWorker = new NotificationWorker(getApplicationContext());
+                    notificationWorker.NotifWorkerEntryPoint();
+                } catch (Exception e) {
+
+                }
+
+
                 Log.d(TAG, "Collected data at " + System.currentTimeMillis());
             } catch (Exception e) {
                 Log.e(TAG, "Collection tick failed", e);
