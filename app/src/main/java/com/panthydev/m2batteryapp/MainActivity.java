@@ -51,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         BatteryUIMethod();
 
-        isAccessGranted();
         if (!isAccessGranted()) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
@@ -129,31 +128,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void OnResult(DataPack<BatteryData> Result)
             {
+                if (Result == null || Result.dataList == null || Result.dataList.isEmpty()) {
+                    return;
+                }
+                
                 int index = Result.dataList.size();
-                String my_ass = String.valueOf(Result.dataList.get(0).estimatedBatTimeLeft.toHours());
-                String fuck = String.valueOf(Result.dataList.get(index-1).percentLeft);
+                BatteryData latestData = Result.dataList.get(index - 1);
 
-                if (Result.dataList.get(0).estimatedBatTimeLeft.getSeconds() == 0)
+                runOnUiThread(new Runnable()
                 {
-                    runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run() {
-                            batText.setText(fuck + "%");
+                    @Override
+                    public void run() {
+                        // Fallback to percentage if prediction is null or zero
+                        if (latestData.estimatedBatTimeLeft == null || latestData.estimatedBatTimeLeft.getSeconds() == 0)
+                        {
+                            batText.setText(latestData.percentLeft + "%");
                         }
-                    });
-                }
-                else
-                {
-                    runOnUiThread(new Runnable()
-                    {
-                        @Override
-                        public void run() {
-                            batText.setText(my_ass);
+                        else
+                        {
+                            batText.setText(String.valueOf(latestData.estimatedBatTimeLeft.toHours()));
                         }
-                    });
-                }
-
+                    }
+                });
             }
         });
     }
