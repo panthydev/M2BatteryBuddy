@@ -1,6 +1,9 @@
 package com.panthydev.m2batteryapp.Managers;
 
+import static android.content.Context.BATTERY_SERVICE;
+
 import android.content.Context;
+import android.os.BatteryManager;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -51,10 +54,12 @@ public class NotificationWorker {
 
     /// All methods accessable under here ///
 
+    BatteryManager BM = (BatteryManager) Syscontext.getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager
+    boolean isCharging = BM.isCharging(); //Checks if the phone is charging
+
     int batPercent = SysCollector.batLevelPercent;
     Duration batTime = SysCollector.remainingBatLife;
     boolean isPowerSaveOn = SysCollector.powerSaveOn;
-    int batCurrentMAh = SysCollector.batCurrentMAh;
 
     // Get bools for which notification are turned on from prefs
 
@@ -62,9 +67,9 @@ public class NotificationWorker {
     boolean PSNotif60Percent = NotificationManager.GetPowersaveNotOnAt60Percent(Syscontext), PSNotif50Percent = NotificationManager.GetPowersaveNotOnAt50Percent(Syscontext), PSNotif40Percent = NotificationManager.GetPowersaveNotOnAt40Percent(Syscontext), PSNotif30Percent = NotificationManager.GetPowersaveNotOnAt30Percent(Syscontext), PSNotif20Percent = NotificationManager.GetPowersaveNotOnAt20Percent(Syscontext), PSNotif10Percent = NotificationManager.GetPowersaveNotOnAt10Percent(Syscontext);
 
     void ChangeNotifBool(boolean NotifToChange) {
-        if (!NotifToChange && batCurrentMAh <= 0) {
+        if (!NotifToChange && !isCharging) {
             NotifToChange = true;
-        } else if (NotifToChange && batCurrentMAh >= 0) {
+        } else if (NotifToChange && isCharging) {
             NotifToChange = false;
         }
     }
@@ -146,7 +151,7 @@ public class NotificationWorker {
     }
 
     void TurnOnPowerSavePercent() {
-        if (!isPowerSaveOn && batCurrentMAh <= 0) {
+        if (!isPowerSaveOn && !isCharging) {
             if (PSNotif60Percent) {
                 // insert Jacobs notif method for hvilken besked de skal have
             }
@@ -169,7 +174,7 @@ public class NotificationWorker {
     }
 
     void TurnOnPowerSaveHours() {
-        if (!isPowerSaveOn && batCurrentMAh <= 0) {
+        if (!isPowerSaveOn && !isCharging) {
             if (PSNotif3Hours) {
                 // insert Jacobs notif method for hvilken besked de skal have
             }
@@ -266,7 +271,7 @@ public class NotificationWorker {
     }
 
     void InformAboutPercent() {
-        if (batCurrentMAh <= 0) {
+        if (!isCharging) {
             if (Notif60Percent) {
                 // insert Jacobs notif method for hvilken besked de skal have
             }
@@ -289,7 +294,7 @@ public class NotificationWorker {
     }
 
     void InformAboutTime() {
-        if (batCurrentMAh <= 0) {
+        if (!isCharging) {
             if (Notif3Hours) {
                 // insert Jacobs notif method for hvilken besked de skal have
             }
