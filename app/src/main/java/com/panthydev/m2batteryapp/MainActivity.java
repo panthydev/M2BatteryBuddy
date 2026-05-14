@@ -2,20 +2,26 @@ package com.panthydev.m2batteryapp;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
+import android.Manifest;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.panthydev.m2batteryapp.Interfaces.Callback;
 import com.panthydev.m2batteryapp.Managers.DataManager;
 import com.panthydev.m2batteryapp.Managers.NotificationManager;
+import com.panthydev.m2batteryapp.Notifications.NotificationSender;
+import com.panthydev.m2batteryapp.Notifications.NotificationsMaker;
 import com.panthydev.m2batteryapp.data.DataCollection.WorkHandler;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
@@ -31,9 +37,11 @@ public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
     public TextView batText;
 
+    NotificationSender notificationSender;
     boolean appsCollectedStarted;
     boolean intervalStarted;
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,6 +114,17 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager.SetIntervalOn(this, intervalStarted = true);
         }
 
+        NotificationManagerCompat NMC = NotificationManagerCompat.from(this);
+        boolean areNotifsAllowed = NMC.areNotificationsEnabled();
+
+        if (!areNotifsAllowed) {
+            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+            startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+        }
+        else {
+            NotificationSender notificationSender = new NotificationSender(this);
+            notificationSender.send ("Reminder", "Don't forget your task!", 1);
+        }
     }
 
     @Override

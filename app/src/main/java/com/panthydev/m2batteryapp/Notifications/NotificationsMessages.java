@@ -25,18 +25,16 @@ public class NotificationsMessages {
         public static final String M_POWER_SAVE_IS_NOT_ON_30_MINUTES = "OH NO! There is only 30 minutes worth of battery left";
         public static final String  TIME_SPENT_IN_APP = "You’ve spent [time in app] inside [app name]. Ain’t that a bit much?";
 
-        public static final String TEMPERATURE = "Is it me or is it hot in here? High temps can KILL your phone!";
-        public static final String TEMPERATURE = "Your phone is getting pretty hot, maybe take a break?";
         public static final String CHARGING = "Your phone’s reached 95%. It might be best to stop charging.";
         public static final String CHARGING_100_POWER = "HEY! Power is at 100%! plz stop charging";
 
-        public static final String = "";
-        public static final String = "";
-        public static final String = "";
-        public static final String = "";
-        public static final String = "";
-        public static final String = "";
-        public static final String = "";
+//        public static final String = "";
+//        public static final String = "";
+//        public static final String = "";
+//        public static final String = "";
+//        public static final String = "";
+//        public static final String = "";
+//        public static final String = "";
 
         public static final String TEST = "man go";
         public static final String TEST_2 = "i so good at this shit";

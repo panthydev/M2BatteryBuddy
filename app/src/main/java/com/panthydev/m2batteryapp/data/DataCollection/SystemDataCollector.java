@@ -17,6 +17,7 @@ import android.os.SystemClock;
 import androidx.annotation.RequiresApi;
 
 import com.panthydev.m2batteryapp.Managers.DataManager;
+import com.panthydev.m2batteryapp.Notifications.NotificationsMaker;
 import com.panthydev.m2batteryapp.data.DataObjects.App;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
