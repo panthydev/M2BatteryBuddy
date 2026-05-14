@@ -37,6 +37,9 @@ public class NotificationWorker {
 
     private boolean prefSwitchTips;
 
+    private boolean PowerSaveOn, IsCharging;
+    private int EstBatTimeLeft, BatPercentage;
+
     private void initializePrefs() {
         prefSwitchPowersave60percent = NotificationManager.GetSwitchPowersave60percent(Syscontext);
         prefSwitchPowersave50percent = NotificationManager.GetSwitchPowersave50percent(Syscontext);
@@ -106,6 +109,11 @@ public class NotificationWorker {
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     public void NotifWorkerEntryPoint () {
+        BatPercentage = NotificationManager.GetBatteryPercent(Syscontext);
+        EstBatTimeLeft = NotificationManager.GetEstBatTime(Syscontext);
+        IsCharging = NotificationManager.GetIsCharging(Syscontext);
+        PowerSaveOn = NotificationManager.GetPowerSaveOn(Syscontext);
+
         Log.d("NotificationWorker", "yayy im awake, im gonna do notif stuff now");
         if (prefSwitchPowersave60percent || prefSwitchPowersave50percent || prefSwitchPowersave40percent || prefSwitchPowersave30percent || prefSwitchPowersave20percent || prefSwitchPowersave10percent) {
             SendPSNotifPercent();
