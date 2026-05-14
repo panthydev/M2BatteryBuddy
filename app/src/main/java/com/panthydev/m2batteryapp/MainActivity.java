@@ -108,6 +108,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ConstraintLayout buddy =findViewById(R.id.buddyView);
+        buddy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buddyChange();
+            }
+        });
+
         buddyChange();
     }
 
