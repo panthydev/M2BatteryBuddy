@@ -35,7 +35,7 @@ public class App extends Application {
         }
 
         // Temporary test endpoint; remove this once you store the endpoint from settings.
-        CloudSyncPreferences.SetSyncEndpoint(this, "http://10.0.2.2:18080/sync/"); // TODO: remove this line; it's just for testing
+        CloudSyncPreferences.SetSyncEndpoint(this, "https://battery-buddy-backend-834594360876.europe-west1.run.app/api/batbuddy/data"); // TODO: remove this line; it's just for testing
 
         Constraints syncConstraints = new Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)

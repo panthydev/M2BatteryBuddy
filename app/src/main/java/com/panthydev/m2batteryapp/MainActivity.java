@@ -2,10 +2,7 @@ package com.panthydev.m2batteryapp;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
-import android.Manifest;
 import android.app.AppOpsManager;
-import android.app.Notification;
-import android.app.NotificationChannel;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -13,19 +10,13 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.RequiresPermission;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.panthydev.m2batteryapp.Interfaces.Callback;
 import com.panthydev.m2batteryapp.Managers.DataManager;
-import com.panthydev.m2batteryapp.Managers.NotificationManager;
-import com.panthydev.m2batteryapp.Notifications.NotificationSender;
-import com.panthydev.m2batteryapp.Notifications.NotificationsMaker;
 import com.panthydev.m2batteryapp.data.DataCollection.WorkHandler;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
@@ -33,18 +24,18 @@ import com.panthydev.m2batteryapp.databinding.ActivityBaseBinding;
 
 import android.provider.Settings;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.time.Duration;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
     public TextView batText;
+    public TextView batText2;
+    public TextView batTextPercent;
 
-    boolean appsCollectedStarted;
-    boolean intervalStarted;
-
-    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,8 +49,22 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
+        WorkHandler workHandler = new WorkHandler();
+
+        workHandler.StartDataCollection(this);
+
         batText = findViewById(R.id.BatTime);
+        batText2 = findViewById(R.id.batTime2);
+        batTextPercent =findViewById(R.id.textViewUIPercent);
+
         BatteryUIMethod();
+
+        isAccessGranted();
+        if (!isAccessGranted()) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
+        }
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
@@ -103,61 +108,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        appsCollectedStarted = NotificationManager.GetFirstAppCollectionOn(this);
-        isAccessGranted();
-        if (!isAccessGranted() && !appsCollectedStarted) {
-            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-            startActivity(intent);
-        }
-
-        intervalStarted = NotificationManager.GetIntervalOn(this);
-        if (!intervalStarted) {
-            WorkHandler workHandler = new WorkHandler();
-            workHandler.StartDataCollection(this);
-            NotificationManager.SetIntervalOn(this, intervalStarted = true);
-        }
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                ActivityCompat.requestPermissions(
-                        this,
-                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                        101
-                );
+        ConstraintLayout buddy =findViewById(R.id.buddyView);
+        buddy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buddyChange();
             }
+        });
+
+        buddyChange();
+    }
+
+    private void buddyChange(){
+        ImageView buddy = (ImageView) findViewById(R.id.buddyImage);
+
+        Random r = new Random();
+        int random = r.nextInt(6 - 1) + 1; //range 5-1 (supposedly)
+
+        if (random==1){
+            buddy.setImageResource(R.drawable.bb1);
         }
-    }
-
-    @Override
-    protected void onStart() {
-        batText = findViewById(R.id.BatTime);
-        BatteryUIMethod();
-        super.onStart();
-    }
-
-    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
-    @Override
-    protected void onResume() {
-        batText = findViewById(R.id.BatTime);
-        BatteryUIMethod();
-        super.onResume();
-    }
-
-    @Override
-    protected void onPause() {
-        batText = findViewById(R.id.BatTime);
-        BatteryUIMethod();
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        batText = findViewById(R.id.BatTime);
-        BatteryUIMethod();
-        super.onStop();
+        else if (random==2){
+            buddy.setImageResource(R.drawable.bb2);
+        }
+        else if (random==3){
+            buddy.setImageResource(R.drawable.bb3);
+        }
+        else if (random==4){
+            buddy.setImageResource(R.drawable.bb4);
+        }
+        else
+            buddy.setImageResource(R.drawable.bb5);
     }
 
     private boolean isAccessGranted() {
+
         try {
             PackageManager packageManager = getPackageManager();
             ApplicationInfo applicationInfo = packageManager.getApplicationInfo(getPackageName(), 0);
@@ -165,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
             int mode = 0;
 
             mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, applicationInfo.uid, applicationInfo.packageName);
-            NotificationManager.SetFirstAppCollectionOn(this, appsCollectedStarted = true);
             return (mode == AppOpsManager.MODE_ALLOWED);
 
         } catch (PackageManager.NameNotFoundException e) {
@@ -174,23 +158,28 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public void BatteryUIMethod(){
         DataManager.GetBatteryDataAsync(this, 24, new Callback<DataPack<BatteryData>>()
         {
+            @RequiresApi(api = Build.VERSION_CODES.O) //got error from toHours osv. this fix?
             @Override
             public void OnResult(DataPack<BatteryData> Result)
             {
                 int index = Result.dataList.size();
+                int hoursRemaining = (int)Result.dataList.get(0).estimatedBatTimeLeft.toHours();
+                int minutesRemaining = (int) Result.dataList.get(0).estimatedBatTimeLeft.toMinutes();
+                String balls = String.valueOf(minutesRemaining-(hoursRemaining*60));
                 String my_ass = String.valueOf(Result.dataList.get(0).estimatedBatTimeLeft.toHours());
                 String fuck = String.valueOf(Result.dataList.get(index-1).percentLeft);
 
-                if (Result.dataList.get(0).estimatedBatTimeLeft.getSeconds() >= 0)
+                if (Result.dataList.get(0).estimatedBatTimeLeft.getSeconds() == 0)
                 {
                     runOnUiThread(new Runnable()
                     {
                         @Override
                         public void run() {
-                            batText.setText(fuck + "%");
+                            batTextPercent.setText(fuck + "%");
                         }
                     });
                 }
@@ -200,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         @Override
                         public void run() {
-                            batText.setText(my_ass);
+                            batText.setText(my_ass + " Hours" + " &");
+                            batText2.setText(balls+ " Minutes");
                         }
                     });
                 }

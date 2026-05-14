@@ -18,9 +18,11 @@ import com.panthydev.m2batteryapp.data.DataObjects.Mappers.BatteryDataMapper;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.io.File;
+import java.io.FileWriter;
 import java.util.Map;
+import java.io.File;
+import java.io.FileWriter;
 
 public class PayloadBuilder {
 
@@ -50,6 +52,9 @@ public class PayloadBuilder {
             payload.put("metadata", metadata);
             payload.put("batteryRows", buildRowsFromDataPack(batteryData, new BatteryDataMapper(), batchId, context, fullResync, uploadedAt, "batteryTable"));
             payload.put("appRows", buildRowsFromDataPack(appData, new AppMapper(), batchId, context, fullResync, uploadedAt, "appTable"));
+
+            // Save payload to file for inspection
+            savePayloadToFile(context, payload, batchId);
 
             return payload;
         } catch (Exception ex) {
@@ -90,6 +95,7 @@ public class PayloadBuilder {
         }
         return arr;
     }
+
     private static JSONObject contentValuesToJson(ContentValues values) throws Exception {
         JSONObject row = new JSONObject();
         for (Map.Entry<String, Object> entry : values.valueSet()) {
@@ -101,6 +107,19 @@ public class PayloadBuilder {
             }
         }
         return row;
+    }
+
+    private static void savePayloadToFile(Context context, JSONObject payload, String batchId) {
+        try {
+            String fileName = "payload_" + batchId + ".json";
+            File file = new File(context.getExternalFilesDir(null), fileName);
+            try (FileWriter writer = new FileWriter(file)) {
+                writer.write(payload.toString(4)); // Indented for readability
+            }
+            Log.d("PayloadBuilder", "Payload saved to: " + file.getAbsolutePath());
+        } catch (Exception e) {
+            Log.e("PayloadBuilder", "Failed to save payload", e);
+        }
     }
 
 }
