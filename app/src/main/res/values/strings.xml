@@ -83,4 +83,24 @@ If Power Saver mode is turned on, the phone will automatically use Dark mode.\n
         3. Avoid using fast charging, as most fast chargers push high amounts of power into the phone battery, causing high temperatures or damaging the battery in other ways.\n
         <b>Note - As with hot temperatures, cold temperatures can also be harmful for smartphones.</b>\n
 </string>
+
+    <string name="settings_about">
+        This app is a product made for the 2026 2nd semester Medialogy project, about problematic smartphone use (PSU). The group thought of an app, which helps promote foresight and inform the users of their power usage, which was inspired by a member in the group getting a warning from Rejsekort.\n\n
+The warning told him that he was not allowed to use adaptive battery (power saving mode) while using the danish traveling app “Rejsekort appen”. This is because the traveling app, and many others like it, use the GPS in the phone to track where you get on and get off of buses and trains. This is especially problematic, because the adaptive battery on Android smartphones turn off, or greatly limit the use of GPS, making it unavailable for apps such as “Rejsekort appen” to use properly.\n\n
+Long discussions, brainstorming and research unveiled the core of the problem; people don’t think about how much power they use throughout the day!\n
+This can cause a plethora of problems, most notably for this project, it can end in people getting fines and prohibited from using the Danish public transport system.\n
+    </string>
+    <string name="settings_data">
+        Data from the app will be collected remotely while in the testing period of the project, for the group to evaluate the app and assess how effectively it has helped with promoting foresight and inform the users of their power usage.\n
+The data collection started when you first installed the app and opened it for the first time.\n\n
+The data collected is battery related data such as; the current battery percentage, the estimated time left on the battery and the power discharge at certain intervals. Data about your phone itself will also be collected, this could be data such as; the amount of apps on the phone and the power discharge per app.\n\n
+This data is sent to the group remotely and processed, while being anonymous and untraceable to a specific participant in the test - unless specifically requested. The data will be stored for the duration of the project and up to 3 months afterwards - it will at the latest be deleted by the 16th of September 2026.\n\n
+If you wish to withdraw your data and participation in the test, please contact us on our email below.\n
+    </string>
+    <string name="settings_contact">
+        If you have any questions about the project, your data or is experiencing any problems, feel free to reach out to us on this email:\n
+create-26-mtab-2-gr02@student.aau.dk \n\n
+We will make sure to answer as fast as possible.\n
+Note: This mail is an email provided by Aalborg university, which means the group will not have access to it, and therefore not be able to answer any inquiries concerning the app, after the 30th of June 2026.\n
+    </string>
 </resources>
