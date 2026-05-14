@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -22,9 +24,11 @@ import com.panthydev.m2batteryapp.databinding.ActivityBaseBinding;
 
 import android.provider.Settings;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.time.Duration;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
@@ -102,12 +106,32 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buddyChange();
+    }
+
+    private void buddyChange(){
+        ImageView buddy = (ImageView) findViewById(R.id.buddyImage);
+
+        Random r = new Random();
+        int random = r.nextInt(6 - 1) + 1; //range 5-1 (supposedly)
+
+        if (random==1){
+            buddy.setImageResource(R.drawable.bb1);
+        }
+        else if (random==2){
+            buddy.setImageResource(R.drawable.bb2);
+        }
+        else if (random==3){
+            buddy.setImageResource(R.drawable.bb3);
+        }
+        else if (random==4){
+            buddy.setImageResource(R.drawable.bb4);
+        }
+        else
+            buddy.setImageResource(R.drawable.bb5);
     }
 
     private boolean isAccessGranted() {
-
-
-
 
         try {
             PackageManager packageManager = getPackageManager();
@@ -128,6 +152,7 @@ public class MainActivity extends AppCompatActivity {
     public void BatteryUIMethod(){
         DataManager.GetBatteryDataAsync(this, 24, new Callback<DataPack<BatteryData>>()
         {
+            @RequiresApi(api = Build.VERSION_CODES.O) //got error from toHours osv. this fix?
             @Override
             public void OnResult(DataPack<BatteryData> Result)
             {
