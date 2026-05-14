@@ -2,13 +2,17 @@ package com.panthydev.m2batteryapp.Managers;
 
 import static android.content.Context.BATTERY_SERVICE;
 
+import android.Manifest;
 import android.content.Context;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
+import androidx.annotation.RequiresPermission;
 
+import com.panthydev.m2batteryapp.MainActivity;
+import com.panthydev.m2batteryapp.Notifications.NotificationSender;
 import com.panthydev.m2batteryapp.data.DataCollection.SystemDataCollector;
 
 import java.time.Duration;
@@ -100,6 +104,7 @@ public class NotificationWorker {
         Notif10Percent = NotificationManager.GetPhoneHas10PercentLeft(Syscontext);
     }
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     public void NotifWorkerEntryPoint () {
         Log.d("NotificationWorker", "yayy im awake, im gonna do notif stuff now");
         if (prefSwitchPowersave60percent || prefSwitchPowersave50percent || prefSwitchPowersave40percent || prefSwitchPowersave30percent || prefSwitchPowersave20percent || prefSwitchPowersave10percent) {
@@ -223,25 +228,37 @@ public class NotificationWorker {
         }
     }
 
+
+    /**
+     * Brug disse to og erstat title samt message med den rigtige context, som jeg tror er Syscontext
+     * NotificationSender notificationSender = new NotificationSender(Syscontext);
+     * notificationSender.send ("title", "Message", 1);
+     */
     void TurnOnPowerSavePercent() {
         if (!isPowerSaveOn && !isCharging) {
             if (PSNotif60Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif50Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif40Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif30Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif20Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif10Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
         }
     }
@@ -249,22 +266,28 @@ public class NotificationWorker {
     void TurnOnPowerSaveHours() {
         if (!isPowerSaveOn && !isCharging) {
             if (PSNotif3Hours) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif25Hours) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif2Hours) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif15Hours) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif1Hour) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (PSNotif30Min) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
         }
     }
@@ -346,22 +369,28 @@ public class NotificationWorker {
     void InformAboutPercent() {
         if (!isCharging) {
             if (Notif60Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif50Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif40Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif30Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif20Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif10Percent) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
         }
     }
@@ -369,22 +398,28 @@ public class NotificationWorker {
     void InformAboutTime() {
         if (!isCharging) {
             if (Notif3Hours) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif25Hours) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif2Hours) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif15Hours) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif1Hour) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
             else if (Notif30Min) {
-                // insert Jacobs notif method for hvilken besked de skal have
+                NotificationSender notificationSender = new NotificationSender(Syscontext);
+                notificationSender.send ("title", "Message", 1);
             }
         }
     }
@@ -393,10 +428,11 @@ public class NotificationWorker {
 
     int randomInterval = (int)(Math.random() * 101);  // 0 to 100
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     public void SendOtherNotif () {
         if (batPercent > 50 && randomInterval == 1 && prefSwitchTips) {
-            // insert Jacobs notif method med en randomizer på hvilken notif de får
-            // Det skal være en collection som vi henter fra og laver ++ på
+            NotificationSender notificationSender = new NotificationSender(Syscontext);
+            notificationSender.send ("title", "Message", 1);
         }
     }
 }
