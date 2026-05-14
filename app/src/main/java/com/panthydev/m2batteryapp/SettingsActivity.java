@@ -27,6 +27,18 @@ public class SettingsActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
+
+        for (int i = 0; i <= 2; i++) { // i < number of accordions (starts from 0).
+            int arrow = getResources().getIdentifier("arrow_button_s_" + i, "id", getPackageName());
+            int hiddenView = getResources().getIdentifier("hidden_view_s_" + i, "id", getPackageName());
+            int baseCard = getResources().getIdentifier("base_cardview_s_" + i, "id", getPackageName());
+
+            AccordionMenu.changeView(findViewById(arrow), findViewById(hiddenView), findViewById(baseCard));
+            // Each cardview menu needs to have individual ids, which are then called here to define what buttons and cardview
+            // correspond to each other.
+        }
+
+
         BottomNavigationView topNavigationView = findViewById(R.id.top_menu_bar);
         topNavigationView.setSelectedItemId(R.id.app_settings_butt);
 
