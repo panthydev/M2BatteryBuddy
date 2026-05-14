@@ -2,26 +2,19 @@ package com.panthydev.m2batteryapp;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
-import android.Manifest;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.panthydev.m2batteryapp.Interfaces.Callback;
 import com.panthydev.m2batteryapp.Managers.DataManager;
-import com.panthydev.m2batteryapp.Managers.NotificationManager;
-import com.panthydev.m2batteryapp.Notifications.NotificationSender;
-import com.panthydev.m2batteryapp.Notifications.NotificationsMaker;
 import com.panthydev.m2batteryapp.data.DataCollection.WorkHandler;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
@@ -37,11 +30,6 @@ public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
     public TextView batText;
 
-    NotificationSender notificationSender;
-    boolean appsCollectedStarted;
-    boolean intervalStarted;
-
-    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,8 +43,20 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
+        WorkHandler workHandler = new WorkHandler();
+
+        workHandler.StartDataCollection(this);
+
         batText = findViewById(R.id.BatTime);
+
         BatteryUIMethod();
+
+        isAccessGranted();
+        if (!isAccessGranted()) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
+        }
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
@@ -156,6 +156,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean isAccessGranted() {
+
+
+
+
         try {
             PackageManager packageManager = getPackageManager();
             ApplicationInfo applicationInfo = packageManager.getApplicationInfo(getPackageName(), 0);
@@ -183,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 String my_ass = String.valueOf(Result.dataList.get(0).estimatedBatTimeLeft.toHours());
                 String fuck = String.valueOf(Result.dataList.get(index-1).percentLeft);
 
-                if (Result.dataList.get(0).estimatedBatTimeLeft.getSeconds() >= 0)
+                if (Result.dataList.get(0).estimatedBatTimeLeft.getSeconds() == 0)
                 {
                     runOnUiThread(new Runnable()
                     {
