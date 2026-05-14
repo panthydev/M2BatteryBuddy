@@ -8,9 +8,7 @@ import android.os.Build;
 import androidx.core.app.NotificationCompat;
 import com.panthydev.m2batteryapp.R;
 
-/**
- *
- */
+
 public class NotificationSender {
 
     private Context context;
