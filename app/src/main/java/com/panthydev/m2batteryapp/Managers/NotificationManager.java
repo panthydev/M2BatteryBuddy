@@ -2,6 +2,7 @@ package com.panthydev.m2batteryapp.Managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.widget.Switch;
 
 public class NotificationManager {
 
@@ -11,6 +12,7 @@ public class NotificationManager {
     private static final String PREF_NAME = "app_prefs";
 
     private static SharedPreferences getPrefs(Context context){
+
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
@@ -20,6 +22,13 @@ public class NotificationManager {
 
     private static boolean getBooleanPref(Context context, String key, boolean defaultValue){
         return getPrefs(context).getBoolean(key, defaultValue);
+    }
+
+    public static void SetInitialized(Context context, boolean b){
+        putBooleanPref(context, "AllPrefsInitialized", b);
+    }
+    public static boolean GetInitialized(Context context){
+        return getBooleanPref(context, "AllPrefsInitialized", false);
     }
 
     public static void SetSwitchPowersave60percent(Context context, boolean b){

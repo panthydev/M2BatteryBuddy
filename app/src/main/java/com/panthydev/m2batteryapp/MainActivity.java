@@ -29,6 +29,7 @@ import java.time.Duration;
 public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
     public TextView batText;
+    public TextView batText2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         workHandler.StartDataCollection(this);
 
         batText = findViewById(R.id.BatTime);
+        batText2 = findViewById(R.id.batTime2);
 
         BatteryUIMethod();
 
@@ -152,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         @Override
                         public void run() {
-                            batText.setText(my_ass + "Hours" + "&" + balls + "minutes" + "remaining");
+                            batText.setText(my_ass + " Hours" + " &");
+                            batText2.setText(balls+ " Minutes");
                         }
                     });
                 }
