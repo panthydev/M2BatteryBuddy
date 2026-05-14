@@ -5,6 +5,7 @@ import static android.content.Context.BATTERY_SERVICE;
 import android.content.Context;
 import android.os.BatteryManager;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -16,17 +17,91 @@ import java.util.Objects;
 public class NotificationWorker {
 
     Context Syscontext;
-    SystemDataCollector SysCollector = new SystemDataCollector(Syscontext);
+    SystemDataCollector SysCollector;
 
-    boolean prefSwitchPowersave60percent = NotificationManager.GetSwitchPowersave60percent(Syscontext), prefSwitchPowersave50percent = NotificationManager.GetSwitchPowersave50percent(Syscontext), prefSwitchPowersave40percent = NotificationManager.GetSwitchPowersave40percent(Syscontext), prefSwitchPowersave30percent = NotificationManager.GetSwitchPowersave30percent(Syscontext), prefSwitchPowersave20percent = NotificationManager.GetSwitchPowersave20percent(Syscontext), prefSwitchPowersave10percent = NotificationManager.GetSwitchPowersave10percent(Syscontext);
-    boolean prefSwitchPowersave3Hours = NotificationManager.GetSwitchPowersave3hours(Syscontext), prefSwitchPowersave25Hours = NotificationManager.GetSwitchPowersave25hours(Syscontext), prefSwitchPowersave2Hours = NotificationManager.GetSwitchPowersave2hours(Syscontext), prefSwitchPowersave15Hours = NotificationManager.GetSwitchPowersave15hours(Syscontext), prefSwitchPowersave1Hour = NotificationManager.GetSwitchPowersave1hours(Syscontext), prefSwitchPowersave30Min = NotificationManager.GetSwitchPowersave30min(Syscontext);
+    public NotificationWorker(Context context) {
+        this.Syscontext = context;
+        this.SysCollector = new SystemDataCollector(context);
+        initializePrefs();
+    }
 
-    boolean prefSwitch60percent = NotificationManager.GetSwitch60percent(Syscontext), prefSwitch50percent = NotificationManager.GetSwitch50percent(Syscontext), prefSwitch40percent = NotificationManager.GetSwitch40percent(Syscontext), prefSwitch30percent = NotificationManager.GetSwitch30percent(Syscontext), prefSwitch20percent = NotificationManager.GetSwitch20percent(Syscontext), prefSwitch10percent = NotificationManager.GetSwitch10percent(Syscontext);
-    boolean prefSwitch3Hours = NotificationManager.GetSwitch3hours(Syscontext), prefSwitch25Hours = NotificationManager.GetSwitch25hours(Syscontext), prefSwitch2Hours = NotificationManager.GetSwitch2hours(Syscontext), prefSwitch15Hours = NotificationManager.GetSwitch15hours(Syscontext), prefSwitch1Hour = NotificationManager.GetSwitch1hours(Syscontext), prefSwitch30Min = NotificationManager.GetSwitch30min(Syscontext);
+    private boolean prefSwitchPowersave60percent, prefSwitchPowersave50percent, prefSwitchPowersave40percent, prefSwitchPowersave30percent, prefSwitchPowersave20percent, prefSwitchPowersave10percent;
+    private boolean prefSwitchPowersave3Hours, prefSwitchPowersave25Hours, prefSwitchPowersave2Hours, prefSwitchPowersave15Hours, prefSwitchPowersave1Hour, prefSwitchPowersave30Min;
 
-    boolean prefSwitchTips = NotificationManager.GetSwitchTips(Syscontext);
+    private boolean prefSwitch60percent, prefSwitch50percent, prefSwitch40percent, prefSwitch30percent, prefSwitch20percent, prefSwitch10percent;
+    private boolean prefSwitch3Hours, prefSwitch25Hours, prefSwitch2Hours, prefSwitch15Hours, prefSwitch1Hour, prefSwitch30Min;
+
+    private boolean prefSwitchTips;
+
+    private void initializePrefs() {
+        prefSwitchPowersave60percent = NotificationManager.GetSwitchPowersave60percent(Syscontext);
+        prefSwitchPowersave50percent = NotificationManager.GetSwitchPowersave50percent(Syscontext);
+        prefSwitchPowersave40percent = NotificationManager.GetSwitchPowersave40percent(Syscontext);
+        prefSwitchPowersave30percent = NotificationManager.GetSwitchPowersave30percent(Syscontext);
+        prefSwitchPowersave20percent = NotificationManager.GetSwitchPowersave20percent(Syscontext);
+        prefSwitchPowersave10percent = NotificationManager.GetSwitchPowersave10percent(Syscontext);
+
+        prefSwitchPowersave3Hours = NotificationManager.GetSwitchPowersave3hours(Syscontext);
+        prefSwitchPowersave25Hours = NotificationManager.GetSwitchPowersave25hours(Syscontext);
+        prefSwitchPowersave2Hours = NotificationManager.GetSwitchPowersave2hours(Syscontext);
+        prefSwitchPowersave15Hours = NotificationManager.GetSwitchPowersave15hours(Syscontext);
+        prefSwitchPowersave1Hour = NotificationManager.GetSwitchPowersave1hours(Syscontext);
+        prefSwitchPowersave30Min = NotificationManager.GetSwitchPowersave30min(Syscontext);
+
+        prefSwitch60percent = NotificationManager.GetSwitch60percent(Syscontext);
+        prefSwitch50percent = NotificationManager.GetSwitch50percent(Syscontext);
+        prefSwitch40percent = NotificationManager.GetSwitch40percent(Syscontext);
+        prefSwitch30percent = NotificationManager.GetSwitch30percent(Syscontext);
+        prefSwitch20percent = NotificationManager.GetSwitch20percent(Syscontext);
+        prefSwitch10percent = NotificationManager.GetSwitch10percent(Syscontext);
+
+        prefSwitch3Hours = NotificationManager.GetSwitch3hours(Syscontext);
+        prefSwitch25Hours = NotificationManager.GetSwitch25hours(Syscontext);
+        prefSwitch2Hours = NotificationManager.GetSwitch2hours(Syscontext);
+        prefSwitch15Hours = NotificationManager.GetSwitch15hours(Syscontext);
+        prefSwitch1Hour = NotificationManager.GetSwitch1hours(Syscontext);
+        prefSwitch30Min = NotificationManager.GetSwitch30min(Syscontext);
+
+        prefSwitchTips = NotificationManager.GetSwitchTips(Syscontext);
+
+        // Battery State
+        BatteryManager BM = (BatteryManager) Syscontext.getSystemService(BATTERY_SERVICE);
+        isCharging = BM.isCharging();
+        batPercent = SysCollector.batLevelPercent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            batTime = SysCollector.remainingBatLife;
+        }
+        isPowerSaveOn = SysCollector.powerSaveOn;
+
+        PSNotif3Hours = NotificationManager.GetPowersaveNotOn3HoursLeft(Syscontext);
+        PSNotif25Hours = NotificationManager.GetPowersaveNotOn25HoursLeft(Syscontext);
+        PSNotif2Hours = NotificationManager.GetPowersaveNotOn2HoursLeft(Syscontext);
+        PSNotif15Hours = NotificationManager.GetPowersaveNotOn15HoursLeft(Syscontext);
+        PSNotif1Hour = NotificationManager.GetPowersaveNotOn1HourLeft(Syscontext);
+        PSNotif30Min = NotificationManager.GetPowersaveNotOn30MinLeft(Syscontext);
+        PSNotif60Percent = NotificationManager.GetPowersaveNotOnAt60Percent(Syscontext);
+        PSNotif50Percent = NotificationManager.GetPowersaveNotOnAt50Percent(Syscontext);
+        PSNotif40Percent = NotificationManager.GetPowersaveNotOnAt40Percent(Syscontext);
+        PSNotif30Percent = NotificationManager.GetPowersaveNotOnAt30Percent(Syscontext);
+        PSNotif20Percent = NotificationManager.GetPowersaveNotOnAt20Percent(Syscontext);
+        PSNotif10Percent = NotificationManager.GetPowersaveNotOnAt10Percent(Syscontext);
+
+        Notif3Hours = NotificationManager.GetPhoneHas3HoursLeft(Syscontext);
+        Notif25Hours = NotificationManager.GetPhoneHas25HoursLeft(Syscontext);
+        Notif2Hours = NotificationManager.GetPhoneHas2HoursLeft(Syscontext);
+        Notif15Hours = NotificationManager.GetPhoneHas15HoursLeft(Syscontext);
+        Notif1Hour = NotificationManager.GetPhoneHas1HourLeft(Syscontext);
+        Notif30Min = NotificationManager.GetPhoneHas30MinLeft(Syscontext);
+        Notif60Percent = NotificationManager.GetPhoneHas60PercentLeft(Syscontext);
+        Notif50Percent = NotificationManager.GetPhoneHas50PercentLeft(Syscontext);
+        Notif40Percent = NotificationManager.GetPhoneHas40PercentLeft(Syscontext);
+        Notif30Percent = NotificationManager.GetPhoneHas30PercentLeft(Syscontext);
+        Notif20Percent = NotificationManager.GetPhoneHas20PercentLeft(Syscontext);
+        Notif10Percent = NotificationManager.GetPhoneHas10PercentLeft(Syscontext);
+    }
 
     public void NotifWorkerEntryPoint () {
+        Log.d("NotificationWorker", "yayy im awake, im gonna do notif stuff now");
         if (prefSwitchPowersave60percent || prefSwitchPowersave50percent || prefSwitchPowersave40percent || prefSwitchPowersave30percent || prefSwitchPowersave20percent || prefSwitchPowersave10percent) {
             SendPSNotifPercent();
         }
@@ -54,17 +129,15 @@ public class NotificationWorker {
 
     /// All methods accessable under here ///
 
-    BatteryManager BM = (BatteryManager) Syscontext.getSystemService(BATTERY_SERVICE); //Getting access to the Battery Manager
-    boolean isCharging = BM.isCharging(); //Checks if the phone is charging
-
-    int batPercent = SysCollector.batLevelPercent;
-    Duration batTime = SysCollector.remainingBatLife;
-    boolean isPowerSaveOn = SysCollector.powerSaveOn;
+    private boolean isCharging;
+    private int batPercent;
+    private Duration batTime;
+    private boolean isPowerSaveOn;
 
     // Get bools for which notification are turned on from prefs
 
-    boolean PSNotif3Hours = NotificationManager.GetPowersaveNotOn3HoursLeft(Syscontext), PSNotif25Hours = NotificationManager.GetPowersaveNotOn25HoursLeft(Syscontext), PSNotif2Hours = NotificationManager.GetPowersaveNotOn2HoursLeft(Syscontext), PSNotif15Hours = NotificationManager.GetPowersaveNotOn15HoursLeft(Syscontext), PSNotif1Hour = NotificationManager.GetPowersaveNotOn1HourLeft(Syscontext), PSNotif30Min = NotificationManager.GetPowersaveNotOn30MinLeft(Syscontext);
-    boolean PSNotif60Percent = NotificationManager.GetPowersaveNotOnAt60Percent(Syscontext), PSNotif50Percent = NotificationManager.GetPowersaveNotOnAt50Percent(Syscontext), PSNotif40Percent = NotificationManager.GetPowersaveNotOnAt40Percent(Syscontext), PSNotif30Percent = NotificationManager.GetPowersaveNotOnAt30Percent(Syscontext), PSNotif20Percent = NotificationManager.GetPowersaveNotOnAt20Percent(Syscontext), PSNotif10Percent = NotificationManager.GetPowersaveNotOnAt10Percent(Syscontext);
+    private boolean PSNotif3Hours, PSNotif25Hours, PSNotif2Hours, PSNotif15Hours, PSNotif1Hour, PSNotif30Min;
+    private boolean PSNotif60Percent, PSNotif50Percent, PSNotif40Percent, PSNotif30Percent, PSNotif20Percent, PSNotif10Percent;
 
     void ChangeNotifBool(boolean NotifToChange) {
         if (!NotifToChange && !isCharging) {
@@ -199,8 +272,8 @@ public class NotificationWorker {
 
     //////////////////////
 
-    boolean Notif3Hours = NotificationManager.GetPhoneHas3HoursLeft(Syscontext), Notif25Hours = NotificationManager.GetPhoneHas25HoursLeft(Syscontext), Notif2Hours = NotificationManager.GetPhoneHas2HoursLeft(Syscontext), Notif15Hours = NotificationManager.GetPhoneHas15HoursLeft(Syscontext), Notif1Hour = NotificationManager.GetPhoneHas1HourLeft(Syscontext), Notif30Min = NotificationManager.GetPhoneHas30MinLeft(Syscontext);
-    boolean Notif60Percent = NotificationManager.GetPhoneHas60PercentLeft(Syscontext), Notif50Percent = NotificationManager.GetPhoneHas50PercentLeft(Syscontext), Notif40Percent = NotificationManager.GetPhoneHas40PercentLeft(Syscontext), Notif30Percent = NotificationManager.GetPhoneHas30PercentLeft(Syscontext), Notif20Percent = NotificationManager.GetPhoneHas20PercentLeft(Syscontext), Notif10Percent = NotificationManager.GetPhoneHas10PercentLeft(Syscontext);
+    private boolean Notif3Hours, Notif25Hours, Notif2Hours, Notif15Hours, Notif1Hour, Notif30Min;
+    private boolean Notif60Percent, Notif50Percent, Notif40Percent, Notif30Percent, Notif20Percent, Notif10Percent;
 
 
     @RequiresApi(api = Build.VERSION_CODES.O)
