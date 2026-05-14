@@ -13,6 +13,8 @@ import java.nio.charset.StandardCharsets;
 
 public final class BackendHttpClient {
 
+    // https://battery-buddy-backend-834594360876.europe-west1.run.app
+
     private static final int CONNECT_TIMEOUT_MS = 15_000;
     private static final int READ_TIMEOUT_MS = 30_000;
 
