@@ -4,6 +4,8 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 import android.Manifest;
 import android.app.AppOpsManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -15,6 +17,7 @@ import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -38,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
     public TextView batText;
 
-    NotificationSender notificationSender;
     boolean appsCollectedStarted;
     boolean intervalStarted;
 
@@ -133,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
     }
 
+    @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     @Override
     protected void onResume() {
         batText = findViewById(R.id.BatTime);
