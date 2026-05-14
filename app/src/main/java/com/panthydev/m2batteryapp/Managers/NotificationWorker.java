@@ -420,10 +420,10 @@ public class NotificationWorker {
 
     //////////////////////
 
-    int randomInterval = (int)(Math.random() * 101);  // 0 to 100
-
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     public void SendOtherNotif () {
+        int randomInterval = (int)(Math.random() * 101);  // 0 to 100
+
         if (batPercent > 50 && randomInterval == 1 && prefSwitchTips) {
             NotificationSender notificationSender = new NotificationSender(Syscontext);
             notificationSender.send ("title", "Message", 1);
