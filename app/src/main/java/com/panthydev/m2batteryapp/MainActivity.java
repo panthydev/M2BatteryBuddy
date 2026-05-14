@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
     public TextView batText;
     public TextView batText2;
+    public TextView batTextPercent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
         batText = findViewById(R.id.BatTime);
         batText2 = findViewById(R.id.batTime2);
+        batTextPercent =findViewById(R.id.textViewUIPercent);
 
         BatteryUIMethod();
 
@@ -169,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         @Override
                         public void run() {
-                            batText.setText(fuck + "%");
+                            batTextPercent.setText(fuck + "%");
                         }
                     });
                 }
