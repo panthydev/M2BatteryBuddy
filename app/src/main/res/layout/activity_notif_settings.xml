@@ -233,7 +233,7 @@
                     android:id="@+id/textViewPowerSavePercent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="20dp"
                     android:text="Power Save Mode: Battery Percentage"
                     android:textSize="20sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -435,7 +435,7 @@
                     android:trackTint="@color/orange_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewPercent" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
                 <Switch
                     android:id="@+id/switchPercent2"
@@ -548,6 +548,17 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Recieve Notifications once your smartphone reaches a certain percentage."
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewPercent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -578,7 +589,7 @@
                     android:trackTint="@color/orange_light"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewHour" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
                 <Switch
                     android:id="@+id/switchHour2"
@@ -691,6 +702,17 @@
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="Recieve Notifications once your smartphone reaches a certain time remaining before it shuts off."
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewHour" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <View
