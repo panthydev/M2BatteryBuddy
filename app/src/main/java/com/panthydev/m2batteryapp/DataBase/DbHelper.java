@@ -105,6 +105,8 @@ public class DbHelper extends SQLiteOpenHelper implements AutoCloseable {
         return GetAppData(appName, -1);
     }
 
+    //TODO make a method that returns a list of key value pairs of app (name) and  AVERAGE discharge, calc it by getting sum of all discharge / number of apps
+    //TODO return list of all apps with app name, then activity can calculate discharge
     public DataPack<App> GetAppDataSince(String appName, String startTimestamp) {
         String query = QueryBuilder.SelectAppDataSince(appName, startTimestamp);
 

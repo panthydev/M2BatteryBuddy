@@ -34,6 +34,22 @@ public class DataManager
         }).start();
     }
 
+/*
+    public static void GetAppDataAsync(Context context, int hours, Callback<DataPack<App>> callback)
+    {
+        DbHelper dbHelper = new DbHelper(context);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                DataPack<App> dataPack = dbHelper.GetAppData(hours);
+                callback.OnResult(dataPack);
+            }
+        }).start();
+    }
+
+*/
+
     /**
      * <p>Method to send battery data to the database, in the form of a dataPack dto.</p>
      * @param context
