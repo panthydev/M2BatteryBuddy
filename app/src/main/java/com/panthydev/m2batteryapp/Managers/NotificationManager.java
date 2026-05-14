@@ -2,7 +2,6 @@ package com.panthydev.m2batteryapp.Managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.widget.Switch;
 
 public class NotificationManager {
 
@@ -12,7 +11,6 @@ public class NotificationManager {
     private static final String PREF_NAME = "app_prefs";
 
     private static SharedPreferences getPrefs(Context context){
-
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
@@ -24,13 +22,8 @@ public class NotificationManager {
         return getPrefs(context).getBoolean(key, defaultValue);
     }
 
-    public static void SetInitialized(Context context, boolean b){
-        putBooleanPref(context, "AllPrefsInitialized", b);
-    }
-    public static boolean GetInitialized(Context context){
-        return getBooleanPref(context, "AllPrefsInitialized", false);
-    }
-
+    /// Notif Bools ///
+    //Percent and powersave
     public static void SetSwitchPowersave60percent(Context context, boolean b){
         putBooleanPref(context, "SwitchPowersave60percent", b);
     }
@@ -210,14 +203,31 @@ public class NotificationManager {
         return getBooleanPref(context, "SwitchTips", false);
     }
 
+    /// System stuff ///
+
+    public static void SetFirstAppCollectionOn(Context context, boolean b){
+        putBooleanPref(context, "FirstAppCollection", b);
+    }
+
+    public static boolean GetFirstAppCollectionOn(Context context){
+        return getBooleanPref(context, "FirstAppCollection", false);
+    }
+
+    public static void SetIntervalOn(Context context, boolean b){
+        putBooleanPref(context, "Interval", b);
+    }
+
+    public static boolean GetIntervalOn(Context context){
+        return getBooleanPref(context, "Interval", false);
+    }
 
     // Powersave related
-        //    public static void SetPowersaveRejseKortApp(Context context, boolean b){
-        //        putBooleanPref(context, "PowersaveRejseKortApp", b);
+        //    public static void SetPowersaveRejseKortApp(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "PowersaveRejseKortApp", b);
         //    }
         //
-        //    public static boolean GetPowersaveRejseKortApp(Context context){
-        //        return getBooleanPref(context, "PowersaveRejseKortApp", false);
+        //    public static boolean GetPowersaveRejseKortApp(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "PowersaveRejseKortApp", false);
         //    }
 
     /// POWER SAVE PERCENT ///
@@ -417,44 +427,44 @@ public class NotificationManager {
     }
 
     // Other related
-        //    public static void SetBatteryMaxCapacityBad(Context context, boolean b){
-        //        putBooleanPref(context, "BatteryMaxCapacityBad", b);
+        //    public static void SetBatteryMaxCapacityBad(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "BatteryMaxCapacityBad", b);
         //    }
         //
-        //    public static boolean GetBatteryMaxCapacityBad(Context context){
-        //        return getBooleanPref(context, "BatteryMaxCapacityBad", false);
+        //    public static boolean GetBatteryMaxCapacityBad(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "BatteryMaxCapacityBad", false);
         //    }
         //
-        //    public static void SetDigitalMaintenanceCheck(Context context, boolean b){
-        //        putBooleanPref(context, "DigitalMaintenanceCheck", b);
+        //    public static void SetDigitalMaintenanceCheck(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "DigitalMaintenanceCheck", b);
         //    }
         //
-        //    public static boolean GetDigitalMaintenanceCheck(Context context){
-        //        return getBooleanPref(context, "DigitalMaintenanceCheck", false);
+        //    public static boolean GetDigitalMaintenanceCheck(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "DigitalMaintenanceCheck", false);
         //    }
         //
-        //    public static void SetOnlyWhenOver50Percent(Context context, boolean b){
-        //        putBooleanPref(context, "OnlyWhenOver50Percent", b);
+        //    public static void SetOnlyWhenOver50Percent(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "OnlyWhenOver50Percent", b);
         //    }
         //
-        //    public static boolean GetOnlyWhenOver50Percent(Context context){
-        //        return getBooleanPref(context, "OnlyWhenOver50Percent", false);
+        //    public static boolean GetOnlyWhenOver50Percent(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "OnlyWhenOver50Percent", false);
         //    }
         //
-        //    public static void SetReadTipsAndTricks(Context context, boolean b){
-        //        putBooleanPref(context, "ReadTipsAndTricks", b);
+        //    public static void SetReadTipsAndTricks(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "ReadTipsAndTricks", b);
         //    }
         //
-        //    public static boolean GetReadTipsAndTricks(Context context){
-        //        return getBooleanPref(context, "ReadTipsAndTricks", false);
+        //    public static boolean GetReadTipsAndTricks(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "ReadTipsAndTricks", false);
         //    }
         //
-        //    public static void SetGoldilocksZone(Context context, boolean b){
-        //        putBooleanPref(context, "GoldilocksZone", b);
+        //    public static void SetGoldilocksZone(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "GoldilocksZone", b);
         //    }
         //
-        //    public static boolean GetGoldilocksZone(Context context){
-        //        return getBooleanPref(context, "GoldilocksZone", false);
+        //    public static boolean GetGoldilocksZone(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "GoldilocksZone", false);
         //    }
 
 }

@@ -5,9 +5,9 @@ public class QueryBuilder
 
     public static String SelectTable(String table) { return "SELECT * FROM " + table;}
 
-    private static String SelectTableWhere(String table, String conditionColumn, String condition)
+    private static String SelectTableWhere(String table, String condition)
     {
-        return SelectTable(table) + " WHERE " + conditionColumn + " " + condition;
+        return SelectTable(table) + " WHERE " + condition;
     }
 
 
@@ -27,7 +27,7 @@ public class QueryBuilder
             return SelectTable(table);
         }
 
-        return SelectTableWhere(table, BatteryTable.TIMESTAMP_COL, ">= '" + startDate + "'");
+        return SelectTableWhere(table, BatteryTable.TIMESTAMP_COL + " >= '" + startDate + "'");
     }
 
     public static String SelectAppDataFromTimeRange(String appName, String rangeStartDate, String rangeEndDate) {
@@ -65,7 +65,7 @@ public class QueryBuilder
 
 
     public static String CreateBatteryTable(){
-        String query = "CREATE TABLE " + BatteryTable.TABLE_NAME + " ("
+        return "CREATE TABLE " + BatteryTable.TABLE_NAME + " ("
                 + BatteryTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + BatteryTable.PERCENT_REMAINING_COL + " REAL, "
                 + BatteryTable.CURRENT_MAH_COL + " REAL, "
@@ -73,18 +73,16 @@ public class QueryBuilder
                 + BatteryTable.MAX_CAPACITY_MAH_COL + " REAL, "
                 + BatteryTable.POWER_SAVING_ON_COL + " INTEGER, " // 1/0 for true/false
                 + BatteryTable.TIMESTAMP_COL + " TEXT)";
-
-        return query;
     }
 
     public static String CreateAppTable(){
-        String query = "CREATE TABLE " + AppTable.TABLE_NAME + " ("
+        return "CREATE TABLE " + AppTable.TABLE_NAME + " ("
                 + AppTable.ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + AppTable.APP_NAME_COL + " TEXT, "
                 + AppTable.APP_CATEGORY_COL + " INTEGER, "
                 + AppTable.APP_DISCHARGE_COL + " INTEGER, "
+                + AppTable.BACKGROUND_PROCESS_COUNT_COL + " INTEGER, "
                 + AppTable.TIMESTAMP_COL + " TEXT)";
-        return query;
     }
 
 

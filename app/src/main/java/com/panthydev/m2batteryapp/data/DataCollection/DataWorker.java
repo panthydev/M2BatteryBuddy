@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import com.panthydev.m2batteryapp.Managers.NotificationWorker;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -37,6 +38,10 @@ public class DataWorker extends Worker{
 
             sysDataCollector.CollectAndSendBatteryDataToDB();
             sysDataCollector.appDischargeTimer();
+
+            // Run Notification Worker
+            NotificationWorker notificationWorker = new NotificationWorker(context);
+            notificationWorker.NotifWorkerEntryPoint();
 
 
             return Result.success();
