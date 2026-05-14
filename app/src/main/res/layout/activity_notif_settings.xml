@@ -57,7 +57,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteX="20dp">
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchTips"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -66,14 +66,13 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="Tips and Tricks"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textViewDesciptionTT" />
+                    app:layout_constraintTop_toBottomOf="@+id/textViewDesciptionTT"
+                    app:track="@drawable/switch_track" />
 
                 <TextView
                     android:id="@+id/textViewTipsTricks"
@@ -92,7 +91,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Recieve Notifications with tips and tricks, to better save power thoughout the day."
+                    android:text="Recieve Notifications with tips and tricks, to better maintain your smartphone and save power thoughout the day."
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
@@ -111,7 +110,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteX="20dp">
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchPowerSavePercent"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -119,17 +118,16 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="60%"
-                    android:textColorLink="@color/orange_light"
+                    android:text="60% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView8" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchPowerSavePercent2"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -137,19 +135,19 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="50%"
+                    android:text="50% Remaining"
                     android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.518"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/SwitchPowerSavePercent"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchPowerSavePercent3"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -157,19 +155,18 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="40%"
-                    android:textColorLink="@color/orange_light"
+                    android:text="40% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/SwitchPowerSavePercent2"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchPowerSavePercent4"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -177,19 +174,18 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="30%"
-                    android:textColorLink="@color/orange_light"
+                    android:text="30% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.518"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/SwitchPowerSavePercent3"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchPowerSavePercent5"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -197,19 +193,18 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="20%"
-                    android:textColorLink="@color/orange_light"
+                    android:text="20% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/SwitchPowerSavePercent4"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchPowerSavePercent6"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -217,12 +212,11 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="10%"
-                    android:textColorLink="@color/orange_light"
+                    android:text="10% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
@@ -265,7 +259,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteX="20dp">
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchPSHour"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -274,16 +268,15 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="3 Hours"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchPSHour2"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -292,18 +285,17 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="2 Hours 30 Minutes"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.518"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/SwitchPSHour"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchPSHour3"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -312,18 +304,17 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="2 Hours"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/SwitchPSHour2"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchPSHour4"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -332,18 +323,17 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="1 Hour 30 Minutes"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.518"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchPSHour3"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchPSHour5"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -352,18 +342,17 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="1 Hour"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchPSHour4"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchPSHour6"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -372,11 +361,10 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="30 Minutes"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
@@ -419,7 +407,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteX="20dp">
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchPercent"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -427,17 +415,16 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="60%"
-                    android:textColorLink="@color/orange_light"
+                    android:text="60% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchPercent2"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -445,19 +432,18 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="50%"
-                    android:textColorLink="@color/orange_light"
+                    android:text=" 50% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.518"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/SwitchPercent"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchPercent3"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -465,19 +451,18 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="40%"
-                    android:textColorLink="@color/orange_light"
+                    android:text="40% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchPercent2"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchPercent4"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -485,19 +470,18 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="30%"
-                    android:textColorLink="@color/orange_light"
+                    android:text=" 30% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.518"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchPercent3"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchPercent5"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -505,19 +489,18 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="20%"
-                    android:textColorLink="@color/orange_light"
+                    android:text="20% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchPercent4"
+                    app:track="@drawable/switch_track"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchPercent6"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -525,16 +508,15 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="25dp"
                     android:showText="true"
-                    android:text="10%"
-                    android:textColorLink="@color/orange_light"
+                    android:text="10% Remaining"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchPercent5"
+                    app:track="@drawable/switch_track"
                     tools:checked="false" />
 
                 <TextView
@@ -573,7 +555,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:layout_editor_absoluteX="20dp">
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/SwitchHour"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -582,16 +564,15 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="3 Hours"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchHour2"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -600,18 +581,17 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="2 Hours 30 Minutes"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.518"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/SwitchHour"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchHour3"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -620,18 +600,17 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="2 Hours"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchHour2"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchHour4"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -640,18 +619,17 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="1 Hour 30 Minutes"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.518"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchHour3"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchHour5"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -660,18 +638,17 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="1 Hour"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/switchHour4"
                     tools:checked="false" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchHour6"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -680,11 +657,10 @@
                     android:layout_marginEnd="25dp"
                     android:showText="true"
                     android:text="30 Minutes"
-                    android:textColorLink="@color/orange_light"
                     android:textOff="OFF"
                     android:textOn="ON"
-                    android:thumbTint="@color/orange_light"
-                    android:trackTint="@color/orange_light"
+                    android:thumb="@drawable/switch_thumb"
+                    app:track="@drawable/switch_track"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.481"
                     app:layout_constraintStart_toStartOf="parent"

@@ -5,6 +5,7 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.widget.Switch;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +15,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.panthydev.m2batteryapp.Managers.NotificationManager;
 
 public class NotifSettingsActivity extends AppCompatActivity {
@@ -108,9 +110,9 @@ public class NotifSettingsActivity extends AppCompatActivity {
         });
     }
 
-//    /// Switch methods ///
+//   /// Switch methods ///
 //    //Percent and powersave
-//    SwitchCompat SwitchPowersave60percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave60percent = findViewById(R.id.SwitchPowerSavePercent);
 //    boolean prefSwitchPowersave60percent = NotificationManager.GetSwitchPowersave60percent(this);
 //    public void CheckSwitchPowersave60percent () {
 //        if (!prefSwitchPowersave60percent) {
@@ -122,7 +124,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave60percent.setChecked(prefSwitchPowersave60percent);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave50percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave50percent = findViewById(R.id.SwitchPowerSavePercent2);
 //    boolean prefSwitchPowersave50percent = NotificationManager.GetSwitchPowersave50percent(this);
 //    public void CheckSwitchPowersave50percent () {
 //        if (!prefSwitchPowersave50percent) {
@@ -134,7 +136,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave50percent.setChecked(prefSwitchPowersave50percent);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave40percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave40percent = findViewById(R.id.SwitchPowerSavePercent3);
 //    boolean prefSwitchPowersave40percent = NotificationManager.GetSwitchPowersave40percent(this);
 //    public void CheckSwitchPowersave40percent () {
 //        if (!prefSwitchPowersave40percent) {
@@ -146,7 +148,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave40percent.setChecked(prefSwitchPowersave40percent);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave30percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave30percent = findViewById(R.id.SwitchPowerSavePercent4);
 //    boolean prefSwitchPowersave30percent = NotificationManager.GetSwitchPowersave30percent(this);
 //    public void CheckSwitchPowersave30percent () {
 //        if (!prefSwitchPowersave30percent) {
@@ -158,7 +160,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave30percent.setChecked(prefSwitchPowersave30percent);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave20percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave20percent = findViewById(R.id.SwitchPowerSavePercent5);
 //    boolean prefSwitchPowersave20percent = NotificationManager.GetSwitchPowersave20percent(this);
 //    public void CheckSwitchPowersave20percent () {
 //        if (!prefSwitchPowersave20percent) {
@@ -170,7 +172,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave20percent.setChecked(prefSwitchPowersave20percent);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave10percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave10percent = findViewById(R.id.SwitchPowerSavePercent6);
 //    boolean prefSwitchPowersave10percent = NotificationManager.GetSwitchPowersave10percent(this);
 //    public void CheckSwitchPowersave10percent () {
 //        if (!prefSwitchPowersave10percent) {
@@ -184,7 +186,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //    }
 //
 //    //Hours and powersave
-//    SwitchCompat SwitchPowersave3Hours = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave3Hours = findViewById(R.id.SwitchPSHour);
 //    boolean prefSwitchPowersave3Hours = NotificationManager.GetSwitchPowersave3hours(this);
 //    public void CheckSwitchPowersave3Hours () {
 //        if (!prefSwitchPowersave3Hours) {
@@ -196,7 +198,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave3Hours.setChecked(prefSwitchPowersave3Hours);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave25Hours = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave25Hours = findViewById(R.id.SwitchPSHour2);
 //    boolean prefSwitchPowersave25Hours = NotificationManager.GetSwitchPowersave25hours(this);
 //    public void CheckSwitchPowersave25Hours () {
 //        if (!prefSwitchPowersave25Hours) {
@@ -208,7 +210,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave25Hours.setChecked(prefSwitchPowersave25Hours);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave2Hours = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave2Hours = findViewById(R.id.switchPSHour3);
 //    boolean prefSwitchPowersave2Hours = NotificationManager.GetSwitchPowersave2hours(this);
 //    public void CheckSwitchPowersave2Hours () {
 //        if (!prefSwitchPowersave2Hours) {
@@ -220,7 +222,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave2Hours.setChecked(prefSwitchPowersave2Hours);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave15Hours = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave15Hours = findViewById(R.id.switchPSHour4);
 //    boolean prefSwitchPowersave15Hours = NotificationManager.GetSwitchPowersave15hours(this);
 //    public void CheckSwitchPowersave15Hours () {
 //        if (!prefSwitchPowersave15Hours) {
@@ -232,7 +234,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave15Hours.setChecked(prefSwitchPowersave15Hours);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave1Hour = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave1Hour = findViewById(R.id.switchPSHour5);
 //    boolean prefSwitchPowersave1Hour = NotificationManager.GetSwitchPowersave1hours(this);
 //    public void CheckSwitchPowersave1Hour () {
 //        if (!prefSwitchPowersave1Hour) {
@@ -244,7 +246,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            SwitchPowersave1Hour.setChecked(prefSwitchPowersave1Hour);
 //        }
 //    }
-//    SwitchCompat SwitchPowersave30Min = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchPowersave30Min = findViewById(R.id.switchPSHour6);
 //    boolean prefSwitchPowersave30Min = NotificationManager.GetSwitchPowersave30min(this);
 //    public void CheckSwitchPowersave30Min () {
 //        if (!prefSwitchPowersave30Min) {
@@ -259,7 +261,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //
 //
 //    //Percent
-//    SwitchCompat Switch60percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch60percent = findViewById(R.id.SwitchPercent);
 //    boolean prefSwitch60percent = NotificationManager.GetSwitch60percent(this);
 //    public void CheckSwitch60percent () {
 //        if (!prefSwitch60percent) {
@@ -271,7 +273,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch60percent.setChecked(prefSwitch60percent);
 //        }
 //    }
-//    SwitchCompat Switch50percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch50percent = findViewById(R.id.switchPercent2);
 //    boolean prefSwitch50percent = NotificationManager.GetSwitch50percent(this);
 //    public void CheckSwitch50percent () {
 //        if (!prefSwitch50percent) {
@@ -283,7 +285,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch50percent.setChecked(prefSwitch50percent);
 //        }
 //    }
-//    SwitchCompat Switch40percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch40percent = findViewById(R.id.switchPercent3);
 //    boolean prefSwitch40percent = NotificationManager.GetSwitch40percent(this);
 //    public void CheckSwitch40percent () {
 //        if (!prefSwitch40percent) {
@@ -295,7 +297,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch40percent.setChecked(prefSwitch40percent);
 //        }
 //    }
-//    SwitchCompat Switch30percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch30percent = findViewById(R.id.switchPercent4);
 //    boolean prefSwitch30percent = NotificationManager.GetSwitch30percent(this);
 //    public void CheckSwitch30percent () {
 //        if (!prefSwitch30percent) {
@@ -307,7 +309,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch30percent.setChecked(prefSwitch30percent);
 //        }
 //    }
-//    SwitchCompat Switch20percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch20percent = findViewById(R.id.switchPercent5);
 //    boolean prefSwitch20percent = NotificationManager.GetSwitch20percent(this);
 //    public void CheckSwitch20percent () {
 //        if (!prefSwitch20percent) {
@@ -319,7 +321,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch20percent.setChecked(prefSwitch20percent);
 //        }
 //    }
-//    SwitchCompat Switch10percent = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch10percent = findViewById(R.id.switchPercent6);
 //    boolean prefSwitch10percent = NotificationManager.GetSwitch10percent(this);
 //    public void CheckSwitch10percent () {
 //        if (!prefSwitch10percent) {
@@ -333,7 +335,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //    }
 //
 //    //Hours
-//    SwitchCompat Switch3Hours = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch3Hours = findViewById(R.id.SwitchHour);
 //    boolean prefSwitch3Hours = NotificationManager.GetSwitch3hours(this);
 //    public void CheckSwitch3Hours () {
 //        if (!prefSwitch3Hours) {
@@ -345,7 +347,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch3Hours.setChecked(prefSwitch3Hours);
 //        }
 //    }
-//    SwitchCompat Switch25Hours = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch25Hours = findViewById(R.id.switchHour2);
 //    boolean prefSwitch25Hours = NotificationManager.GetSwitch25hours(this);
 //    public void CheckSwitch25Hours () {
 //        if (!prefSwitch25Hours) {
@@ -357,7 +359,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch25Hours.setChecked(prefSwitch25Hours);
 //        }
 //    }
-//    SwitchCompat Switch2Hours = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch2Hours = findViewById(R.id.switchHour3);
 //    boolean prefSwitch2Hours = NotificationManager.GetSwitch2hours(this);
 //    public void CheckSwitch2Hours () {
 //        if (!prefSwitch2Hours) {
@@ -369,7 +371,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch2Hours.setChecked(prefSwitch2Hours);
 //        }
 //    }
-//    SwitchCompat Switch15Hours = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch15Hours = findViewById(R.id.switchHour4);
 //    boolean prefSwitch15Hours = NotificationManager.GetSwitch15hours(this);
 //    public void CheckSwitch15Hours () {
 //        if (!prefSwitch15Hours) {
@@ -381,7 +383,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch15Hours.setChecked(prefSwitch15Hours);
 //        }
 //    }
-//    SwitchCompat Switch1Hour = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch1Hour = findViewById(R.id.switchHour5);
 //    boolean prefSwitch1Hour = NotificationManager.GetSwitch1hours(this);
 //    public void CheckSwitch1Hour () {
 //        if (!prefSwitch1Hour) {
@@ -393,7 +395,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //            Switch1Hour.setChecked(prefSwitch1Hour);
 //        }
 //    }
-//    SwitchCompat Switch30Min = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat Switch30Min = findViewById(R.id.switchHour6);
 //    boolean prefSwitch30Min = NotificationManager.GetSwitch30min(this);
 //    public void CheckSwitch30Min () {
 //        if (!prefSwitch30Min) {
@@ -407,7 +409,7 @@ public class NotifSettingsActivity extends AppCompatActivity {
 //    }
 //
 //    //Tips
-//    SwitchCompat SwitchTips = findViewById(R.id.SWITCH_ID_HERE);
+//    SwitchCompat SwitchTips = findViewById(R.id.SwitchTips);
 //    boolean prefSwitchTips = NotificationManager.GetSwitchTips(this);
 //    public void CheckSwitchTips () {
 //        if (!prefSwitchTips) {
