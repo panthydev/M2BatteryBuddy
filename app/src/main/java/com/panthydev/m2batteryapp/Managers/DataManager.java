@@ -9,6 +9,10 @@ import com.panthydev.m2batteryapp.data.DataObjects.App;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
 import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class DataManager
 {
     /**
@@ -34,21 +38,38 @@ public class DataManager
         }).start();
     }
 
-/*
-    public static void GetAppDataAsync(Context context, int hours, Callback<DataPack<App>> callback)
+
+    public static void GetAppDataAsync(Context context, int hours, Callback<Map<String, ArrayList<App>>> callback)
     {
         DbHelper dbHelper = new DbHelper(context);
         new Thread(new Runnable() {
             @Override
             public void run() {
 
-                DataPack<App> dataPack = dbHelper.GetAppData(hours);
-                callback.OnResult(dataPack);
+                DataPack<App> dataPack = dbHelper.GetAllAppData();
+
+
+                //remove all zeroes grrrrrr
+                ArrayList<App> NonZeroApps = new ArrayList<>();
+                for (App app : dataPack.dataList) {
+                    if (app.getAppDischarge() != 0) {
+                        NonZeroApps.add(app);
+                    }
+                }
+                Map<String, ArrayList<App>> appListMap = new HashMap<>();
+                //put them all in their own little lines
+                for (App app : NonZeroApps) {
+                    if (!appListMap.containsKey(app.getAppName())) {
+                        appListMap.put(app.getAppName(), new ArrayList<>());
+                    }
+                    appListMap.get(app.getAppName()).add(app);
+                }
+                callback.OnResult(appListMap);
             }
         }).start();
     }
 
-*/
+
 
     /**
      * <p>Method to send battery data to the database, in the form of a dataPack dto.</p>
