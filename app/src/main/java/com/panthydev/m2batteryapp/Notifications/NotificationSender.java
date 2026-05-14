@@ -20,9 +20,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.panthydev.m2batteryapp.MainActivity;
 import com.panthydev.m2batteryapp.R;
 
-/**
- *
- */
+
 public class NotificationSender {
 
     private Context context;
