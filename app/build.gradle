@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation libs.constraintlayout
     coreLibraryDesugaring libs.desugar.jdk.libs
     // remove libs.activity and (another thing i cant remember bellow it) if they appear
     implementation libs.work.multiprocess
