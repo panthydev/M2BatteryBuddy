@@ -4,6 +4,7 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -18,8 +19,12 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.panthydev.m2batteryapp.Interfaces.Callback;
+import com.panthydev.m2batteryapp.Managers.DataManager;
+import com.panthydev.m2batteryapp.data.DataObjects.App;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class GraphActivity extends AppCompatActivity
 {
@@ -115,10 +120,24 @@ public class GraphActivity extends AppCompatActivity
         horizontalBarChart.setClickable(false);
         horizontalBarChart.setTouchEnabled(false);
 
+        GetAllAppData();
+
     }
+
+    public void GetAllAppData(){
+        DataManager.GetAppDataAsync(this, 24, new Callback<Map<String, ArrayList<App>>>() {
+            @Override
+            public void OnResult(Map<String, ArrayList<App>> Result)
+            {
+                Log.d("TEST", "Received app data: " + Result);
+            }
+        });
+    }
+
 
     @NonNull
     private static ArrayList<String> getStrings() {
+
 
         ArrayList<String> labelEntries = new ArrayList<>();
 
