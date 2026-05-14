@@ -130,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
             public void OnResult(DataPack<BatteryData> Result)
             {
                 int index = Result.dataList.size();
+                int hoursRemaining = (int)Result.dataList.get(0).estimatedBatTimeLeft.toHours();
+                int minutesRemaining = (int) Result.dataList.get(0).estimatedBatTimeLeft.toMinutes();
+                String balls = String.valueOf(minutesRemaining-(hoursRemaining*60));
                 String my_ass = String.valueOf(Result.dataList.get(0).estimatedBatTimeLeft.toHours());
                 String fuck = String.valueOf(Result.dataList.get(index-1).percentLeft);
 
@@ -149,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         @Override
                         public void run() {
-                            batText.setText(my_ass + "Hours remaining");
+                            batText.setText(my_ass + "Hours" + "&" + balls + "minutes" + "remaining");
                         }
                     });
                 }
