@@ -12,6 +12,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
+import com.panthydev.m2batteryapp.Managers.NotificationWorker;
 import com.panthydev.m2batteryapp.R;
 
 public class DataCollectionService extends Service {
@@ -38,6 +39,9 @@ public class DataCollectionService extends Service {
 
                 collector.CollectAndSendBatteryDataToDB();
                 collector.appDischargeTimer();
+
+                NotificationWorker notificationWorker = new NotificationWorker(getApplicationContext());
+                notificationWorker.NotifWorkerEntryPoint();
                 Log.d(TAG, "Collected data at " + System.currentTimeMillis());
             } catch (Exception e) {
                 Log.e(TAG, "Collection tick failed", e);

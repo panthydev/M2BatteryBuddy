@@ -2,6 +2,7 @@ package com.panthydev.m2batteryapp;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
+import android.Manifest;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +14,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.panthydev.m2batteryapp.Interfaces.Callback;
@@ -65,6 +67,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        101
+                );
+            }
+        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
