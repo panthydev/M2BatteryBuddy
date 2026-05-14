@@ -7,8 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -22,13 +24,17 @@ import com.panthydev.m2batteryapp.databinding.ActivityBaseBinding;
 
 import android.provider.Settings;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.time.Duration;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
     public TextView batText;
+    public TextView batText2;
+    public TextView batTextPercent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         workHandler.StartDataCollection(this);
 
         batText = findViewById(R.id.BatTime);
+        batText2 = findViewById(R.id.batTime2);
+        batTextPercent =findViewById(R.id.textViewUIPercent);
 
         BatteryUIMethod();
 
@@ -100,65 +108,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        appsCollectedStarted = NotificationManager.GetFirstAppCollectionOn(this);
-        isAccessGranted();
-        if (!isAccessGranted() && !appsCollectedStarted) {
-            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
-            startActivity(intent);
-        }
+        ConstraintLayout buddy =findViewById(R.id.buddyView);
+        buddy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buddyChange();
+            }
+        });
 
-        intervalStarted = NotificationManager.GetIntervalOn(this);
-        if (!intervalStarted) {
-            WorkHandler workHandler = new WorkHandler();
-            workHandler.StartDataCollection(this);
-            NotificationManager.SetIntervalOn(this, intervalStarted = true);
-        }
-
-        NotificationManagerCompat NMC = NotificationManagerCompat.from(this);
-        boolean areNotifsAllowed = NMC.areNotificationsEnabled();
-
-        if (!areNotifsAllowed) {
-            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
-            startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
-        }
-        else {
-            NotificationSender notificationSender = new NotificationSender(this);
-            notificationSender.send ("Reminder", "Don't forget your task!", 1);
-        }
+        buddyChange();
     }
 
-    @Override
-    protected void onStart() {
-        batText = findViewById(R.id.BatTime);
-        BatteryUIMethod();
-        super.onStart();
-    }
+    private void buddyChange(){
+        ImageView buddy = (ImageView) findViewById(R.id.buddyImage);
 
-    @Override
-    protected void onResume() {
-        batText = findViewById(R.id.BatTime);
-        BatteryUIMethod();
-        super.onResume();
-    }
+        Random r = new Random();
+        int random = r.nextInt(6 - 1) + 1; //range 5-1 (supposedly)
 
-    @Override
-    protected void onPause() {
-        batText = findViewById(R.id.BatTime);
-        BatteryUIMethod();
-        super.onPause();
-    }
-
-    @Override
-    protected void onStop() {
-        batText = findViewById(R.id.BatTime);
-        BatteryUIMethod();
-        super.onStop();
+        if (random==1){
+            buddy.setImageResource(R.drawable.bb1);
+        }
+        else if (random==2){
+            buddy.setImageResource(R.drawable.bb2);
+        }
+        else if (random==3){
+            buddy.setImageResource(R.drawable.bb3);
+        }
+        else if (random==4){
+            buddy.setImageResource(R.drawable.bb4);
+        }
+        else
+            buddy.setImageResource(R.drawable.bb5);
     }
 
     private boolean isAccessGranted() {
-
-
-
 
         try {
             PackageManager packageManager = getPackageManager();
@@ -167,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
             int mode = 0;
 
             mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, applicationInfo.uid, applicationInfo.packageName);
-            NotificationManager.SetFirstAppCollectionOn(this, appsCollectedStarted = true);
             return (mode == AppOpsManager.MODE_ALLOWED);
 
         } catch (PackageManager.NameNotFoundException e) {
@@ -180,10 +162,14 @@ public class MainActivity extends AppCompatActivity {
     public void BatteryUIMethod(){
         DataManager.GetBatteryDataAsync(this, 24, new Callback<DataPack<BatteryData>>()
         {
+            @RequiresApi(api = Build.VERSION_CODES.O) //got error from toHours osv. this fix?
             @Override
             public void OnResult(DataPack<BatteryData> Result)
             {
                 int index = Result.dataList.size();
+                int hoursRemaining = (int)Result.dataList.get(0).estimatedBatTimeLeft.toHours();
+                int minutesRemaining = (int) Result.dataList.get(0).estimatedBatTimeLeft.toMinutes();
+                String balls = String.valueOf(minutesRemaining-(hoursRemaining*60));
                 String my_ass = String.valueOf(Result.dataList.get(0).estimatedBatTimeLeft.toHours());
                 String fuck = String.valueOf(Result.dataList.get(index-1).percentLeft);
 
@@ -193,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         @Override
                         public void run() {
-                            batText.setText(fuck + "%");
+                            batTextPercent.setText(fuck + "%");
                         }
                     });
                 }
@@ -203,7 +189,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         @Override
                         public void run() {
-                            batText.setText(my_ass);
+                            batText.setText(my_ass + " Hours" + " &");
+                            batText2.setText(balls+ " Minutes");
                         }
                     });
                 }
