@@ -33,7 +33,6 @@ public class NotificationSender {
      */
     // Call this to send a notification
     public void send(String title, String message) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                     .setSmallIcon(R.drawable.baseline_notifications_24)
@@ -45,7 +44,7 @@ public class NotificationSender {
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             manager.notify(10, builder.build());
-        }
+
     }
 
     // Private helper — creates the channel once
@@ -60,6 +59,7 @@ public class NotificationSender {
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             manager.createNotificationChannel(channel);
+
         }
     }
 }
