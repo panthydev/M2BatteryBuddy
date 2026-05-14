@@ -71,15 +71,6 @@ public class NotificationWorker {
 
         prefSwitchTips = NotificationManager.GetSwitchTips(Syscontext);
 
-        // Battery State
-        BatteryManager BM = (BatteryManager) Syscontext.getSystemService(BATTERY_SERVICE);
-        isCharging = BM.isCharging();
-        batPercent = SysCollector.batLevelPercent;
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            batTime = SysCollector.remainingBatLife;
-        }
-        isPowerSaveOn = SysCollector.powerSaveOn;
-
         PSNotif3Hours = NotificationManager.GetPowersaveNotOn3HoursLeft(Syscontext);
         PSNotif25Hours = NotificationManager.GetPowersaveNotOn25HoursLeft(Syscontext);
         PSNotif2Hours = NotificationManager.GetPowersaveNotOn2HoursLeft(Syscontext);
