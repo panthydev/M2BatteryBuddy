@@ -100,6 +100,59 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        appsCollectedStarted = NotificationManager.GetFirstAppCollectionOn(this);
+        isAccessGranted();
+        if (!isAccessGranted() && !appsCollectedStarted) {
+            Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
+            startActivity(intent);
+        }
+
+        intervalStarted = NotificationManager.GetIntervalOn(this);
+        if (!intervalStarted) {
+            WorkHandler workHandler = new WorkHandler();
+            workHandler.StartDataCollection(this);
+            NotificationManager.SetIntervalOn(this, intervalStarted = true);
+        }
+
+        NotificationManagerCompat NMC = NotificationManagerCompat.from(this);
+        boolean areNotifsAllowed = NMC.areNotificationsEnabled();
+
+        if (!areNotifsAllowed) {
+            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
+            startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
+        }
+        else {
+            NotificationSender notificationSender = new NotificationSender(this);
+            notificationSender.send ("Reminder", "Don't forget your task!", 1);
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        batText = findViewById(R.id.BatTime);
+        BatteryUIMethod();
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+        batText = findViewById(R.id.BatTime);
+        BatteryUIMethod();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        batText = findViewById(R.id.BatTime);
+        BatteryUIMethod();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+        batText = findViewById(R.id.BatTime);
+        BatteryUIMethod();
+        super.onStop();
     }
 
     private boolean isAccessGranted() {
@@ -114,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
             int mode = 0;
 
             mode = appOpsManager.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, applicationInfo.uid, applicationInfo.packageName);
+            NotificationManager.SetFirstAppCollectionOn(this, appsCollectedStarted = true);
             return (mode == AppOpsManager.MODE_ALLOWED);
 
         } catch (PackageManager.NameNotFoundException e) {
