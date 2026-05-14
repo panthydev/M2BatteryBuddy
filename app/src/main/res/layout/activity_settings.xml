@@ -10,6 +10,340 @@
 
     >
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <!-- This is the base cardview-->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="170dp" />
+
+            <!-- accordion starts here-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/base_cardview_s_0"
+                style="@style/Base.CardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="20dp">
+
+                <!-- This is a ConstraintLayout for the entire CardView including the expandable portion -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/purple_light"
+                    app:layout_constraintBottom_toBottomOf="@id/base_cardview_s_0"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.511"
+                    tools:layout_editor_absoluteX="-55dp">
+
+                    <!-- This is a ConstraintLayout for the fixed portion of the CardView. The elements that
+        lie within the fixed portion of the CardView can be constrained to this layout -->
+
+                    <!-- The following is the expandable portion whose visibility is initially set to 'gone'
+        The parent LinearLayout contains 3 child LinearLayouts that hold a subject name and an icon each -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/accord_s_0"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <!-- This is the Header textview -->
+                        <TextView
+                            android:id="@+id/heading_s_0"
+                            android:layout_width="280sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="175dp"
+                            android:text="About the project"
+                            android:textColor="@color/text_light_gray"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/arrow_button_s_0"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--This is the textview for the undertitle-->
+                        <TextView
+                            android:id="@+id/list_of_subjects_s_0"
+                            android:layout_width="280sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="175dp"
+                            android:layout_marginBottom="19dp"
+                            android:text="Read about the project and group"
+                            android:textColor="@color/text_light_gray"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/arrow_button_s_0"
+                            app:layout_constraintTop_toBottomOf="@id/heading_s_0" />
+
+                        <!--This is the orange image button, any image can be used but the one chosen here works well.
+                    To get the rounded corners see @drawable/roundcorners for the xml file which does this-->
+                        <ImageButton
+                            android:id="@+id/arrow_button_s_0"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="27dp"
+                            android:layout_marginEnd="65dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@drawable/roundcorners"
+                            android:contentDescription="Arrow button"
+                            android:src="@drawable/outline_arrow_circle_right_24"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--This is the Hidden view which needs to start off as gone for it to be hidden-->
+                    <LinearLayout
+                        android:id="@+id/hidden_view_s_0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/accord_s_0">
+
+                        <!--This is the textview which is desplayed within the hidden view-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/settings_about"
+                            android:textColor="@color/text_light_gray"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <!-- accordion ends here-->
+
+            <!-- accordion starts here-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/base_cardview_s_1"
+                style="@style/Base.CardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="20dp">
+
+                <!-- This is a ConstraintLayout for the entire CardView including the expandable portion -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/purple_light"
+                    app:layout_constraintBottom_toBottomOf="@id/base_cardview_s_1"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.511"
+                    tools:layout_editor_absoluteX="-55dp">
+
+                    <!-- This is a ConstraintLayout for the fixed portion of the CardView. The elements that
+        lie within the fixed portion of the CardView can be constrained to this layout -->
+
+                    <!-- The following is the expandable portion whose visibility is initially set to 'gone'
+        The parent LinearLayout contains 3 child LinearLayouts that hold a subject name and an icon each -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/accord_s_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <!-- This is the Header textview -->
+                        <TextView
+                            android:id="@+id/heading_s_1"
+                            android:layout_width="280sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="175dp"
+                            android:text="Data policy"
+                            android:textColor="@color/text_light_gray"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/arrow_button_s_1"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--This is the textview for the undertitle-->
+                        <TextView
+                            android:id="@+id/list_of_subjects_s_1"
+                            android:layout_width="280sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="175dp"
+                            android:layout_marginBottom="19dp"
+                            android:text="How data is collected and used"
+                            android:textColor="@color/text_light_gray"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/arrow_button_s_1"
+                            app:layout_constraintTop_toBottomOf="@id/heading_s_1" />
+
+                        <!--This is the orange image button, any image can be used but the one chosen here works well.
+                    To get the rounded corners see @drawable/roundcorners for the xml file which does this-->
+                        <ImageButton
+                            android:id="@+id/arrow_button_s_1"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="27dp"
+                            android:layout_marginEnd="65dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@drawable/roundcorners"
+                            android:contentDescription="Arrow button"
+                            android:src="@drawable/outline_arrow_circle_right_24"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--This is the Hidden view which needs to start off as gone for it to be hidden-->
+                    <LinearLayout
+                        android:id="@+id/hidden_view_s_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/accord_s_1">
+
+                        <!--This is the textview which is desplayed within the hidden view-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/settings_data"
+                            android:textColor="@color/text_light_gray"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <!-- accordion ends here-->
+
+            <!-- accordion starts here-->
+            <androidx.cardview.widget.CardView
+                android:id="@+id/base_cardview_s_2"
+                style="@style/Base.CardView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="10dp"
+                app:cardCornerRadius="20dp">
+
+                <!-- This is a ConstraintLayout for the entire CardView including the expandable portion -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/purple_light"
+                    app:layout_constraintBottom_toBottomOf="@id/base_cardview_s_2"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.511"
+                    tools:layout_editor_absoluteX="-55dp">
+
+                    <!-- This is a ConstraintLayout for the fixed portion of the CardView. The elements that
+        lie within the fixed portion of the CardView can be constrained to this layout -->
+
+                    <!-- The following is the expandable portion whose visibility is initially set to 'gone'
+        The parent LinearLayout contains 3 child LinearLayouts that hold a subject name and an icon each -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/accord_s_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        app:layout_constraintTop_toTopOf="parent">
+
+
+                        <!-- This is the Header textview -->
+                        <TextView
+                            android:id="@+id/heading_s_2"
+                            android:layout_width="280sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="175dp"
+                            android:text="Contact us"
+                            android:textColor="@color/text_light_gray"
+                            android:textSize="25sp"
+                            android:textStyle="bold"
+                            app:layout_constraintStart_toEndOf="@id/arrow_button_s_2"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <!--This is the textview for the undertitle-->
+                        <TextView
+                            android:id="@+id/list_of_subjects_s_2"
+                            android:layout_width="280sp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginEnd="175dp"
+                            android:layout_marginBottom="19dp"
+                            android:text="Ways to contact the group"
+                            android:textColor="@color/text_light_gray"
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toEndOf="@id/arrow_button_s_2"
+                            app:layout_constraintTop_toBottomOf="@id/heading_s_2" />
+
+                        <!--This is the orange image button, any image can be used but the one chosen here works well.
+                    To get the rounded corners see @drawable/roundcorners for the xml file which does this-->
+                        <ImageButton
+                            android:id="@+id/arrow_button_s_2"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_marginStart="27dp"
+                            android:layout_marginTop="27dp"
+                            android:layout_marginEnd="65dp"
+                            android:layout_marginBottom="30dp"
+                            android:background="@drawable/roundcorners"
+                            android:contentDescription="Arrow button"
+                            android:src="@drawable/outline_arrow_circle_right_24"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!--This is the Hidden view which needs to start off as gone for it to be hidden-->
+                    <LinearLayout
+                        android:id="@+id/hidden_view_s_2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone"
+                        app:layout_constraintTop_toBottomOf="@id/accord_s_2">
+
+                        <!--This is the textview which is desplayed within the hidden view-->
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="20dp"
+                            android:text="@string/settings_contact"
+                            android:textColor="@color/text_light_gray"
+                            android:textSize="20sp" />
+                    </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+            <!-- accordion ends here-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="100dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
     <ImageView
         android:id="@+id/imageView8"
         android:layout_width="match_parent"
@@ -27,18 +361,5 @@
     <include layout="@layout/buttom_bar"/>
 
     <include layout="@layout/settings_top_bar"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="settings"
-            android:textSize="30sp" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

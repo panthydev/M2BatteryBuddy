@@ -18,18 +18,21 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
+import com.panthydev.m2batteryapp.Managers.DataManager;
+import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
+import com.panthydev.m2batteryapp.data.DataObjects.DataPack;
 
 import java.util.ArrayList;
 
-public class GraphActivity extends AppCompatActivity
-{
+public class GraphActivity extends AppCompatActivity {
 
     HorizontalBarChart horizontalBarChart;
     BarDataSet barDataSet;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
         horizontalBarChart = findViewById(R.id.idBarChart);
@@ -41,7 +44,7 @@ public class GraphActivity extends AppCompatActivity
         //Arraylist for the names of apps
         ArrayList<String> labelEntries = getStrings();
 
-        barDataSet = new BarDataSet(getBarEntries(),"");
+        barDataSet = new BarDataSet(getBarEntries(), "");
         BarData data = new BarData(barDataSet);
         horizontalBarChart.setData(data);
 
@@ -66,7 +69,7 @@ public class GraphActivity extends AppCompatActivity
 
         //The little description in the corner + color and shape of background
         Description description = new Description();
-        description.setText("General use of mAh");
+        description.setText("mAh drainage");
         description.setTextColor(getResources().getColor(R.color.text_light_gray));
         horizontalBarChart.setDescription(description);
         horizontalBarChart.getXAxis().setLabelCount(5);
@@ -78,7 +81,6 @@ public class GraphActivity extends AppCompatActivity
         legend.setEnabled(true);
         Legend colorShape = horizontalBarChart.getLegend();
         colorShape.setForm(Legend.LegendForm.NONE);
-
 
 
         // Set bar width
@@ -99,8 +101,6 @@ public class GraphActivity extends AppCompatActivity
         topAxis.setTextColor(getResources().getColor(R.color.text_light_gray));
         YAxis botAxis = horizontalBarChart.getAxisRight();
         botAxis.setTextColor(getResources().getColor(R.color.text_light_gray));
-
-
 
 
         // Sets app names for each bar
@@ -143,15 +143,27 @@ public class GraphActivity extends AppCompatActivity
         return barEntries;
         //Her skal vi have dataen hvor y er den værdi der skal være dynamisk x4 er den øverste på grafen
     }
+//
+//    public void GraphChanger() {
+//        DataManager.GetAppDataAsync(this, new Callback<DataPack<App>>()
+//        {
+//            String[] AppNames = Result.datalist.appName;
+//            int[] AppDischarge = Result.datalist.appDischarge;
+//            @Override
+//            public void OnResult(DataPack<App> Result)
+//            {
+//
+//            }
+//        });
+//    }
+
 
     //Dette er til at gå tilbage til main activity.
-    public void Back(View v)
-    {
+    public void Back(View v) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
         startActivity(intent);
         overridePendingTransition(R.anim.ani_fade_enter, R.anim.ani_fade_exit);
         finish();
     }
-
 }
