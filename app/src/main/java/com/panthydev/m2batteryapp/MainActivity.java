@@ -14,6 +14,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresPermission;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationManagerCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -114,16 +115,14 @@ public class MainActivity extends AppCompatActivity {
             NotificationManager.SetIntervalOn(this, intervalStarted = true);
         }
 
-        NotificationManagerCompat NMC = NotificationManagerCompat.from(this);
-        boolean areNotifsAllowed = NMC.areNotificationsEnabled();
-
-        if (!areNotifsAllowed) {
-            startActivity(new Intent("android.settings.ACTION_NOTIFICATION_LISTENER_SETTINGS"));
-            startActivity(new Intent(Settings.ACTION_NOTIFICATION_LISTENER_SETTINGS));
-        }
-        else {
-            NotificationSender notificationSender = new NotificationSender(this);
-            notificationSender.send ("Reminder", "Don't forget your task!", 1);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        101
+                );
+            }
         }
     }
 
@@ -171,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
 
     public void BatteryUIMethod(){
         DataManager.GetBatteryDataAsync(this, 24, new Callback<DataPack<BatteryData>>()
