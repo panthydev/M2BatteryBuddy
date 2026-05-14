@@ -47,7 +47,7 @@ public class SystemDataCollector{
     public int batCapMAh;
     public int batCurrentMAh;
     public boolean powerSaveOn;
-    public Duration remainingBatLife;
+    public int remainingBatLife;
     public boolean isCharging;
 
     public SystemDataCollector(Context context){
