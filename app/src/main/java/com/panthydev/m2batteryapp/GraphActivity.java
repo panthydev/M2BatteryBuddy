@@ -24,7 +24,12 @@ import com.panthydev.m2batteryapp.Managers.DataManager;
 import com.panthydev.m2batteryapp.data.DataObjects.App;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class GraphActivity extends AppCompatActivity
 {
@@ -121,7 +126,7 @@ public class GraphActivity extends AppCompatActivity
         horizontalBarChart.setTouchEnabled(false);
 
         GetAllAppData();
-
+        CalculateSumOfApps();
     }
 
     public void GetAllAppData(){
@@ -173,4 +178,39 @@ public class GraphActivity extends AppCompatActivity
         finish();
     }
 
+    public void CalculateSumOfApps () {
+        DataManager.GetAppDataAsync(this, 24, new Callback<Map<String, ArrayList<App>>>() {
+            @Override
+            public void OnResult(Map<String, ArrayList<App>> Result) {
+                Set<String> ListOfKeys = Result.keySet();
+                float SumDischarge = 0;
+                float appAverageDischarge = 0;
+                LinkedHashMap<String, Float> allAppsDischargeAverage = new LinkedHashMap<>();
+
+                for (String Key: ListOfKeys) {
+                   var AppList = Result.get(Key);
+
+                   for(App app : AppList) {
+                       SumDischarge += app.getAppDischarge();
+                   }
+
+                   appAverageDischarge = SumDischarge / AppList.size();
+
+                    allAppsDischargeAverage.put(Key, appAverageDischarge);
+                }
+
+                List<Map.Entry<String, Float>> list = new ArrayList<>(allAppsDischargeAverage.entrySet());
+                list.sort(Map.Entry.comparingByValue());
+
+//                runOnUiThread(new Runnable()
+//                {
+//                    @Override
+//                    public void run() {
+//                        batTextPercent.setText(fuck + "%");
+//                    }
+//                });
+
+            }
+        });
+    }
 }
