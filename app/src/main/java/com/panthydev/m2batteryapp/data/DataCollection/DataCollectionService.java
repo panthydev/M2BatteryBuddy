@@ -64,8 +64,8 @@ public class DataCollectionService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        createChannel();
-        startForeground(NOTIFICATION_ID, buildNotification());
+//        createChannel();
+//        startForeground(NOTIFICATION_ID, buildNotification());
     }
 
     @Override
