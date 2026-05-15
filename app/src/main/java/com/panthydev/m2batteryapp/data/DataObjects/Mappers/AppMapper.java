@@ -25,7 +25,7 @@ public class AppMapper implements Mapper<App>{
         index = c.getColumnIndexOrThrow(AppTable.APP_DISCHARGE_COL);
         int appDischarge = c.getInt(index);
 
-        index = c.getColumnIndexOrThrow(AppTable.BACKGROUND_PROCESS_COUNT_COL);
+        //index = c.getColumnIndexOrThrow(AppTable.BACKGROUND_PROCESS_COUNT_COL);
         int backgroundProcessCount = c.getInt(index);
 
         index = c.getColumnIndexOrThrow(AppTable.TIMESTAMP_COL);
@@ -49,7 +49,7 @@ public class AppMapper implements Mapper<App>{
         values.put(AppTable.APP_NAME_COL, obj.getAppName());
         values.put(AppTable.APP_CATEGORY_COL, obj.getAppCategory());
         values.put(AppTable.APP_DISCHARGE_COL, obj.getAppDischarge());
-        values.put(AppTable.BACKGROUND_PROCESS_COUNT_COL, obj.getBackgroundProcessCount());
+        //values.put(AppTable.BACKGROUND_PROCESS_COUNT_COL, obj.getBackgroundProcessCount());
 
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US).format(obj.Timestamp);
         values.put(AppTable.TIMESTAMP_COL, date);
