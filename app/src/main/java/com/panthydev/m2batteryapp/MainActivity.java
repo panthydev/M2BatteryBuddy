@@ -63,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
         if (!isAccessGranted()) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
+            if (isAccessGranted()) {
+                BatteryUIMethod();
+            }
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -126,8 +129,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buddyChange();
-
-        BatteryUIMethod();
     }
 
     private void buddyChange(){
