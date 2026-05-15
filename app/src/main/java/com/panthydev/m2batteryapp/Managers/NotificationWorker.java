@@ -2,6 +2,33 @@ package com.panthydev.m2batteryapp.Managers;
 
 import static android.content.Context.BATTERY_SERVICE;
 
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_10_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_1_5_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_1_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_20_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_2_5_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_2_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_30_MINUTES;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_30_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_3_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_40_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_50_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_60_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_10_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_1_5_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_1_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_20_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_2_5_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_2_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_30_MINUTES;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_30_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_3_HOURS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_40_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_50_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_60_PERCENT;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.TITLE_POWER;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.TITLE_POWER_SAVE_IS_NOT_ON;
+
 import android.Manifest;
 import android.content.Context;
 import android.os.BatteryManager;
@@ -232,27 +259,27 @@ public class NotificationWorker {
         if (!isPowerSaveOn && !isCharging) {
             if (PSNotif60Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_60_PERCENT, 1);
             }
             else if (PSNotif50Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_50_PERCENT, 1);
             }
             else if (PSNotif40Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_40_PERCENT, 1);
             }
             else if (PSNotif30Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_30_PERCENT, 1);
             }
             else if (PSNotif20Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_20_PERCENT, 1);
             }
             else if (PSNotif10Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_10_PERCENT, 1);
             }
         }
     }
@@ -261,27 +288,27 @@ public class NotificationWorker {
         if (!isPowerSaveOn && !isCharging) {
             if (PSNotif3Hours) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_3_HOURS, 1);
             }
             else if (PSNotif25Hours) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_2_5_HOURS, 1);
             }
             else if (PSNotif2Hours) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_2_HOURS, 1);
             }
             else if (PSNotif15Hours) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_1_5_HOURS, 1);
             }
             else if (PSNotif1Hour) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_1_HOURS, 1);
             }
             else if (PSNotif30Min) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_30_MINUTES, 1);
             }
         }
     }
@@ -364,27 +391,27 @@ public class NotificationWorker {
         if (!isCharging) {
             if (Notif60Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_60_PERCENT, 1);
             }
             else if (Notif50Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_50_PERCENT, 1);
             }
             else if (Notif40Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_40_PERCENT, 1);
             }
             else if (Notif30Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_30_PERCENT, 1);
             }
             else if (Notif20Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_20_PERCENT, 1);
             }
             else if (Notif10Percent) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_10_PERCENT, 1);
             }
         }
     }
@@ -393,27 +420,27 @@ public class NotificationWorker {
         if (!isCharging) {
             if (Notif3Hours) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_3_HOURS, 1);
             }
             else if (Notif25Hours) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_2_5_HOURS, 1);
             }
             else if (Notif2Hours) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_2_HOURS, 1);
             }
             else if (Notif15Hours) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_1_5_HOURS, 1);
             }
             else if (Notif1Hour) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_1_HOURS, 1);
             }
             else if (Notif30Min) {
                 NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send ("title", "Message", 1);
+                notificationSender.send (TITLE_POWER, M_ON_30_MINUTES, 1);
             }
         }
     }

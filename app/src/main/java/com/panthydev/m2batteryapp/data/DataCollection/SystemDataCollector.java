@@ -85,7 +85,10 @@ public class SystemDataCollector{
         DataManager.SetBatteryDataAsync(context,datapack) ; //Sending the battery data object to the database
 
         NotificationManager.SetBatteryPercent(context, batLevelPercent);
-        NotificationManager.SetEstBatTime(context, (int) remainingBatLife.toSeconds());
+
+        if (remainingBatLife != null){
+            NotificationManager.SetEstBatTime(context, (int) remainingBatLife.toSeconds());
+        }
         NotificationManager.SetIsCharging(context, isCharging);
         NotificationManager.SetPowerSaveOn(context, powerSaveOn);
     }
