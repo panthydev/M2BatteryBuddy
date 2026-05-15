@@ -28,6 +28,7 @@ import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_P
 import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_60_PERCENT;
 import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.TITLE_POWER;
 import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.TITLE_POWER_SAVE_IS_NOT_ON;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.TITLE_TIPS_AND_TRICKS;
 
 import android.Manifest;
 import android.content.Context;
@@ -451,9 +452,9 @@ public class NotificationWorker {
     public void SendOtherNotif () {
         int randomInterval = (int)(Math.random() * 101);  // 0 to 100
 
-        if (batPercent > 50 && randomInterval == 1 && prefSwitchTips) {
+        if (batPercent > 30 && randomInterval == 1 && prefSwitchTips) {
             NotificationSender notificationSender = new NotificationSender(Syscontext);
-            notificationSender.send ("title", "Message", 1);
+            notificationSender.send (TITLE_TIPS_AND_TRICKS, "Remember to check out some tips and tricks in the Battery Buddy app, to make your battery last longer!", 1);
         }
     }
 }
