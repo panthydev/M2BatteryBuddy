@@ -22,6 +22,14 @@ public class NotificationManager {
         return getPrefs(context).getBoolean(key, defaultValue);
     }
 
+    private static void putIntPref(Context context, String key, int value){
+        getPrefs(context).edit().putInt(key, value).apply();
+    }
+
+    private static int getIntPref(Context context, String key, int defaultValue){
+        return getPrefs(context).getInt(key, defaultValue);
+    }
+
     /// Notif Bools ///
     //Percent and powersave
     public static void SetSwitchPowersave60percent(Context context, boolean b){
@@ -219,6 +227,38 @@ public class NotificationManager {
 
     public static boolean GetIntervalOn(Context context){
         return getBooleanPref(context, "Interval", false);
+    }
+
+    public static void SetBatteryPercent (Context context, int b){
+        putIntPref(context, "BatteryPercent", b);
+    }
+
+    public static int GetBatteryPercent(Context context){
+        return getIntPref(context, "BatteryPercent", 0);
+    }
+
+    public static void SetEstBatTime (Context context, int b){
+        putIntPref(context, "EstBatTime", b);
+    }
+
+    public static int GetEstBatTime(Context context){
+        return getIntPref(context, "EstBatTime", 0);
+    }
+
+    public static void SetPowerSaveOn(Context context, boolean b){
+        putBooleanPref(context, "PowerSaveOn", b);
+    }
+
+    public static boolean GetPowerSaveOn(Context context){
+        return getBooleanPref(context, "PowerSaveOn", false);
+    }
+
+    public static void SetIsCharging(Context context, boolean b){
+        putBooleanPref(context, "IsCharging", b);
+    }
+
+    public static boolean GetIsCharging(Context context){
+        return getBooleanPref(context, "IsCharging", false);
     }
 
     // Powersave related

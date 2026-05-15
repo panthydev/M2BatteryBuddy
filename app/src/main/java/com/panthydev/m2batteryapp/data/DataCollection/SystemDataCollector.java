@@ -21,6 +21,7 @@ import android.os.Process;
 import android.util.Log;
 
 import com.panthydev.m2batteryapp.Managers.DataManager;
+import com.panthydev.m2batteryapp.Managers.NotificationManager;
 import com.panthydev.m2batteryapp.Notifications.NotificationsMaker;
 import com.panthydev.m2batteryapp.data.DataObjects.App;
 import com.panthydev.m2batteryapp.data.DataObjects.BatteryData;
@@ -47,6 +48,7 @@ public class SystemDataCollector{
     public int batCurrentMAh;
     public boolean powerSaveOn;
     public Duration remainingBatLife;
+    public boolean isCharging;
 
     public SystemDataCollector(Context context){
         this.context = context;
@@ -60,7 +62,7 @@ public class SystemDataCollector{
         batCapMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CHARGE_COUNTER); //Entire Battery capacity in microampere-hours, as an integer.
         batCurrentMAh = BM.getIntProperty(BatteryManager.BATTERY_PROPERTY_CURRENT_NOW); //Instantaneous battery current in microamperes, as an integer (positive means it is charging, negative is draining)
         powerSaveOn = PM.isPowerSaveMode(); //Checks if powersaving mode is on
-
+        isCharging = BM.isCharging();
 
         //Checks if the phone which runs this, has a high enough API level (is new enough)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -81,6 +83,14 @@ public class SystemDataCollector{
         var datapack = new DataPack<BatteryData>();
         datapack.AddData(batData); //Adding the battery data object to the data pack
         DataManager.SetBatteryDataAsync(context,datapack) ; //Sending the battery data object to the database
+
+        NotificationManager.SetBatteryPercent(context, batLevelPercent);
+
+        if (remainingBatLife != null){
+            NotificationManager.SetEstBatTime(context, (int) remainingBatLife.toMinutes());
+        }
+        NotificationManager.SetIsCharging(context, isCharging);
+        NotificationManager.SetPowerSaveOn(context, powerSaveOn);
     }
 
     /**

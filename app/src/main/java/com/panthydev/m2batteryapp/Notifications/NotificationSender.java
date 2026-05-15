@@ -20,9 +20,7 @@ import androidx.core.app.NotificationManagerCompat;
 import com.panthydev.m2batteryapp.MainActivity;
 import com.panthydev.m2batteryapp.R;
 
-/**
- *
- */
+
 public class NotificationSender {
 
     private Context context;
@@ -54,8 +52,7 @@ public class NotificationSender {
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setAutoCancel(true);
 
-        NotificationManagerCompat NMC = NotificationManagerCompat.from(context);
-        NMC.notify(ID, builder.build());
+        NotificationManagerCompat.from(context).notify(ID, builder.build());
     }
 
     // Private helper — creates the channel once

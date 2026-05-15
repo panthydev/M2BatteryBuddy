@@ -24,7 +24,12 @@ import com.panthydev.m2batteryapp.Managers.DataManager;
 import com.panthydev.m2batteryapp.data.DataObjects.App;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class GraphActivity extends AppCompatActivity
 {
@@ -85,6 +90,11 @@ public class GraphActivity extends AppCompatActivity
         colorShape.setForm(Legend.LegendForm.NONE);
 
 
+        // Sets app names for each bar
+        horizontalBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getStrings()));
+        horizontalBarChart.getXAxis().setGranularity(0.2f);
+        horizontalBarChart.getXAxis().setGranularityEnabled(true);
+        horizontalBarChart.setVisibleXRangeMaximum(5);
 
         // Set bar width
         data.setBarWidth(0.9f);
@@ -106,46 +116,25 @@ public class GraphActivity extends AppCompatActivity
         botAxis.setTextColor(getResources().getColor(R.color.text_light_gray));
 
 
-
-
-        // Sets app names for each bar
-        horizontalBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getStrings()));
-        horizontalBarChart.getXAxis().setGranularity(0.2f);
-        horizontalBarChart.getXAxis().setGranularityEnabled(true);
-        horizontalBarChart.setVisibleXRangeMaximum(5);
-
-
         // Invalidate the chart to refresh and makes sure it isn't clickable
         horizontalBarChart.invalidate();
         horizontalBarChart.setClickable(false);
         horizontalBarChart.setTouchEnabled(false);
 
-        GetAllAppData();
+        CalculateSumOfApps();
 
     }
-
-    public void GetAllAppData(){
-        DataManager.GetAppDataAsync(this, 24, new Callback<Map<String, ArrayList<App>>>() {
-            @Override
-            public void OnResult(Map<String, ArrayList<App>> Result)
-            {
-                Log.d("TEST", "Received app data: " + Result);
-            }
-        });
-    }
-
 
     @NonNull
     private static ArrayList<String> getStrings() {
 
-
         ArrayList<String> labelEntries = new ArrayList<>();
 
-        labelEntries.add("App Name5");
-        labelEntries.add("App Name4");
-        labelEntries.add("App Name3");
-        labelEntries.add("App Name2");
-        labelEntries.add("App Name1");
+        labelEntries.add(""); //App Name5
+        labelEntries.add(""); //App Name4
+        labelEntries.add(""); //App Name3
+        labelEntries.add(""); //App Name2
+        labelEntries.add(""); //App Name1
         return labelEntries;
         //Vi skal have dataen rangeret og navnene på den skal ind her
     }
@@ -173,4 +162,49 @@ public class GraphActivity extends AppCompatActivity
         finish();
     }
 
+    public void CalculateSumOfApps () {
+        DataManager.GetAppDataAsync(this, 72, new Callback<Map<String, ArrayList<App>>>() {
+            @Override
+            public void OnResult(Map<String, ArrayList<App>> Result) {
+                Set<String> ListOfKeys = Result.keySet();
+                float SumDischarge = 0;
+                float appAverageDischarge = 0;
+                LinkedHashMap<String, Float> allAppsDischargeAverage = new LinkedHashMap<>();
+
+                for (String Key: ListOfKeys) {
+                   var AppList = Result.get(Key);
+
+                   for(App app : AppList) {
+                       SumDischarge += app.getAppDischarge();
+                   }
+
+                   appAverageDischarge = SumDischarge / AppList.size();
+
+                    allAppsDischargeAverage.put(Key, appAverageDischarge);
+                }
+
+                List<Map.Entry<String, Float>> list = new ArrayList<>(allAppsDischargeAverage.entrySet());
+                list.sort(Map.Entry.comparingByValue());
+
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run() {
+                        ArrayList<String> labelEntries = new ArrayList<>();
+
+                        for(Map.Entry entry: list){
+                            labelEntries.add(entry.getKey().toString());
+                        }
+
+                        horizontalBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labelEntries));
+                        horizontalBarChart.getXAxis().setGranularity(0.2f);
+                        horizontalBarChart.getXAxis().setGranularityEnabled(true);
+                        horizontalBarChart.setVisibleXRangeMaximum(5);
+
+                    }
+                });
+
+            }
+        });
+    }
 }

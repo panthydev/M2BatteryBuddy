@@ -39,7 +39,7 @@ public class DataWorker extends Worker{
             sysDataCollector.CollectAndSendBatteryDataToDB();
             sysDataCollector.appDischargeTimer();
 
-            // Run Notification Worker
+            // Run Notification Worker // THIS IS NOT WORKING
             NotificationWorker notificationWorker = new NotificationWorker(context);
             notificationWorker.NotifWorkerEntryPoint();
 
