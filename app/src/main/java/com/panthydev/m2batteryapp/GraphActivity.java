@@ -130,11 +130,11 @@ public class GraphActivity extends AppCompatActivity
 
         ArrayList<String> labelEntries = new ArrayList<>();
 
-        labelEntries.add("App Name5");
-        labelEntries.add("App Name4");
-        labelEntries.add("App Name3");
-        labelEntries.add("App Name2");
-        labelEntries.add("App Name1");
+        labelEntries.add(""); //App Name5
+        labelEntries.add(""); //App Name4
+        labelEntries.add(""); //App Name3
+        labelEntries.add(""); //App Name2
+        labelEntries.add(""); //App Name1
         return labelEntries;
         //Vi skal have dataen rangeret og navnene på den skal ind her
     }
@@ -163,7 +163,7 @@ public class GraphActivity extends AppCompatActivity
     }
 
     public void CalculateSumOfApps () {
-        DataManager.GetAppDataAsync(this, 24, new Callback<Map<String, ArrayList<App>>>() {
+        DataManager.GetAppDataAsync(this, 72, new Callback<Map<String, ArrayList<App>>>() {
             @Override
             public void OnResult(Map<String, ArrayList<App>> Result) {
                 Set<String> ListOfKeys = Result.keySet();
@@ -190,36 +190,17 @@ public class GraphActivity extends AppCompatActivity
                 {
                     @Override
                     public void run() {
-                        ArrayList NamesForGraph = new ArrayList<>();
+                        ArrayList<String> labelEntries = new ArrayList<>();
 
-                        int i = list.size();
-                        if (list.size() >= 5) {
-                            String firstPlace = String.valueOf(list.get(i-4));
-                            String secondPlace = String.valueOf(list.get(i-3));
-                            String thirdPlace = String.valueOf(list.get(i-2));
-                            String fourthPlace = String.valueOf(list.get(i-1));
-                            String fifthPlace = String.valueOf(list.get(i));
-                        } else if (list.size() == 4) {
-                            String firstPlace = String.valueOf(list.get(i-3));
-                            String secondPlace = String.valueOf(list.get(i-2));
-                            String thirdPlace = String.valueOf(list.get(i-1));
-                            String fourthPlace = String.valueOf(list.get(i));
+                        for(Map.Entry entry: list){
+                            labelEntries.add(entry.getKey().toString());
                         }
-                        else if (list.size() == 3) {
-                            String firstPlace = String.valueOf(list.get(i-2));
-                            String secondPlace = String.valueOf(list.get(i-1));
-                            String thirdPlace = String.valueOf(list.get(i));
-                        }
-                        else if (list.size() == 2) {
-                            String firstPlace = String.valueOf(list.get(i-1));
-                            String secondPlace = String.valueOf(list.get(i));
-                        }
-                        else if (list.size() <= 1) {
-                            String firstPlace = String.valueOf(list.get(i));
-                        }
-                        else {
-                            return;
-                        }
+
+                        horizontalBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labelEntries));
+                        horizontalBarChart.getXAxis().setGranularity(0.2f);
+                        horizontalBarChart.getXAxis().setGranularityEnabled(true);
+                        horizontalBarChart.setVisibleXRangeMaximum(5);
+
                     }
                 });
 
