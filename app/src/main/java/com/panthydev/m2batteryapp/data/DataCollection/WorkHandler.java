@@ -26,6 +26,7 @@ public class WorkHandler {
         Intent intent = new Intent(context, DataCollectionService.class);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             context.startForegroundService(intent);
+
         } else {
             context.startService(intent);
         }
