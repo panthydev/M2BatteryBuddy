@@ -64,8 +64,8 @@ public class DataCollectionService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-//        createChannel();
-//        startForeground(NOTIFICATION_ID, buildNotification());
+        createChannel();
+        startForeground(NOTIFICATION_ID, buildNotification());
     }
 
     @Override
@@ -112,7 +112,7 @@ public class DataCollectionService extends Service {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("Battery Buddy running")
                 .setContentText("Collecting battery data every minute")
-                .setOngoing(true)
+                .setOngoing(false)
                 .setPriority(NotificationCompat.PRIORITY_LOW)
                 .build();
     }
