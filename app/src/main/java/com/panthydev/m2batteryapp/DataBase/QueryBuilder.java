@@ -81,7 +81,7 @@ public class QueryBuilder
                 + AppTable.APP_NAME_COL + " TEXT, "
                 + AppTable.APP_CATEGORY_COL + " INTEGER, "
                 + AppTable.APP_DISCHARGE_COL + " INTEGER, "
-                + AppTable.BACKGROUND_PROCESS_COUNT_COL + " INTEGER, "
+                //+ AppTable.BACKGROUND_PROCESS_COUNT_COL + " INTEGER, "
                 + AppTable.TIMESTAMP_COL + " TEXT)";
     }
 
