@@ -51,6 +51,10 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
+        WorkHandler workHandler = new WorkHandler();
+
+        workHandler.StartDataCollection(this);
+
         batText = findViewById(R.id.BatTime);
         batText2 = findViewById(R.id.batTime2);
         batTextPercent =findViewById(R.id.textViewUIPercent);
@@ -124,10 +128,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buddyChange();
-        
-        WorkHandler workHandler = new WorkHandler();
-
-        workHandler.StartDataCollection(this);
     }
 
     private void buddyChange(){
