@@ -76,7 +76,7 @@ public class GraphActivity extends AppCompatActivity
 
         //The little description in the corner + color and shape of background
         Description description = new Description();
-        description.setText("General use of mAh");
+        description.setText("Comparative Drainage");
         description.setTextColor(getResources().getColor(R.color.text_light_gray));
         horizontalBarChart.setDescription(description);
         horizontalBarChart.getXAxis().setLabelCount(5);
