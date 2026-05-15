@@ -90,6 +90,11 @@ public class GraphActivity extends AppCompatActivity
         colorShape.setForm(Legend.LegendForm.NONE);
 
 
+        // Sets app names for each bar
+        horizontalBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getStrings()));
+        horizontalBarChart.getXAxis().setGranularity(0.2f);
+        horizontalBarChart.getXAxis().setGranularityEnabled(true);
+        horizontalBarChart.setVisibleXRangeMaximum(5);
 
         // Set bar width
         data.setBarWidth(0.9f);
@@ -111,38 +116,17 @@ public class GraphActivity extends AppCompatActivity
         botAxis.setTextColor(getResources().getColor(R.color.text_light_gray));
 
 
-
-
-        // Sets app names for each bar
-        horizontalBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(getStrings()));
-        horizontalBarChart.getXAxis().setGranularity(0.2f);
-        horizontalBarChart.getXAxis().setGranularityEnabled(true);
-        horizontalBarChart.setVisibleXRangeMaximum(5);
-
-
         // Invalidate the chart to refresh and makes sure it isn't clickable
         horizontalBarChart.invalidate();
         horizontalBarChart.setClickable(false);
         horizontalBarChart.setTouchEnabled(false);
 
-        GetAllAppData();
         CalculateSumOfApps();
-    }
 
-    public void GetAllAppData(){
-        DataManager.GetAppDataAsync(this, 24, new Callback<Map<String, ArrayList<App>>>() {
-            @Override
-            public void OnResult(Map<String, ArrayList<App>> Result)
-            {
-                Log.d("TEST", "Received app data: " + Result);
-            }
-        });
     }
-
 
     @NonNull
     private static ArrayList<String> getStrings() {
-
 
         ArrayList<String> labelEntries = new ArrayList<>();
 
@@ -202,13 +186,42 @@ public class GraphActivity extends AppCompatActivity
                 List<Map.Entry<String, Float>> list = new ArrayList<>(allAppsDischargeAverage.entrySet());
                 list.sort(Map.Entry.comparingByValue());
 
-//                runOnUiThread(new Runnable()
-//                {
-//                    @Override
-//                    public void run() {
-//                        batTextPercent.setText(fuck + "%");
-//                    }
-//                });
+                runOnUiThread(new Runnable()
+                {
+                    @Override
+                    public void run() {
+                        ArrayList NamesForGraph = new ArrayList<>();
+
+                        int i = list.size();
+                        if (list.size() >= 5) {
+                            String firstPlace = String.valueOf(list.get(i-4));
+                            String secondPlace = String.valueOf(list.get(i-3));
+                            String thirdPlace = String.valueOf(list.get(i-2));
+                            String fourthPlace = String.valueOf(list.get(i-1));
+                            String fifthPlace = String.valueOf(list.get(i));
+                        } else if (list.size() == 4) {
+                            String firstPlace = String.valueOf(list.get(i-3));
+                            String secondPlace = String.valueOf(list.get(i-2));
+                            String thirdPlace = String.valueOf(list.get(i-1));
+                            String fourthPlace = String.valueOf(list.get(i));
+                        }
+                        else if (list.size() == 3) {
+                            String firstPlace = String.valueOf(list.get(i-2));
+                            String secondPlace = String.valueOf(list.get(i-1));
+                            String thirdPlace = String.valueOf(list.get(i));
+                        }
+                        else if (list.size() == 2) {
+                            String firstPlace = String.valueOf(list.get(i-1));
+                            String secondPlace = String.valueOf(list.get(i));
+                        }
+                        else if (list.size() <= 1) {
+                            String firstPlace = String.valueOf(list.get(i));
+                        }
+                        else {
+                            return;
+                        }
+                    }
+                });
 
             }
         });
