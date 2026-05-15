@@ -22,14 +22,252 @@ public class NotificationManager {
         return getPrefs(context).getBoolean(key, defaultValue);
     }
 
+    private static void putIntPref(Context context, String key, int value){
+        getPrefs(context).edit().putInt(key, value).apply();
+    }
+
+    private static int getIntPref(Context context, String key, int defaultValue){
+        return getPrefs(context).getInt(key, defaultValue);
+    }
+
+    /// Notif Bools ///
+    //Percent and powersave
+    public static void SetSwitchPowersave60percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave60percent", b);
+    }
+    public static boolean GetSwitchPowersave60percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave60percent", false);
+    }
+
+    public static void SetSwitchPowersave50percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave50percent", b);
+    }
+    public static boolean GetSwitchPowersave50percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave50percent", false);
+    }
+
+    public static void SetSwitchPowersave40percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave40percent", b);
+    }
+    public static boolean GetSwitchPowersave40percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave40percent", false);
+    }
+
+    public static void SetSwitchPowersave30percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave30percent", b);
+    }
+    public static boolean GetSwitchPowersave30percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave30percent", false);
+    }
+
+    public static void SetSwitchPowersave20percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave20percent", b);
+    }
+    public static boolean GetSwitchPowersave20percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave20percent", false);
+    }
+
+    public static void SetSwitchPowersave10percent(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave10percent", b);
+    }
+    public static boolean GetSwitchPowersave10percent(Context context){
+        return getBooleanPref(context, "SwitchPowersave10percent", false);
+    }
+
+    //time and powersave
+    public static void SetSwitchPowersave3hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave3hours", b);
+    }
+    public static boolean GetSwitchPowersave3hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave3hours", false);
+    }
+
+    public static void SetSwitchPowersave25hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave25hours", b);
+    }
+    public static boolean GetSwitchPowersave25hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave25hours", false);
+    }
+
+    public static void SetSwitchPowersave2hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave2hours", b);
+    }
+    public static boolean GetSwitchPowersave2hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave2hours", false);
+    }
+
+    public static void SetSwitchPowersave15hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave15hours", b);
+    }
+    public static boolean GetSwitchPowersave15hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave15hours", false);
+    }
+
+    public static void SetSwitchPowersave1hours(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave1hour", b);
+    }
+    public static boolean GetSwitchPowersave1hours(Context context){
+        return getBooleanPref(context, "SwitchPowersave1hour", false);
+    }
+
+    public static void SetSwitchPowersave30min(Context context, boolean b){
+        putBooleanPref(context, "SwitchPowersave30min", b);
+    }
+    public static boolean GetSwitchPowersave30min(Context context){
+        return getBooleanPref(context, "SwitchPowersave30min", false);
+    }
+
+    //Percent
+    public static void SetSwitch60percent(Context context, boolean b){
+        putBooleanPref(context, "Switch60percent", b);
+    }
+    public static boolean GetSwitch60percent(Context context){
+        return getBooleanPref(context, "Switch60percent", false);
+    }
+
+    public static void SetSwitch50percent(Context context, boolean b){
+        putBooleanPref(context, "Switch50percent", b);
+    }
+    public static boolean GetSwitch50percent(Context context){
+        return getBooleanPref(context, "Switch50percent", false);
+    }
+
+    public static void SetSwitch40percent(Context context, boolean b){
+        putBooleanPref(context, "Switch40percent", b);
+    }
+    public static boolean GetSwitch40percent(Context context){
+        return getBooleanPref(context, "Switch40percent", false);
+    }
+
+    public static void SetSwitch30percent(Context context, boolean b){
+        putBooleanPref(context, "Switch30percent", b);
+    }
+    public static boolean GetSwitch30percent(Context context){
+        return getBooleanPref(context, "Switch30percent", false);
+    }
+
+    public static void SetSwitch20percent(Context context, boolean b){
+        putBooleanPref(context, "Switch20percent", b);
+    }
+    public static boolean GetSwitch20percent(Context context){
+        return getBooleanPref(context, "Switch20percent", false);
+    }
+
+    public static void SetSwitch10percent(Context context, boolean b){
+        putBooleanPref(context, "Switch10percent", b);
+    }
+    public static boolean GetSwitch10percent(Context context){
+        return getBooleanPref(context, "Switch10percent", false);
+    }
+
+    //Time
+    public static void SetSwitch3hours(Context context, boolean b){
+        putBooleanPref(context, "Switch3hours", b);
+    }
+    public static boolean GetSwitch3hours(Context context){
+        return getBooleanPref(context, "Switch3hours", false);
+    }
+
+    public static void SetSwitch25hours(Context context, boolean b){
+        putBooleanPref(context, "Switch25hours", b);
+    }
+    public static boolean GetSwitch25hours(Context context){
+        return getBooleanPref(context, "Switch25hours", false);
+    }
+
+    public static void SetSwitch2hours(Context context, boolean b){
+        putBooleanPref(context, "Switch2hours", b);
+    }
+    public static boolean GetSwitch2hours(Context context){
+        return getBooleanPref(context, "Switch2hours", false);
+    }
+
+    public static void SetSwitch15hours(Context context, boolean b){
+        putBooleanPref(context, "Switch15hours", b);
+    }
+    public static boolean GetSwitch15hours(Context context){
+        return getBooleanPref(context, "Switch15hours", false);
+    }
+
+    public static void SetSwitch1hours(Context context, boolean b){
+        putBooleanPref(context, "Switch1hour", b);
+    }
+    public static boolean GetSwitch1hours(Context context){
+        return getBooleanPref(context, "Switch1hour", false);
+    }
+
+    public static void SetSwitch30min(Context context, boolean b){
+        putBooleanPref(context, "Switch30min", b);
+    }
+    public static boolean GetSwitch30min(Context context){
+        return getBooleanPref(context, "Switch30min", false);
+    }
+
+    //Tips
+    public static void SetSwitchTips(Context context, boolean b){
+        putBooleanPref(context, "SwitchTips", b);
+    }
+    public static boolean GetSwitchTips(Context context){
+        return getBooleanPref(context, "SwitchTips", false);
+    }
+
+    /// System stuff ///
+
+    public static void SetFirstAppCollectionOn(Context context, boolean b){
+        putBooleanPref(context, "FirstAppCollection", b);
+    }
+
+    public static boolean GetFirstAppCollectionOn(Context context){
+        return getBooleanPref(context, "FirstAppCollection", false);
+    }
+
+    public static void SetIntervalOn(Context context, boolean b){
+        putBooleanPref(context, "Interval", b);
+    }
+
+    public static boolean GetIntervalOn(Context context){
+        return getBooleanPref(context, "Interval", false);
+    }
+
+    public static void SetBatteryPercent (Context context, int b){
+        putIntPref(context, "BatteryPercent", b);
+    }
+
+    public static int GetBatteryPercent(Context context){
+        return getIntPref(context, "BatteryPercent", 0);
+    }
+
+    public static void SetEstBatTime (Context context, int b){
+        putIntPref(context, "EstBatTime", b);
+    }
+
+    public static int GetEstBatTime(Context context){
+        return getIntPref(context, "EstBatTime", 0);
+    }
+
+    public static void SetPowerSaveOn(Context context, boolean b){
+        putBooleanPref(context, "PowerSaveOn", b);
+    }
+
+    public static boolean GetPowerSaveOn(Context context){
+        return getBooleanPref(context, "PowerSaveOn", false);
+    }
+
+    public static void SetIsCharging(Context context, boolean b){
+        putBooleanPref(context, "IsCharging", b);
+    }
+
+    public static boolean GetIsCharging(Context context){
+        return getBooleanPref(context, "IsCharging", false);
+    }
 
     // Powersave related
-        //    public static void SetPowersaveRejseKortApp(Context context, boolean b){
-        //        putBooleanPref(context, "PowersaveRejseKortApp", b);
+        //    public static void SetPowersaveRejseKortApp(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "PowersaveRejseKortApp", b);
         //    }
         //
-        //    public static boolean GetPowersaveRejseKortApp(Context context){
-        //        return getBooleanPref(context, "PowersaveRejseKortApp", false);
+        //    public static boolean GetPowersaveRejseKortApp(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "PowersaveRejseKortApp", false);
         //    }
 
     /// POWER SAVE PERCENT ///
@@ -229,44 +467,44 @@ public class NotificationManager {
     }
 
     // Other related
-        //    public static void SetBatteryMaxCapacityBad(Context context, boolean b){
-        //        putBooleanPref(context, "BatteryMaxCapacityBad", b);
+        //    public static void SetBatteryMaxCapacityBad(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "BatteryMaxCapacityBad", b);
         //    }
         //
-        //    public static boolean GetBatteryMaxCapacityBad(Context context){
-        //        return getBooleanPref(context, "BatteryMaxCapacityBad", false);
+        //    public static boolean GetBatteryMaxCapacityBad(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "BatteryMaxCapacityBad", false);
         //    }
         //
-        //    public static void SetDigitalMaintenanceCheck(Context context, boolean b){
-        //        putBooleanPref(context, "DigitalMaintenanceCheck", b);
+        //    public static void SetDigitalMaintenanceCheck(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "DigitalMaintenanceCheck", b);
         //    }
         //
-        //    public static boolean GetDigitalMaintenanceCheck(Context context){
-        //        return getBooleanPref(context, "DigitalMaintenanceCheck", false);
+        //    public static boolean GetDigitalMaintenanceCheck(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "DigitalMaintenanceCheck", false);
         //    }
         //
-        //    public static void SetOnlyWhenOver50Percent(Context context, boolean b){
-        //        putBooleanPref(context, "OnlyWhenOver50Percent", b);
+        //    public static void SetOnlyWhenOver50Percent(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "OnlyWhenOver50Percent", b);
         //    }
         //
-        //    public static boolean GetOnlyWhenOver50Percent(Context context){
-        //        return getBooleanPref(context, "OnlyWhenOver50Percent", false);
+        //    public static boolean GetOnlyWhenOver50Percent(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "OnlyWhenOver50Percent", false);
         //    }
         //
-        //    public static void SetReadTipsAndTricks(Context context, boolean b){
-        //        putBooleanPref(context, "ReadTipsAndTricks", b);
+        //    public static void SetReadTipsAndTricks(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "ReadTipsAndTricks", b);
         //    }
         //
-        //    public static boolean GetReadTipsAndTricks(Context context){
-        //        return getBooleanPref(context, "ReadTipsAndTricks", false);
+        //    public static boolean GetReadTipsAndTricks(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "ReadTipsAndTricks", false);
         //    }
         //
-        //    public static void SetGoldilocksZone(Context context, boolean b){
-        //        putBooleanPref(context, "GoldilocksZone", b);
+        //    public static void SetGoldilocksZone(Context Syscontext, boolean b){
+        //        putBooleanPref(Syscontext, "GoldilocksZone", b);
         //    }
         //
-        //    public static boolean GetGoldilocksZone(Context context){
-        //        return getBooleanPref(context, "GoldilocksZone", false);
+        //    public static boolean GetGoldilocksZone(Context Syscontext){
+        //        return getBooleanPref(Syscontext, "GoldilocksZone", false);
         //    }
 
 }

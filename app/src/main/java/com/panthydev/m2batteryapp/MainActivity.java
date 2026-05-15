@@ -2,15 +2,19 @@ package com.panthydev.m2batteryapp;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
+import android.Manifest;
 import android.app.AppOpsManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.panthydev.m2batteryapp.Interfaces.Callback;
@@ -22,13 +26,17 @@ import com.panthydev.m2batteryapp.databinding.ActivityBaseBinding;
 
 import android.provider.Settings;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.time.Duration;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     ActivityBaseBinding binding;
     public TextView batText;
+    public TextView batText2;
+    public TextView batTextPercent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         workHandler.StartDataCollection(this);
 
         batText = findViewById(R.id.BatTime);
+        batText2 = findViewById(R.id.batTime2);
+        batTextPercent =findViewById(R.id.textViewUIPercent);
 
         BatteryUIMethod();
 
@@ -57,6 +67,15 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                ActivityCompat.requestPermissions(
+                        this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        101
+                );
+            }
+        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.menu_bar);
         bottomNavigationView.setSelectedItemId(R.id.home_butt);
@@ -100,12 +119,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ConstraintLayout buddy =findViewById(R.id.buddyView);
+        buddy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                buddyChange();
+            }
+        });
+
+        buddyChange();
+    }
+
+    private void buddyChange(){
+        ImageView buddy = (ImageView) findViewById(R.id.buddyImage);
+
+        Random r = new Random();
+        int random = r.nextInt(6 - 1) + 1; //range 5-1 (supposedly)
+
+        if (random==1){
+            buddy.setImageResource(R.drawable.bb1);
+        }
+        else if (random==2){
+            buddy.setImageResource(R.drawable.bb2);
+        }
+        else if (random==3){
+            buddy.setImageResource(R.drawable.bb3);
+        }
+        else if (random==4){
+            buddy.setImageResource(R.drawable.bb4);
+        }
+        else
+            buddy.setImageResource(R.drawable.bb5);
     }
 
     private boolean isAccessGranted() {
-
-
-
 
         try {
             PackageManager packageManager = getPackageManager();
@@ -126,10 +173,14 @@ public class MainActivity extends AppCompatActivity {
     public void BatteryUIMethod(){
         DataManager.GetBatteryDataAsync(this, 24, new Callback<DataPack<BatteryData>>()
         {
+            @RequiresApi(api = Build.VERSION_CODES.O) //got error from toHours osv. this fix?
             @Override
             public void OnResult(DataPack<BatteryData> Result)
             {
                 int index = Result.dataList.size();
+                int hoursRemaining = (int)Result.dataList.get(0).estimatedBatTimeLeft.toHours();
+                int minutesRemaining = (int) Result.dataList.get(0).estimatedBatTimeLeft.toMinutes();
+                String balls = String.valueOf(minutesRemaining-(hoursRemaining*60));
                 String my_ass = String.valueOf(Result.dataList.get(0).estimatedBatTimeLeft.toHours());
                 String fuck = String.valueOf(Result.dataList.get(index-1).percentLeft);
 
@@ -139,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     {
                         @Override
                         public void run() {
-                            batText.setText(fuck + "%");
+                            batTextPercent.setText(fuck + "%");
                         }
                     });
                 }
@@ -149,7 +200,8 @@ public class MainActivity extends AppCompatActivity {
                     {
                         @Override
                         public void run() {
-                            batText.setText(my_ass);
+                            batText.setText(my_ass + " Hours" + " &");
+                            batText2.setText(balls+ " Minutes");
                         }
                     });
                 }
