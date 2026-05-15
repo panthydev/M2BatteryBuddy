@@ -59,8 +59,6 @@ public class MainActivity extends AppCompatActivity {
         batText2 = findViewById(R.id.batTime2);
         batTextPercent =findViewById(R.id.textViewUIPercent);
 
-        BatteryUIMethod();
-
         isAccessGranted();
         if (!isAccessGranted()) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
@@ -128,6 +126,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buddyChange();
+
+        BatteryUIMethod();
     }
 
     private void buddyChange(){
