@@ -5,7 +5,9 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.TextureView;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,7 @@ import com.panthydev.m2batteryapp.Interfaces.Callback;
 import com.panthydev.m2batteryapp.Managers.DataManager;
 import com.panthydev.m2batteryapp.data.DataObjects.App;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -37,12 +40,24 @@ public class GraphActivity extends AppCompatActivity
     HorizontalBarChart horizontalBarChart;
     BarDataSet barDataSet;
 
+    TextView topApp1;
+    TextView topApp2;
+    TextView topApp3;
+    TextView topApp4;
+    TextView topApp5;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
         horizontalBarChart = findViewById(R.id.idBarChart);
+
+        topApp1 = findViewById(R.id.TopApp1);
+        topApp2 = findViewById(R.id.TopApp2);
+        topApp3 = findViewById(R.id.TopApp3);
+        topApp4 = findViewById(R.id.TopApp4);
+        topApp5 = findViewById(R.id.TopApp5);
 
 
         //Arraylist for the data of each app
@@ -76,7 +91,7 @@ public class GraphActivity extends AppCompatActivity
 
         //The little description in the corner + color and shape of background
         Description description = new Description();
-        description.setText("General use of mAh");
+        description.setText("Comparable Discharge");
         description.setTextColor(getResources().getColor(R.color.text_light_gray));
         horizontalBarChart.setDescription(description);
         horizontalBarChart.getXAxis().setLabelCount(5);
@@ -186,20 +201,27 @@ public class GraphActivity extends AppCompatActivity
                 List<Map.Entry<String, Float>> list = new ArrayList<>(allAppsDischargeAverage.entrySet());
                 list.sort(Map.Entry.comparingByValue());
 
+
+
                 runOnUiThread(new Runnable()
                 {
                     @Override
                     public void run() {
                         ArrayList<String> labelEntries = new ArrayList<>();
+                        TextView[] appLabelEntries = new TextView[5];
+                        appLabelEntries[0]=topApp1;
+                        appLabelEntries[1]=topApp2;
+                        appLabelEntries[2]=topApp3;
+                        appLabelEntries[3]=topApp4;
+                        appLabelEntries[4]=topApp5;
+                        int i = 0;
 
                         for(Map.Entry entry: list){
-                            labelEntries.add(entry.getKey().toString());
+                            appLabelEntries[i].setText(entry.getKey().toString());
+                            i++;
                         }
 
-                        horizontalBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labelEntries));
-                        horizontalBarChart.getXAxis().setGranularity(0.2f);
-                        horizontalBarChart.getXAxis().setGranularityEnabled(true);
-                        horizontalBarChart.setVisibleXRangeMaximum(5);
+
 
                     }
                 });
