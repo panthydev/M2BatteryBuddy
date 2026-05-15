@@ -51,21 +51,16 @@ public class MainActivity extends AppCompatActivity {
 //            return insets;
 //        });
 
-        WorkHandler workHandler = new WorkHandler();
-
-        workHandler.StartDataCollection(this);
-
         batText = findViewById(R.id.BatTime);
         batText2 = findViewById(R.id.batTime2);
         batTextPercent =findViewById(R.id.textViewUIPercent);
+
+        BatteryUIMethod();
 
         isAccessGranted();
         if (!isAccessGranted()) {
             Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
             startActivity(intent);
-            if (isAccessGranted()) {
-                BatteryUIMethod();
-            }
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
@@ -129,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         buddyChange();
+        
+        WorkHandler workHandler = new WorkHandler();
+
+        workHandler.StartDataCollection(this);
     }
 
     private void buddyChange(){
