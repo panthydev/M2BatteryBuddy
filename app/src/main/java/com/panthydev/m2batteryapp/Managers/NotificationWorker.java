@@ -1,50 +1,17 @@
 package com.panthydev.m2batteryapp.Managers;
 
-import static android.content.Context.BATTERY_SERVICE;
-
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_10_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_1_5_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_1_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_20_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_2_5_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_2_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_30_MINUTES;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_30_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_3_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_40_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_50_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_ON_60_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_10_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_1_5_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_1_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_20_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_2_5_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_2_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_30_MINUTES;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_30_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_3_HOURS;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_40_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_50_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.M_POWER_SAVE_NOT_ON_60_PERCENT;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.TITLE_POWER;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.TITLE_POWER_SAVE_IS_NOT_ON;
-import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.TITLE_TIPS_AND_TRICKS;
+import static com.panthydev.m2batteryapp.Notifications.NotificationsMessages.*;
 
 import android.Manifest;
 import android.content.Context;
-import android.os.BatteryManager;
 import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.annotation.RequiresPermission;
 
-import com.panthydev.m2batteryapp.MainActivity;
 import com.panthydev.m2batteryapp.Notifications.NotificationSender;
 import com.panthydev.m2batteryapp.data.DataCollection.SystemDataCollector;
-
-import java.time.Duration;
-import java.util.Objects;
 
 public class NotificationWorker {
 
@@ -67,6 +34,12 @@ public class NotificationWorker {
 
     private boolean isPowerSaveOn, isCharging;
     private int batTime, batPercent;
+
+    private boolean PSNotif3Hours, PSNotif25Hours, PSNotif2Hours, PSNotif15Hours, PSNotif1Hour, PSNotif30Min;
+    private boolean PSNotif60Percent, PSNotif50Percent, PSNotif40Percent, PSNotif30Percent, PSNotif20Percent, PSNotif10Percent;
+
+    private boolean Notif3Hours, Notif25Hours, Notif2Hours, Notif15Hours, Notif1Hour, Notif30Min;
+    private boolean Notif60Percent, Notif50Percent, Notif40Percent, Notif30Percent, Notif20Percent, Notif10Percent;
 
     private void initializePrefs() {
         prefSwitchPowersave60percent = NotificationManager.GetSwitchPowersave60percent(Syscontext);
@@ -133,320 +106,218 @@ public class NotificationWorker {
         isCharging = NotificationManager.GetIsCharging(Syscontext);
         isPowerSaveOn = NotificationManager.GetPowerSaveOn(Syscontext);
 
-        Log.d("NotificationWorker", "yayy im awake, im gonna do notif stuff now");
-        if (prefSwitchPowersave60percent || prefSwitchPowersave50percent || prefSwitchPowersave40percent || prefSwitchPowersave30percent || prefSwitchPowersave20percent || prefSwitchPowersave10percent) {
-            SendPSNotifPercent();
+        Log.d("NotificationWorker", "Checking triggers. Bat: " + batPercent + "%, Time: " + batTime + "m, Charging: " + isCharging + ", PS: " + isPowerSaveOn);
+
+        SendPSNotifPercent();
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            SendPSNotifTime();
+            SendTimeNotif();
         }
-
-        if (prefSwitchPowersave3Hours || prefSwitchPowersave25Hours || prefSwitchPowersave2Hours || prefSwitchPowersave15Hours || prefSwitchPowersave1Hour || prefSwitchPowersave30Min) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                SendPSNotifTime();
-            }
-        }
-
-        if (prefSwitch60percent || prefSwitch50percent || prefSwitch40percent || prefSwitch30percent || prefSwitch20percent || prefSwitch10percent) {
-            SendPercentNotif();
-        }
-
-        if (prefSwitch3Hours || prefSwitch25Hours || prefSwitch2Hours || prefSwitch15Hours || prefSwitch1Hour || prefSwitch30Min) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                SendTimeNotif();
-            }
-        }
-
-        if (prefSwitchTips) {
-            SendOtherNotif();
-        }
-    }
-
-    /// All methods accessable under here ///
-
-    // Get bools for which notification are turned on from prefs
-
-    private boolean PSNotif3Hours, PSNotif25Hours, PSNotif2Hours, PSNotif15Hours, PSNotif1Hour, PSNotif30Min;
-    private boolean PSNotif60Percent, PSNotif50Percent, PSNotif40Percent, PSNotif30Percent, PSNotif20Percent, PSNotif10Percent;
-
-    void ChangeNotifBool(boolean NotifToChange) {
-        if (!NotifToChange && !isCharging) {
-            NotifToChange = true;
-        } else if (NotifToChange && isCharging) {
-            NotifToChange = false;
-        }
+        SendPercentNotif();
+        SendOtherNotif();
     }
 
     public void SendPSNotifPercent () {
-        switch(batPercent) {
-            case 60:
-                if (prefSwitchPowersave60percent) {
-                    TurnOnPowerSavePercent ();
-                    ChangeNotifBool(PSNotif60Percent);
-                    NotificationManager.SetPowersaveNotOnAt60Percent(Syscontext, PSNotif60Percent);
-                    break;
-                }
-            case 50:
-                if (prefSwitchPowersave50percent) {
-                    TurnOnPowerSavePercent();
-                    ChangeNotifBool(PSNotif50Percent);
-                    NotificationManager.SetPowersaveNotOnAt50Percent(Syscontext, PSNotif50Percent);
-                    break;
-                }
-            case 40:
-                if (prefSwitchPowersave40percent) {
-                    TurnOnPowerSavePercent();
-                    ChangeNotifBool(PSNotif40Percent);
-                    NotificationManager.SetPowersaveNotOnAt40Percent(Syscontext, PSNotif40Percent);
-                    break;
-                }
-            case 30:
-                if (prefSwitchPowersave30percent) {
-                    TurnOnPowerSavePercent();
-                    ChangeNotifBool(PSNotif30Percent);
-                    NotificationManager.SetPowersaveNotOnAt30Percent(Syscontext, PSNotif30Percent);
-                    break;
-                }
-            case 20:
-                if (prefSwitchPowersave20percent) {
-                    TurnOnPowerSavePercent();
-                    ChangeNotifBool(PSNotif20Percent);
-                    NotificationManager.SetPowersaveNotOnAt20Percent(Syscontext, PSNotif20Percent);
-                    break;
-                }
-            case 10:
-                if (prefSwitchPowersave10percent) {
-                    TurnOnPowerSavePercent();
-                    ChangeNotifBool(PSNotif10Percent);
-                    NotificationManager.SetPowersaveNotOnAt10Percent(Syscontext, PSNotif10Percent);
-                    break;
-                }
+        if (isCharging || isPowerSaveOn) {
+            if (isCharging) resetPSPercentFlags();
+            return;
         }
+
+        boolean notified = false;
+        notified = checkPSPercent(10, prefSwitchPowersave10percent, PSNotif10Percent, M_POWER_SAVE_NOT_ON_10_PERCENT, notified);
+        notified = checkPSPercent(20, prefSwitchPowersave20percent, PSNotif20Percent, M_POWER_SAVE_NOT_ON_20_PERCENT, notified);
+        notified = checkPSPercent(30, prefSwitchPowersave30percent, PSNotif30Percent, M_POWER_SAVE_NOT_ON_30_PERCENT, notified);
+        notified = checkPSPercent(40, prefSwitchPowersave40percent, PSNotif40Percent, M_POWER_SAVE_NOT_ON_40_PERCENT, notified);
+        notified = checkPSPercent(50, prefSwitchPowersave50percent, PSNotif50Percent, M_POWER_SAVE_NOT_ON_50_PERCENT, notified);
+        notified = checkPSPercent(60, prefSwitchPowersave60percent, PSNotif60Percent, M_POWER_SAVE_NOT_ON_60_PERCENT, notified);
+    }
+
+    private boolean checkPSPercent(int threshold, boolean prefEnabled, boolean alreadyNotified, String message, boolean alreadySentThisCycle) {
+        if (batPercent <= threshold) {
+            if (!alreadyNotified) {
+                if (prefEnabled && !alreadySentThisCycle) {
+                    new NotificationSender(Syscontext).send(TITLE_POWER_SAVE_IS_NOT_ON, message, 1);
+                    alreadySentThisCycle = true;
+                }
+                setPSPercentFlag(threshold, true);
+            }
+        } else {
+            setPSPercentFlag(threshold, false);
+        }
+        return alreadySentThisCycle;
+    }
+
+    private void setPSPercentFlag(int threshold, boolean value) {
+        switch (threshold) {
+            case 60: NotificationManager.SetPowersaveNotOnAt60Percent(Syscontext, value); break;
+            case 50: NotificationManager.SetPowersaveNotOnAt50Percent(Syscontext, value); break;
+            case 40: NotificationManager.SetPowersaveNotOnAt40Percent(Syscontext, value); break;
+            case 30: NotificationManager.SetPowersaveNotOnAt30Percent(Syscontext, value); break;
+            case 20: NotificationManager.SetPowersaveNotOnAt20Percent(Syscontext, value); break;
+            case 10: NotificationManager.SetPowersaveNotOnAt10Percent(Syscontext, value); break;
+        }
+    }
+
+    private void resetPSPercentFlags() {
+        NotificationManager.SetPowersaveNotOnAt60Percent(Syscontext, false);
+        NotificationManager.SetPowersaveNotOnAt50Percent(Syscontext, false);
+        NotificationManager.SetPowersaveNotOnAt40Percent(Syscontext, false);
+        NotificationManager.SetPowersaveNotOnAt30Percent(Syscontext, false);
+        NotificationManager.SetPowersaveNotOnAt20Percent(Syscontext, false);
+        NotificationManager.SetPowersaveNotOnAt10Percent(Syscontext, false);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void SendPSNotifTime () {
-        if (batTime <= 180 && batTime >= 160 && prefSwitchPowersave3Hours) {
-            TurnOnPowerSaveHours();
-            ChangeNotifBool(PSNotif3Hours);
-            NotificationManager.SetPowersaveNotOn3HoursLeft(Syscontext, PSNotif3Hours);
-        } else if (batTime <= 150 && batTime >= 130 && prefSwitchPowersave25Hours) {
-            TurnOnPowerSaveHours();
-            ChangeNotifBool(PSNotif25Hours);
-            NotificationManager.SetPowersaveNotOn25HoursLeft(Syscontext, PSNotif25Hours);
-        } else if (batTime <= 120 && batTime >= 100 && prefSwitchPowersave2Hours) {
-            TurnOnPowerSaveHours();
-            ChangeNotifBool(PSNotif2Hours);
-            NotificationManager.SetPowersaveNotOn2HoursLeft(Syscontext, PSNotif2Hours);
-        } else if (batTime <= 90 && batTime >= 70 && prefSwitchPowersave15Hours) {
-            TurnOnPowerSaveHours();
-            ChangeNotifBool(PSNotif15Hours);
-            NotificationManager.SetPowersaveNotOn15HoursLeft(Syscontext, PSNotif15Hours);
-        } else if (batTime <= 60 && batTime >= 40 && prefSwitchPowersave1Hour) {
-            TurnOnPowerSaveHours();
-            ChangeNotifBool(PSNotif1Hour);
-            NotificationManager.SetPowersaveNotOn1HourLeft(Syscontext, PSNotif1Hour);
-        } else if (batTime <= 30 && batTime >= 10 && prefSwitchPowersave30Min) {
-            TurnOnPowerSaveHours();
-            ChangeNotifBool(PSNotif30Min);
-            NotificationManager.SetPowersaveNotOn30MinLeft(Syscontext, PSNotif30Min);
+        if (isCharging || isPowerSaveOn) {
+            if (isCharging) resetPSTimeFlags();
+            return;
+        }
+
+        boolean notified = false;
+        notified = checkPSTime(30, prefSwitchPowersave30Min, PSNotif30Min, M_POWER_SAVE_NOT_ON_30_MINUTES, notified);
+        notified = checkPSTime(60, prefSwitchPowersave1Hour, PSNotif1Hour, M_POWER_SAVE_NOT_ON_1_HOURS, notified);
+        notified = checkPSTime(90, prefSwitchPowersave15Hours, PSNotif15Hours, M_POWER_SAVE_NOT_ON_1_5_HOURS, notified);
+        notified = checkPSTime(120, prefSwitchPowersave2Hours, PSNotif2Hours, M_POWER_SAVE_NOT_ON_2_HOURS, notified);
+        notified = checkPSTime(150, prefSwitchPowersave25Hours, PSNotif25Hours, M_POWER_SAVE_NOT_ON_2_5_HOURS, notified);
+        notified = checkPSTime(180, prefSwitchPowersave3Hours, PSNotif3Hours, M_POWER_SAVE_NOT_ON_3_HOURS, notified);
+    }
+
+    private boolean checkPSTime(int thresholdMin, boolean prefEnabled, boolean alreadyNotified, String message, boolean alreadySentThisCycle) {
+        if (batTime <= thresholdMin && batTime > 0) {
+            if (!alreadyNotified) {
+                if (prefEnabled && !alreadySentThisCycle) {
+                    new NotificationSender(Syscontext).send(TITLE_POWER_SAVE_IS_NOT_ON, message, 1);
+                    alreadySentThisCycle = true;
+                }
+                setPSTimeFlag(thresholdMin, true);
+            }
+        } else {
+            setPSTimeFlag(thresholdMin, false);
+        }
+        return alreadySentThisCycle;
+    }
+
+    private void setPSTimeFlag(int thresholdMin, boolean value) {
+        switch (thresholdMin) {
+            case 180: NotificationManager.SetPowersaveNotOn3HoursLeft(Syscontext, value); break;
+            case 150: NotificationManager.SetPowersaveNotOn25HoursLeft(Syscontext, value); break;
+            case 120: NotificationManager.SetPowersaveNotOn2HoursLeft(Syscontext, value); break;
+            case 90: NotificationManager.SetPowersaveNotOn15HoursLeft(Syscontext, value); break;
+            case 60: NotificationManager.SetPowersaveNotOn1HourLeft(Syscontext, value); break;
+            case 30: NotificationManager.SetPowersaveNotOn30MinLeft(Syscontext, value); break;
         }
     }
 
-
-    /**
-     * Brug disse to og erstat title samt message med den rigtige context, som jeg tror er Syscontext
-     * NotificationSender notificationSender = new NotificationSender(Syscontext);
-     * notificationSender.send ("title", "Message", 1);
-     */
-    void TurnOnPowerSavePercent() {
-        if (!isPowerSaveOn && !isCharging) {
-            if (PSNotif60Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_60_PERCENT, 1);
-            }
-            else if (PSNotif50Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_50_PERCENT, 1);
-            }
-            else if (PSNotif40Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_40_PERCENT, 1);
-            }
-            else if (PSNotif30Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_30_PERCENT, 1);
-            }
-            else if (PSNotif20Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_20_PERCENT, 1);
-            }
-            else if (PSNotif10Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_10_PERCENT, 1);
-            }
-        }
-    }
-
-    void TurnOnPowerSaveHours() {
-        if (!isPowerSaveOn && !isCharging) {
-            if (PSNotif3Hours) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_3_HOURS, 1);
-            }
-            else if (PSNotif25Hours) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_2_5_HOURS, 1);
-            }
-            else if (PSNotif2Hours) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_2_HOURS, 1);
-            }
-            else if (PSNotif15Hours) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_1_5_HOURS, 1);
-            }
-            else if (PSNotif1Hour) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_1_HOURS, 1);
-            }
-            else if (PSNotif30Min) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER_SAVE_IS_NOT_ON, M_POWER_SAVE_NOT_ON_30_MINUTES, 1);
-            }
-        }
-    }
-
-
-    //////////////////////
-
-    private boolean Notif3Hours, Notif25Hours, Notif2Hours, Notif15Hours, Notif1Hour, Notif30Min;
-    private boolean Notif60Percent, Notif50Percent, Notif40Percent, Notif30Percent, Notif20Percent, Notif10Percent;
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    public void SendTimeNotif () {
-        if (batTime <= 180 && batTime >= 160 && prefSwitch3Hours) {
-            InformAboutTime();
-            ChangeNotifBool(Notif3Hours);
-            NotificationManager.SetPhoneHas3HoursLeft(Syscontext, Notif3Hours);
-        } else if (batTime <= 150 && batTime >= 130 && prefSwitch25Hours) {
-            InformAboutTime();
-            ChangeNotifBool(Notif25Hours);
-            NotificationManager.SetPhoneHas25HoursLeft(Syscontext, Notif25Hours);
-        } else if (batTime <= 120 && batTime >= 100 && prefSwitch2Hours) {
-            InformAboutTime();
-            ChangeNotifBool(Notif2Hours);
-            NotificationManager.SetPhoneHas2HoursLeft(Syscontext, Notif2Hours);
-        } else if (batTime <= 90 && batTime >= 70 && prefSwitch15Hours ) {
-            InformAboutTime();
-            ChangeNotifBool(Notif15Hours);
-            NotificationManager.SetPhoneHas15HoursLeft(Syscontext, Notif15Hours);
-        } else if (batTime <= 60 && batTime >= 40 && prefSwitch1Hour) {
-            InformAboutTime();
-            ChangeNotifBool(Notif1Hour);
-            NotificationManager.SetPhoneHas1HourLeft(Syscontext, Notif1Hour);
-        } else if (batTime <= 30 && batTime >= 10 && prefSwitch30Min) {
-            InformAboutTime();
-            ChangeNotifBool(Notif30Min);
-            NotificationManager.SetPhoneHas30MinLeft(Syscontext, Notif30Min);
-        }
+    private void resetPSTimeFlags() {
+        NotificationManager.SetPowersaveNotOn3HoursLeft(Syscontext, false);
+        NotificationManager.SetPowersaveNotOn25HoursLeft(Syscontext, false);
+        NotificationManager.SetPowersaveNotOn2HoursLeft(Syscontext, false);
+        NotificationManager.SetPowersaveNotOn15HoursLeft(Syscontext, false);
+        NotificationManager.SetPowersaveNotOn1HourLeft(Syscontext, false);
+        NotificationManager.SetPowersaveNotOn30MinLeft(Syscontext, false);
     }
 
     public void SendPercentNotif () {
-        // Here is the assumed bools which are saved in the prefs:
-        // GetPowerSaveStatus().something
+        if (isCharging) {
+            resetPercentFlags();
+            return;
+        }
 
-        switch(batPercent) {
-            case 60:
-                InformAboutPercent();
-                ChangeNotifBool(Notif60Percent);
-                NotificationManager.SetPhoneHas60PercentLeft(Syscontext, Notif60Percent);
-                break;
-            case 50:
-                InformAboutPercent();
-                ChangeNotifBool(Notif50Percent);
-                NotificationManager.SetPhoneHas50PercentLeft(Syscontext, Notif50Percent);
-                break;
-            case 40:
-                InformAboutPercent();
-                ChangeNotifBool(Notif40Percent);
-                NotificationManager.SetPhoneHas40PercentLeft(Syscontext, Notif40Percent);
-                break;
-            case 30:
-                InformAboutPercent();
-                ChangeNotifBool(Notif30Percent);
-                NotificationManager.SetPhoneHas30PercentLeft(Syscontext, Notif30Percent);
-                break;
-            case 20:
-                InformAboutPercent();
-                ChangeNotifBool(Notif20Percent);
-                NotificationManager.SetPhoneHas20PercentLeft(Syscontext, Notif20Percent);
-                break;
-            case 10:
-                InformAboutPercent();
-                ChangeNotifBool(Notif10Percent);
-                NotificationManager.SetPhoneHas10PercentLeft(Syscontext, Notif10Percent);
-                break;
+        boolean notified = false;
+        notified = checkPercent(10, prefSwitch10percent, Notif10Percent, M_ON_10_PERCENT, notified);
+        notified = checkPercent(20, prefSwitch20percent, Notif20Percent, M_ON_20_PERCENT, notified);
+        notified = checkPercent(30, prefSwitch30percent, Notif30Percent, M_ON_30_PERCENT, notified);
+        notified = checkPercent(40, prefSwitch40percent, Notif40Percent, M_ON_40_PERCENT, notified);
+        notified = checkPercent(50, prefSwitch50percent, Notif50Percent, M_ON_50_PERCENT, notified);
+        notified = checkPercent(60, prefSwitch60percent, Notif60Percent, M_ON_60_PERCENT, notified);
+    }
+
+    private boolean checkPercent(int threshold, boolean prefEnabled, boolean alreadyNotified, String message, boolean alreadySentThisCycle) {
+        if (batPercent <= threshold) {
+            if (!alreadyNotified) {
+                if (prefEnabled && !alreadySentThisCycle) {
+                    new NotificationSender(Syscontext).send(TITLE_POWER, message, 1);
+                    alreadySentThisCycle = true;
+                }
+                setPercentFlag(threshold, true);
+            }
+        } else {
+            setPercentFlag(threshold, false);
+        }
+        return alreadySentThisCycle;
+    }
+
+    private void setPercentFlag(int threshold, boolean value) {
+        switch (threshold) {
+            case 60: NotificationManager.SetPhoneHas60PercentLeft(Syscontext, value); break;
+            case 50: NotificationManager.SetPhoneHas50PercentLeft(Syscontext, value); break;
+            case 40: NotificationManager.SetPhoneHas40PercentLeft(Syscontext, value); break;
+            case 30: NotificationManager.SetPhoneHas30PercentLeft(Syscontext, value); break;
+            case 20: NotificationManager.SetPhoneHas20PercentLeft(Syscontext, value); break;
+            case 10: NotificationManager.SetPhoneHas10PercentLeft(Syscontext, value); break;
         }
     }
 
-    void InformAboutPercent() {
-        if (!isCharging) {
-            if (Notif60Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_60_PERCENT, 1);
+    private void resetPercentFlags() {
+        NotificationManager.SetPhoneHas60PercentLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas50PercentLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas40PercentLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas30PercentLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas20PercentLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas10PercentLeft(Syscontext, false);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void SendTimeNotif () {
+        if (isCharging) {
+            resetTimeFlags();
+            return;
+        }
+
+        boolean notified = false;
+        notified = checkTime(30, prefSwitch30Min, Notif30Min, M_ON_30_MINUTES, notified);
+        notified = checkTime(60, prefSwitch1Hour, Notif1Hour, M_ON_1_HOURS, notified);
+        notified = checkTime(90, prefSwitch15Hours, Notif15Hours, M_ON_1_5_HOURS, notified);
+        notified = checkTime(120, prefSwitch2Hours, Notif2Hours, M_ON_2_HOURS, notified);
+        notified = checkTime(150, prefSwitch25Hours, Notif25Hours, M_ON_2_5_HOURS, notified);
+        notified = checkTime(180, prefSwitch3Hours, Notif3Hours, M_ON_3_HOURS, notified);
+    }
+
+    private boolean checkTime(int thresholdMin, boolean prefEnabled, boolean alreadyNotified, String message, boolean alreadySentThisCycle) {
+        if (batTime <= thresholdMin && batTime > 0) {
+            if (!alreadyNotified) {
+                if (prefEnabled && !alreadySentThisCycle) {
+                    new NotificationSender(Syscontext).send(TITLE_POWER, message, 1);
+                    alreadySentThisCycle = true;
+                }
+                setTimeFlag(thresholdMin, true);
             }
-            else if (Notif50Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_50_PERCENT, 1);
-            }
-            else if (Notif40Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_40_PERCENT, 1);
-            }
-            else if (Notif30Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_30_PERCENT, 1);
-            }
-            else if (Notif20Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_20_PERCENT, 1);
-            }
-            else if (Notif10Percent) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_10_PERCENT, 1);
-            }
+        } else {
+            setTimeFlag(thresholdMin, false);
+        }
+        return alreadySentThisCycle;
+    }
+
+    private void setTimeFlag(int thresholdMin, boolean value) {
+        switch (thresholdMin) {
+            case 180: NotificationManager.SetPhoneHas3HoursLeft(Syscontext, value); break;
+            case 150: NotificationManager.SetPhoneHas25HoursLeft(Syscontext, value); break;
+            case 120: NotificationManager.SetPhoneHas2HoursLeft(Syscontext, value); break;
+            case 90: NotificationManager.SetPhoneHas15HoursLeft(Syscontext, value); break;
+            case 60: NotificationManager.SetPhoneHas1HourLeft(Syscontext, value); break;
+            case 30: NotificationManager.SetPhoneHas30MinLeft(Syscontext, value); break;
         }
     }
 
-    void InformAboutTime() {
-        if (!isCharging) {
-            if (Notif3Hours) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_3_HOURS, 1);
-            }
-            else if (Notif25Hours) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_2_5_HOURS, 1);
-            }
-            else if (Notif2Hours) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_2_HOURS, 1);
-            }
-            else if (Notif15Hours) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_1_5_HOURS, 1);
-            }
-            else if (Notif1Hour) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_1_HOURS, 1);
-            }
-            else if (Notif30Min) {
-                NotificationSender notificationSender = new NotificationSender(Syscontext);
-                notificationSender.send (TITLE_POWER, M_ON_30_MINUTES, 1);
-            }
-        }
+    private void resetTimeFlags() {
+        NotificationManager.SetPhoneHas3HoursLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas25HoursLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas2HoursLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas15HoursLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas1HourLeft(Syscontext, false);
+        NotificationManager.SetPhoneHas30MinLeft(Syscontext, false);
     }
-
-    //////////////////////
 
     @RequiresPermission(Manifest.permission.POST_NOTIFICATIONS)
     public void SendOtherNotif () {

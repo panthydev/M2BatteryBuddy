@@ -87,7 +87,7 @@ public class SystemDataCollector{
         NotificationManager.SetBatteryPercent(context, batLevelPercent);
 
         if (remainingBatLife != null){
-            NotificationManager.SetEstBatTime(context, (int) remainingBatLife.toSeconds());
+            NotificationManager.SetEstBatTime(context, (int) remainingBatLife.toMinutes());
         }
         NotificationManager.SetIsCharging(context, isCharging);
         NotificationManager.SetPowerSaveOn(context, powerSaveOn);
