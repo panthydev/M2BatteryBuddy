@@ -14,73 +14,75 @@ In hac habitasse platea dictumst. Class aptent taciti sociosqu ad litora torquen
     </string>
 
     <string name="info_intro">Hello and welcome to Battery Buddy!
-        This is an app for the 2nd semester Medialogy project. If you’re curious, you can read more about it on the settings-page.\n
+        This is an app for the 2nd semester Medialogy project. If you’re curious, you can read more about it on the settings-page.\n\n
         Battery Buddy will be gathering data about each app on your smartphone while you are using them, and give estimations on how much each app drains your battery.
         It can also send you notifications that help you keep an eye on certain aspects of your battery or your phone behaviour, such as your current battery status, how much power you are using and how long you’ve been in an app - this can be customized on the settings-page.\n
-        Last but not least, on this page are a bunch of helpful tips, tricks and other information on how to properly maintain the health of your phone and battery!\n
+        Last but not least, on this page are a bunch of helpful tips, tricks and other information on how to properly maintain the health of your phone and battery!\n\n
 
         <b>Home:</b> \n
-        This is where you can find a bunch of information about your phone and battery life.\n
+        This is where you can find a bunch of information about your phone and battery life.\n\n
         <b>Info:</b> \n
-        Info: This is where you are right now! It contains information about good practices to maintain your phone.\n
+        Info: This is where you are right now! It contains information about good practices to maintain your phone.\n\n
         <b>Settings:</b> \n
         Settings: If you want to edit which notifications you receive or want to know more about the project, this is where you can do that :)\n
     </string>
 
-    <string name="info_powerSaver">Every android smartphone comes with the option to toggle on or off power saver mode. This mode was made with the aim of conserving and minimizing the power used by the smartphone. However this will come at the cost of the performance of the smartphone. Features such as lighting, processing speed, sound and GPS tracking might perform worse when power saver mode is active. This may cause errors with some apps that use GPS location in the background of the phone.\n
+    <string name="info_powerSaver">Every android smartphone comes with the option to toggle on or off power saver mode. This mode was made with the aim of conserving and minimizing the power used by the smartphone. However this will come at the cost of the performance of the smartphone. Features such as lighting, processing speed, sound and GPS tracking might perform worse when power saver mode is active. This may cause errors with some apps that use GPS location in the background of the phone.\n\n
     <b>How to activate:</b> \n
         Swipe down the Quick Settings panel and tap the Battery Saver/Power Saving icon. Alternatively, go to Settings -> Battery- > Battery Saver and turn it on from there.\n
     </string>
 
-    <string name="info_goldilock">Keeping a smartphone\'s battery between 20%-80% (also called the goldilock zone) is good for the phone’s battery health. This is because depleting the battery inside the phone to 0% or charging it up to 100% can overwork the battery and degrade it with time, causing it to run out of power faster and shortening the battery’s overall lifespan.\n
+    <string name="info_goldilock">Keeping a smartphone\'s battery between 20%-80% (also called the goldilock zone) is good for the phone’s battery health. This is because depleting the battery inside the phone to 0% or charging it up to 100% can overwork the battery and degrade it with time, causing it to run out of power faster and shortening the battery’s overall lifespan.\n\n
         <b>General tips:</b> \n
         1. Avoid leaving your phone unattended in a charger for long periods of time. Like before going to sleep.\n
-        2. When the phone’s battery is low, try to use it less or use less power-intensive apps.\n
-        <b>Battery protection:</b> Newer phone models have a feature called battery protection. It sets a limit to how much the phone is allowed to charge, so when the phone reaches a certain battery percentage it will stop charging, preventing it from going over the goldilock zone or continuing to charge even when at 100%.\n
+        2. When the phone’s battery is low, try to use it less or use less power-intensive apps.\n\n
+        <b>Battery protection:</b> Newer phone models have a feature called battery protection. It sets a limit to how much the phone is allowed to charge, so when the phone reaches a certain battery percentage it will stop charging, preventing it from going over the goldilock zone or continuing to charge even when at 100%.\n\n
         <b>How to activate:</b> Inside phone settings, go to Battery -> Battery protection, tap the switch to turn it on. Alternatively, you can search in settings by tapping on the magnifying glass in the corner. If you tap on Battery protection, it will take you to the battery protection settings, where you can set it to use the basic setup (limit at 100%) or the maximum setup (you can set the limit at 80% to 95%).\n
     </string>
 
     <string name="info_update">Issues and bugs with the smartphone battery can sometimes stem from outdated software.
-Keeping a phone and its apps up-to-date can often fix these bugs and other performance issues.\n
+Keeping a phone and its apps up-to-date can often fix these bugs and other performance issues.\n\n
 <b>How to update:</b> \n
-        To update the smartphone fully, you have to both update the phones software and security separately.\n
+        To update the smartphone fully, you have to both update the phones software and security separately.\n\n
 <b>Software:</b> Go into settings and scroll down to Software update, where you can scan for new updates. You can also enable auto download for updates in here.\n
 <b>Security:</b> Go into settings and scroll down to Security and privacy -> Updates. where you can scan for new security updates and Google Play updates.\n
 <b>Apps:</b> Open the Google Play store and tap on your profile icon in the upper-corner. Go into “Manage apps and device”. A field titled “Updates available” will note how many apps have an update, and you can either update all at once or go into “See details” to choose apps to update individually.\n
 </string>
 
-    <string name="info_closeApps">Apps can still be running on the smartphone after exiting them, like when returning to the home screen or opening another app. This is because apps do not close when you exit them and are still technically still “open” and active in the background, even when not visibly on screen. Open apps can be viewed in the Recents screen.\n
+    <string name="info_closeApps">Apps can still be running on the smartphone after exiting them, like when returning to the home screen or opening another app. This is because apps do not close when you exit them and are still technically still “open” and active in the background, even when not visibly on screen. Open apps can be viewed in the Recents screen.\n\n
 <b>How to close apps:</b> \n
         Opening the Recents screen is done differently depending on the phone’s model.\n
 1. Swipe up from the bottom edge of the screen.\n
-2. Press the “Recents” button, which is next to the home button at the bottom of the screen.\n
+2. Press the “Recents” button, which is next to the home button at the bottom of the screen.\n\n
 Here you can close an app by swiping it upward, or close all apps with the “Close all” button.\n
 </string>
     <string name="info_GPS">GPS and other apps that ask for your location can be very power draining, as they have to track your location while the app service is running. Some of these services run in the background of the phone and drain the phone battery even when not in active use.
-You can give each app a specific permission on when it’s allowed to track your location.\n
+You can give each app a specific permission on when it’s allowed to track your location.\n\n
 
 Depending on how the app works, giving it fitting permission can help it run smoothly and save power.
 Some apps need to be able to track your location in the background. These should be allowed to get the location all the time.
 For most other apps, it is recommended to only allow them to track your location while the app is in use. This means it will only track your location while the app is open and on screen.
-Finally, some apps can function just fine without tracking your location, even if it asks for it. These can be given the permission to never track your location safely.\n
+Finally, some apps can function just fine without tracking your location, even if it asks for it. These can be given the permission to never track your location safely.\n\n
 <b>How to manage:</b> \n
-        Inside phone settings, go to Location -> App permissions. Alternatively, you can search in settings by tapping on the magnifying glass in the corner. In App permissions, you can see and change all the permission status of apps that use GPS location.\n
+        Inside phone settings, go to Location -> App permissions. Alternatively, you can search in settings by tapping on the magnifying glass in the corner. In App permissions, you can see and change all the permission status of apps that use GPS location.\n\n
         <b>Note - It is NOT advised to change the permission of apps that have “Android” in their names.</b>\n
     </string>
-    <string name="info_screenBrightness">Setting the screen brightness to high levels will drain the smartphone battery slightly faster, and might increase the internal temperature of the phone depending on the situation.\n
+    <string name="info_screenBrightness">Setting the screen brightness to high levels will drain the smartphone battery slightly faster, and might increase the internal temperature of the phone depending on the situation.\n\n
 <b>How to manage:</b> \n
-        Swipe down the Quick Settings panel and adjust the brightness with the slider. Depending on the phone’s model, you might have to slide down from a specific area (example: on some newer versions, slide down on the right side of the top of the screen to open Quick Settings). Alternatively, go into settings and scroll down to Display, where a Brightness slider will be.\n
+        Swipe down the Quick Settings panel and adjust the brightness with the slider. Depending on the phone’s model, you might have to slide down from a specific area (example: on some newer versions, slide down on the right side of the top of the screen to open Quick Settings).\n
+        Alternatively, go into settings and scroll down to Display, where a Brightness slider will be.\n
 </string>
-    <string name="info_darkMode">Using Dark modes on the smartphone and in apps can save battery power. This is because like with screen brightness, displaying lighter colors and especially white on the screen drains the battery slightly faster. Dark mode changes menus in the phone and apps to display with a dark-to-black background and white text, which is more power efficient.\n
+    <string name="info_darkMode">Using Dark modes on the smartphone and in apps can save battery power. This is because like with screen brightness, displaying lighter colors and especially white on the screen drains the battery slightly faster. Dark mode changes menus in the phone and apps to display with a dark-to-black background and white text, which is more power efficient.\n\n
 <b>How to activate:</b> \n
-        Swipe down the Quick Settings panel and tap on the Dark mode icon (icon of a moon) next to the Brightness slider. Alternatively, go into settings and scroll down to Display, where you will be able to pick between Light- and Dark mode.
+        Swipe down the Quick Settings panel and tap on the Dark mode icon (icon of a moon) next to the Brightness slider.\n
+        Alternatively, go into settings and scroll down to Display, where you will be able to pick between Light- and Dark mode.
 If Power Saver mode is turned on, the phone will automatically use Dark mode.\n
     </string>
-    <string name="info_temperatures">If a smartphone is hot, it can cause performance issues on the phone or even damage its internal parts. This is because the internals of the phone naturally get warmer when it is running, processing data or transferring power (when it is using power or is charging). If the phone detects its temperature is getting too high, it will try to cool down by limiting its internal processes or forcefully shutting down to avoid damaging its components. The phone\'s temperature can be affected by both inside processes of the phone and the outside environment it’s in.\n
+    <string name="info_temperatures">If a smartphone is hot, it can cause performance issues on the phone or even damage its internal parts. This is because the internals of the phone naturally get warmer when it is running, processing data or transferring power (when it is using power or is charging). If the phone detects its temperature is getting too high, it will try to cool down by limiting its internal processes or forcefully shutting down to avoid damaging its components. The phone\'s temperature can be affected by both inside processes of the phone and the outside environment it’s in.\n\n
         <b>General tips:</b> \n
         1. Avoid using your phone in direct sunlight on hot days.\n
         2. Stop or close power- and process intensive apps.\n
-        3. Avoid using fast charging, as most fast chargers push high amounts of power into the phone battery, causing high temperatures or damaging the battery in other ways.\n
+        3. Avoid using fast charging, as most fast chargers push high amounts of power into the phone battery, causing high temperatures or damaging the battery in other ways.\n\n
         <b>Note - As with hot temperatures, cold temperatures can also be harmful for smartphones.</b>\n
 </string>
 
