@@ -297,7 +297,7 @@ public class SystemDataCollector{
                     if (proc == null) continue;
                     if (proc.importance == IMPORTANCE_FOREGROUND || proc.importance == IMPORTANCE_VISIBLE) {
                         String name = proc.processName;
-                        if (name == null) continue;
+                        if (name == null || name.equals("com.panthydev.m2batteryapp")) continue;
                         name = normalizePackage(name);
                         if (!name.equals(context.getPackageName())) return name;
                         if (pkg == null) pkg = name;
